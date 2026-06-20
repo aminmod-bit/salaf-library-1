@@ -1,0 +1,22 @@
+Salaf Library — Production UX Release 1.1
+
+Дата сборки: 2026-06-20
+
+Состав релиза:
+- официальный каталог без демо-книг;
+- 116 реальных PDF-книг;
+- онлайн-читалка /#/read/:id;
+- автоматические премиальные обложки;
+- GitHub API админка;
+- массовый импорт PDF;
+- SEO-каталог /catalog/;
+- SEO-страницы книг /catalog/books/b001.html;
+- sitemap.xml;
+- robots.txt;
+- rss.xml;
+- PWA;
+- GitHub Pages workflow;
+- custom domain CNAME.
+
+Важно:
+В GitHub Desktop нужно копировать СОДЕРЖИМОЕ распакованной папки в корень репозитория salaf-library-1, а не саму папку архива.
