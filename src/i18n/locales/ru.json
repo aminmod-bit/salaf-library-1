@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "home": "Главная",
+    "books": "Книги",
+    "biographies": "Биографии",
+    "audio": "Аудиоуроки",
+    "fawaid": "Фаваиды",
+    "categories": "Категории",
+    "search": "Поиск",
+    "favorites": "Избранное",
+    "history": "История",
+    "admin": "Админ-панель",
+    "dashboard": "Панель",
+    "goals": "Цели",
+    "readingPlans": "Планы чтения"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "search": "Поиск",
+    "noResults": "Ничего не найдено",
+    "page": "Страница",
+    "of": "из",
+    "close": "Закрыть",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "download": "Скачать",
+    "read": "Читать",
+    "listen": "Слушать",
+    "share": "Поделиться",
+    "favorite": "В избранное",
+    "unfavorite": "Убрать из избранного",
+    "book": "Книга",
+    "author": "Автор",
+    "category": "Категория",
+    "tags": "Теги",
+    "description": "Описание",
+    "pages": "Страниц",
+    "language": "Язык",
+    "year": "Год",
+    "rating": "Рейтинг",
+    "downloads": "Загрузок",
+    "views": "Просмотров"
+  },
+  "home": {
+    "title": "Salaf Library",
+    "subtitle": "Исламская библиотека учёных ахли-сунна",
+    "featuredBooks": "Избранные книги",
+    "popularBooks": "Популярные книги",
+    "newBooks": "Новые поступления",
+    "featuredBiographies": "Избранные биографии",
+    "featuredAudio": "Избранные уроки",
+    "featuredFawaid": "Избранные фаваиды"
+  },
+  "biographies": {
+    "title": "Биографии",
+    "prophets": "Пророки",
+    "companions": "Сподвижники",
+    "tabiin": "Табиины",
+    "scholars": "Учёные",
+    "modern": "Современные"
+  },
+  "audio": {
+    "title": "Аудиоуроки",
+    "player": "Плеер",
+    "play": "Играть",
+    "pause": "Пауза",
+    "next": "Следующий",
+    "previous": "Предыдущий",
+    "volume": "Громкость",
+    "speed": "Скорость"
+  },
+  "fawaid": {
+    "title": "Фаваиды",
+    "source": "Источник",
+    "author": "Автор"
+  },
+  "admin": {
+    "title": "Админ-панель",
+    "import": "Импорт",
+    "books": "Книги",
+    "authors": "Авторы",
+    "categories": "Категории",
+    "stats": "Статистика",
+    "settings": "Настройки"
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "progress": "Прогресс",
+    "streak": "Серия",
+    "goalsCompleted": "Целей выполнено",
+    "weeklyReading": "Чтение по дням",
+    "recentActivity": "Недавняя активность"
+  },
+  "goals": {
+    "title": "Цели",
+    "active": "Активные",
+    "completed": "Выполненные",
+    "plan": "План",
+    "stats": "Статистика"
+  }
+}
