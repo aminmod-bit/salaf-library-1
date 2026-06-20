@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "home": "Home",
+    "books": "Books",
+    "biographies": "Biographies",
+    "audio": "Audio Lessons",
+    "fawaid": "Benefits",
+    "categories": "Categories",
+    "search": "Search",
+    "favorites": "Favorites",
+    "history": "History",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "goals": "Goals",
+    "readingPlans": "Reading Plans"
+  },
+  "common": {
+    "loading": "Loading...",
+    "search": "Search",
+    "noResults": "No results found",
+    "page": "Page",
+    "of": "of",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "download": "Download",
+    "read": "Read",
+    "listen": "Listen",
+    "share": "Share",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite",
+    "book": "Book",
+    "author": "Author",
+    "category": "Category",
+    "tags": "Tags",
+    "description": "Description",
+    "pages": "Pages",
+    "language": "Language",
+    "year": "Year",
+    "rating": "Rating",
+    "downloads": "Downloads",
+    "views": "Views"
+  },
+  "home": {
+    "title": "Salaf Library",
+    "subtitle": "Islamic Library of Ahlus-Sunnah Scholars",
+    "featuredBooks": "Featured Books",
+    "popularBooks": "Popular Books",
+    "newBooks": "New Arrivals",
+    "featuredBiographies": "Featured Biographies",
+    "featuredAudio": "Featured Lessons",
+    "featuredFawaid": "Featured Benefits"
+  },
+  "biographies": {
+    "title": "Biographies",
+    "prophets": "Prophets",
+    "companions": "Companions",
+    "tabiin": "Tabi'een",
+    "scholars": "Scholars",
+    "modern": "Modern"
+  },
+  "audio": {
+    "title": "Audio Lessons",
+    "player": "Player",
+    "play": "Play",
+    "pause": "Pause",
+    "next": "Next",
+    "previous": "Previous",
+    "volume": "Volume",
+    "speed": "Speed"
+  },
+  "fawaid": {
+    "title": "Benefits",
+    "source": "Source",
+    "author": "Author"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "import": "Import",
+    "books": "Books",
+    "authors": "Authors",
+    "categories": "Categories",
+    "stats": "Statistics",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "progress": "Progress",
+    "streak": "Streak",
+    "goalsCompleted": "Goals Completed",
+    "weeklyReading": "Weekly Reading",
+    "recentActivity": "Recent Activity"
+  },
+  "goals": {
+    "title": "Goals",
+    "active": "Active",
+    "completed": "Completed",
+    "plan": "Plan",
+    "stats": "Statistics"
+  }
+}
