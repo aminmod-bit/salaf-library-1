@@ -1,0 +1,20 @@
+[
+  {
+    "file": "tri-osnovy.pdf",
+    "cover": "tri-osnovy.webp",
+    "title": "Три основы",
+    "titleAr": "الأصول الثلاثة",
+    "author": "Мухаммад ибн Абд аль-Ваххаб",
+    "authorId": "a001",
+    "category": "Акыда",
+    "language": "Русский",
+    "pages": 64,
+    "description": "Краткое и важное произведение по основам исламской акыды.",
+    "tags": ["акыда", "таухид", "основы"],
+    "year": "2026",
+    "featured": true,
+    "popular": true,
+    "isNew": true,
+    "rating": 5
+  }
+]

@@ -132,7 +132,61 @@ public/data/categories.json
 
 При запуске приложение сначала пытается загрузить эти JSON-файлы. Если файл отсутствует или повреждён, используется встроенный fallback из `src/data/*`.
 
-## Импорт книг
+## Автоматический импорт материалов
+
+В версии 1.0 добавлена безопасная система автоматического импорта для GitHub Pages без backend.
+
+Рабочая схема:
+
+1. Кладёте исходные файлы в папку `import/`.
+2. Заполняете маленький JSON-манифест.
+3. Запускаете одну команду.
+4. Скрипт сам переносит файлы в `public/` и обновляет `public/data/*.json`.
+5. Делаете commit/push — GitHub Actions публикует обновление.
+
+Команды:
+
+```bash
+npm run import:books
+npm run import:audio
+npm run import:biographies
+npm run import:fawaid
+npm run import:all
+```
+
+Папки импорта:
+
+```text
+import/books/
+import/audio/
+import/covers/
+import/biographies/
+import/fawaid/
+```
+
+Примеры манифестов лежат здесь:
+
+```text
+import/books/books.example.json
+import/audio/audio.example.json
+import/biographies/biographies.example.json
+import/fawaid/fawaid.example.json
+```
+
+Для реального импорта создайте рядом файлы без `.example`, например:
+
+```text
+import/books/books.json
+import/audio/audio.json
+```
+
+После импорта проверьте проект:
+
+```bash
+npm run build
+```
+
+## Импорт книг вручную
 
 1. Поместите PDF-файлы в публичную папку, например:
 
@@ -169,7 +223,21 @@ public/books/tri-osnovy.pdf
 
 ## Импорт изображений обложек
 
-Текущая дизайн-система использует премиальные цветовые обложки (`coverColor`, `coverEmoji`). Если в дальнейшем материалу нужен отдельный файл изображения, храните его в `public/covers/` и добавьте поле в JSON, не меняя архитектуру данных.
+Сайт поддерживает настоящие обложки через поле:
+
+```json
+"coverImage": "./covers/tri-osnovy.webp"
+```
+
+Если `coverImage` указан, карточка книги показывает картинку. Если картинки нет, автоматически используется прежняя премиальная цветовая обложка через `coverColor` и `coverEmoji`.
+
+При автоматическом импорте положите обложку в `import/covers/` и укажите её в `import/books/books.json`:
+
+```json
+"cover": "tri-osnovy.webp"
+```
+
+Скрипт сам скопирует файл в `public/covers/` и добавит `coverImage` в запись книги.
 
 Рекомендации:
 

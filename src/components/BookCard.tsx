@@ -23,6 +23,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
       visitedAt: new Date().toISOString(),
       coverColor: book.coverColor,
       coverEmoji: book.coverEmoji,
+      coverImage: book.coverImage,
     });
     navigate(`/books/${book.id}`);
   };
@@ -74,7 +75,11 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
           flexShrink: 0,
           boxShadow: '4px 4px 12px rgba(0,0,0,0.4)',
         }}>
-          {book.coverEmoji || '📖'}
+          {book.coverImage ? (
+            <img src={book.coverImage} alt={`Обложка книги ${book.title}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            book.coverEmoji || '📖'
+          )}
         </div>
 
         {/* Info */}
@@ -139,7 +144,16 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
           inset: 0,
           backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(212,175,55,0.08) 0%, transparent 60%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%)',
         }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</div>
+        {book.coverImage ? (
+          <img
+            src={book.coverImage}
+            alt={`Обложка книги ${book.title}`}
+            loading="lazy"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
+          />
+        ) : (
+          <div style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</div>
+        )}
 
         {/* Badges */}
         {book.isNew && (
@@ -240,7 +254,14 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
             Читать
           </button>
           <button
-            onClick={e => { e.stopPropagation(); toast('Скачивание недоступно в демо', { icon: '📥' }); }}
+            onClick={e => {
+              e.stopPropagation();
+              if (book.downloadUrl || book.fileUrl) {
+                window.open(book.downloadUrl || book.fileUrl, '_blank');
+              } else {
+                toast('PDF файл пока не добавлен', { icon: '📥' });
+              }
+            }}
             style={{
               width: '28px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',

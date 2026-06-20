@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "check": "tsc --noEmit && npm audit --audit-level=moderate"
+    "check": "tsc --noEmit && npm audit --audit-level=moderate",
+    "import:books": "node scripts/import-content.mjs books",
+    "import:audio": "node scripts/import-content.mjs audio",
+    "import:biographies": "node scripts/import-content.mjs biographies",
+    "import:fawaid": "node scripts/import-content.mjs fawaid",
+    "import:all": "node scripts/import-content.mjs all"
   },
   "dependencies": {
     "clsx": "2.1.1",

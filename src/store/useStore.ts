@@ -19,6 +19,7 @@ export interface Book {
   description: string;
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
   tags: string[];
   fileUrl?: string;
   downloadUrl?: string;
@@ -48,6 +49,7 @@ export interface Biography {
   relatedAudio?: string[];
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
   featured?: boolean;
 }
 
@@ -64,6 +66,7 @@ export interface AudioLesson {
   tags: string[];
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
   series?: string;
   episode?: number;
   year?: string;
@@ -106,6 +109,7 @@ export interface ReadingProgress {
   author: string;
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
 }
 
 export interface AudioProgress {
@@ -117,6 +121,7 @@ export interface AudioProgress {
   author: string;
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
 }
 
 export interface HistoryItem {
@@ -127,6 +132,7 @@ export interface HistoryItem {
   visitedAt: string;
   coverColor?: string;
   coverEmoji?: string;
+  coverImage?: string;
 }
 
 // ─── Store ────────────────────────────────────────────────────────────────────

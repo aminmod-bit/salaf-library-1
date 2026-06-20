@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Шейх Мухаммад ибн Салих аль-Усаймин",
+    "nameAr": "محمد بن صالح العثيمين",
+    "type": "scholar",
+    "birthYear": "1929",
+    "deathYear": "2001",
+    "birthPlace": "Унайза, Саудовская Аравия",
+    "description": "Один из известных учёных ахлю-сунна современности.",
+    "fullBio": "Здесь полный текст биографии.",
+    "tags": ["учёный", "акыда", "фикх"],
+    "relatedBooks": ["b101"],
+    "relatedAudio": ["au101"],
+    "cover": "uthaymeen.webp",
+    "featured": true
+  }
+]

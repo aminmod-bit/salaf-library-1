@@ -32,7 +32,7 @@ export default function BookDetailPage() {
       id: book.id, type: 'book',
       title: book.title, subtitle: book.author,
       visitedAt: new Date().toISOString(),
-      coverColor: book.coverColor, coverEmoji: book.coverEmoji,
+      coverColor: book.coverColor, coverEmoji: book.coverEmoji, coverImage: book.coverImage,
     });
     if (book.fileUrl) {
       window.open(book.fileUrl, '_blank');
@@ -93,7 +93,15 @@ export default function BookDetailPage() {
               position: 'absolute', inset: 0,
               backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(212,175,55,0.1) 0%, transparent 60%)',
             }} />
-            <span style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</span>
+            {book.coverImage ? (
+              <img
+                src={book.coverImage}
+                alt={`Обложка книги ${book.title}`}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
+              />
+            ) : (
+              <span style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</span>
+            )}
           </div>
 
           {/* Action buttons */}
@@ -101,7 +109,17 @@ export default function BookDetailPage() {
             <button className="btn-primary" onClick={handleRead} style={{ width: '100%', justifyContent: 'center' }}>
               <BookOpen size={16} /> Читать книгу
             </button>
-            <button className="btn-secondary" onClick={() => toast('Скачивание недоступно в демо', { icon: '📥' })} style={{ width: '100%', justifyContent: 'center' }}>
+            <button
+              className="btn-secondary"
+              onClick={() => {
+                if (book.downloadUrl || book.fileUrl) {
+                  window.open(book.downloadUrl || book.fileUrl, '_blank');
+                } else {
+                  toast('PDF файл пока не добавлен', { icon: '📥' });
+                }
+              }}
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
               <Download size={16} /> Скачать PDF
             </button>
             <button
