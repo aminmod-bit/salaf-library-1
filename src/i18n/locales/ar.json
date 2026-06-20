@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "books": "الكتب",
+    "biographies": "التراجم",
+    "audio": "الدروس الصوتية",
+    "fawaid": "الفوائد",
+    "categories": "التصنيفات",
+    "search": "البحث",
+    "favorites": "المفضلة",
+    "history": "التاريخ",
+    "admin": "لوحة التحكم",
+    "dashboard": "لوحة التحكم",
+    "goals": "الأهداف",
+    "readingPlans": "خطط القراءة"
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "search": "بحث",
+    "noResults": "لا توجد نتائج",
+    "page": "صفحة",
+    "of": "من",
+    "close": "إغلاق",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "download": "تحميل",
+    "read": "قراءة",
+    "listen": "استماع",
+    "share": "مشاركة",
+    "favorite": "المفضلة",
+    "unfavorite": "إزالة من المفضلة",
+    "book": "كتاب",
+    "author": "المؤلف",
+    "category": "التصنيف",
+    "tags": "الوسوم",
+    "description": "الوصف",
+    "pages": "الصفحات",
+    "language": "اللغة",
+    "year": "السنة",
+    "rating": "التقييم",
+    "downloads": "التحميلات",
+    "views": "المشاهدات"
+  },
+  "home": {
+    "title": "مكتبة السلف",
+    "subtitle": "المكتبة الإسلامية لعلماء أهل السنة",
+    "featuredBooks": "الكتب المميزة",
+    "popularBooks": "الكتب الشائعة",
+    "newBooks": "الإضافات الجديدة",
+    "featuredBiographies": "التراجم المميزة",
+    "featuredAudio": "الدروس المميزة",
+    "featuredFawaid": "الفوائد المميزة"
+  },
+  "biographies": {
+    "title": "التراجم",
+    "prophets": "الأنبياء",
+    "companions": "الصحابة",
+    "tabiin": "التابعون",
+    "scholars": "العلماء",
+    "modern": "المعاصرون"
+  },
+  "audio": {
+    "title": "الدروس الصوتية",
+    "player": "المشغل",
+    "play": "تشغيل",
+    "pause": "إيقاف",
+    "next": "التالي",
+    "previous": "السابق",
+    "volume": "الصوت",
+    "speed": "السرعة"
+  },
+  "fawaid": {
+    "title": "الفوائد",
+    "source": "المصدر",
+    "author": "المؤلف"
+  },
+  "admin": {
+    "title": "لوحة التحكم",
+    "import": "الاستيراد",
+    "books": "الكتب",
+    "authors": "المؤلفون",
+    "categories": "التصنيفات",
+    "stats": "الإحصائيات",
+    "settings": "الإعدادات"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "progress": "التقدم",
+    "streak": "السلسلة",
+    "goalsCompleted": "الأهداف المنجزة",
+    "weeklyReading": "القراءة الأسبوعية",
+    "recentActivity": "النشاط الأخير"
+  },
+  "goals": {
+    "title": "الأهداف",
+    "active": "النشطة",
+    "completed": "المكتملة",
+    "plan": "الخطة",
+    "stats": "الإحصائيات"
+  }
+}
