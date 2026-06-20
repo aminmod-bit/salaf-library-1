@@ -74,7 +74,7 @@ export default function Header() {
       </div>
 
       {/* Search */}
-      <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
+      <form onSubmit={handleSearch} className="header-search" style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -106,7 +106,9 @@ export default function Header() {
       </form>
 
       {/* Notification */}
-      <button style={{
+      <style>{`@media (max-width: 720px) { .header-search { display: none !important; } }`}</style>
+
+      <button style={{ 
         background: 'rgba(255,255,255,0.05)',
         border: '1px solid rgba(212,175,55,0.15)',
         borderRadius: '10px',

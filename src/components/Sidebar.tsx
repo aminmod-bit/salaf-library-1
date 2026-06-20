@@ -80,19 +80,16 @@ export default function Sidebar() {
                 gap: '10px',
                 marginBottom: '4px',
               }}>
-                <div style={{
-                  width: '36px',
-                  height: '36px',
-                  background: 'linear-gradient(135deg, #d4af37, #f0c84a)',
-                  borderRadius: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '18px',
-                  boxShadow: '0 4px 12px rgba(212, 175, 55, 0.4)',
-                }}>
-                  📚
-                </div>
+                <img
+                  src="./logo-mark.svg"
+                  alt="Salaf Library"
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 16px rgba(212, 175, 55, 0.28)',
+                  }}
+                />
                 <div>
                   <div style={{
                     fontSize: '18px',

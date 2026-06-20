@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useStore } from './store/useStore';
@@ -10,7 +10,7 @@ import AudioPlayer from './components/AudioPlayer';
 import HomePage from './pages/HomePage';
 import BooksPage from './pages/BooksPage';
 import BookDetailPage from './pages/BookDetailPage';
-import BookReaderPage from './pages/BookReaderPage';
+
 import BiographiesPage from './pages/BiographiesPage';
 import BiographyDetailPage from './pages/BiographyDetailPage';
 import AudioPage from './pages/AudioPage';
@@ -26,6 +26,16 @@ import AdminSettingsPage from './pages/admin/AdminSettingsPage';
 import DashboardPage from './pages/DashboardPage';
 import GoalsPage from './pages/GoalsPage';
 import ReadingPlansPage from './pages/ReadingPlansPage';
+
+const BookReaderPage = lazy(() => import('./pages/BookReaderPage'));
+
+function PageLoader() {
+  return (
+    <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37', fontWeight: 700 }}>
+      Загрузка страницы...
+    </div>
+  );
+}
 
 function AudioPlayerWrapper() {
   const { currentAudio } = useStore();
@@ -64,6 +74,7 @@ export default function App() {
         <div className="main-content">
           <Header />
           <div className="page-content">
+            <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/books" element={<BooksPage />} />
@@ -85,6 +96,7 @@ export default function App() {
               <Route path="/goals" element={<GoalsPage />} />
               <Route path="/reading-plans" element={<ReadingPlansPage />} />
             </Routes>
+            </Suspense>
           </div>
         </div>
         <AudioPlayerWrapper />
