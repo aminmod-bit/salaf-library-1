@@ -1,603 +1,18 @@
 [
   {
     "id": "b001",
-    "title": "Три основы",
-    "titleAr": "الأصول الثلاثة",
-    "author": "Мухаммад ибн Абд аль-Ваххаб",
-    "authorId": "a001",
-    "category": "Акыда",
-    "language": "Русский",
-    "pages": 64,
-    "size": "1.2 МБ",
-    "description": "Три основы — краткое и важнейшее произведение в исламской акыде. Автор излагает три главных вопроса, о которых каждый мусульманин будет спрошен в могиле: кто твой Господь, какова твоя религия и кто твой пророк?",
-    "coverColor": "#1a3a2a",
-    "coverEmoji": "📖",
-    "tags": [
-      "акыда",
-      "основы",
-      "обязательное знание",
-      "таухид"
-    ],
-    "year": "2020",
-    "featured": true,
-    "popular": true,
-    "isNew": false,
-    "relatedBooks": [
-      "b002",
-      "b003",
-      "b005"
-    ],
-    "views": 15420,
-    "downloads": 8930,
-    "rating": 4.9
-  },
-  {
-    "id": "b002",
-    "title": "Книга таухида",
-    "titleAr": "كتاب التوحيد",
-    "author": "Мухаммад ибн Абд аль-Ваххаб",
-    "authorId": "a001",
-    "category": "Акыда",
-    "language": "Русский",
-    "pages": 312,
-    "size": "4.8 МБ",
-    "description": "Книга Таухида — один из важнейших трудов в исламской литературе. Автор собрал аяты Корана и хадисы пророка о единобожии, разъяснил их смысл и указал на опасность ширка.",
-    "coverColor": "#2a1a3a",
-    "coverEmoji": "📚",
-    "tags": [
-      "таухид",
-      "акыда",
-      "ширк",
-      "поклонение"
-    ],
-    "year": "2019",
-    "featured": true,
-    "popular": true,
-    "isNew": false,
-    "relatedBooks": [
-      "b001",
-      "b003",
-      "b004"
-    ],
-    "views": 22180,
-    "downloads": 14500,
-    "rating": 4.9
-  },
-  {
-    "id": "b003",
-    "title": "Четыре правила",
-    "titleAr": "القواعد الأربع",
-    "author": "Мухаммад ибн Абд аль-Ваххаб",
-    "authorId": "a001",
-    "category": "Акыда",
-    "language": "Русский",
-    "pages": 48,
-    "size": "0.9 МБ",
-    "description": "Четыре правила — трактат о признании многобожников и понимании их положения. Автор разъясняет четыре основных правила, по которым отличается истинный монотеизм от многобожия.",
-    "coverColor": "#3a2a1a",
-    "coverEmoji": "📜",
-    "tags": [
-      "акыда",
-      "таухид",
-      "правила",
-      "ширк"
-    ],
-    "year": "2021",
-    "popular": true,
-    "relatedBooks": [
-      "b001",
-      "b002"
-    ],
-    "views": 8750,
-    "downloads": 4200,
-    "rating": 4.8
-  },
-  {
-    "id": "b004",
-    "title": "Свет и путь. Сборник фаваидов",
-    "titleAr": "نور ومنهج",
-    "author": "Ибн аль-Каййим аль-Джаузийя",
-    "authorId": "a002",
-    "category": "Зухд и духовность",
-    "language": "Русский",
-    "pages": 256,
-    "size": "3.5 МБ",
-    "description": "Сборник мудрых высказываний и наставлений великого учёного Ибн аль-Каййима о пути к Аллаху, очищении сердца и укреплении веры.",
-    "coverColor": "#1a2a3a",
-    "coverEmoji": "✨",
-    "tags": [
-      "зухд",
-      "сердце",
-      "духовность",
-      "фаваид"
-    ],
-    "year": "2022",
-    "isNew": true,
-    "relatedBooks": [
-      "b005",
-      "b006"
-    ],
-    "views": 9340,
-    "downloads": 5100,
-    "rating": 4.7
-  },
-  {
-    "id": "b005",
-    "title": "Сады праведных",
-    "titleAr": "رياض الصالحين",
-    "author": "Имам ан-Навави",
-    "authorId": "a003",
-    "category": "Хадисы",
-    "language": "Русский",
-    "pages": 784,
-    "size": "12.4 МБ",
-    "description": "Риядус-Салихин — выдающийся сборник хадисов пророка Мухаммада ﷺ, систематизированный по темам. Одна из самых читаемых и популярных книг в исламе.",
-    "coverColor": "#1a3a1a",
-    "coverEmoji": "🌿",
-    "tags": [
-      "хадисы",
-      "адаб",
-      "сунна",
-      "нравственность"
-    ],
-    "year": "2018",
-    "featured": true,
-    "popular": true,
-    "relatedBooks": [
-      "b006",
-      "b007"
-    ],
-    "views": 31200,
-    "downloads": 19800,
-    "rating": 4.9
-  },
-  {
-    "id": "b006",
-    "title": "40 хадисов ан-Навави",
-    "titleAr": "الأربعون النووية",
-    "author": "Имам ан-Навави",
-    "authorId": "a003",
-    "category": "Хадисы",
-    "language": "Русский",
-    "pages": 128,
-    "size": "1.8 МБ",
-    "description": "Сорок хадисов ан-Навави — один из самых известных и изучаемых исламских текстов. Содержит 42 хадиса, охватывающих основы ислама.",
-    "coverColor": "#2a3a1a",
-    "coverEmoji": "📿",
-    "tags": [
-      "хадисы",
-      "основы",
-      "обязательное знание"
-    ],
-    "year": "2020",
-    "popular": true,
-    "relatedBooks": [
-      "b005",
-      "b007"
-    ],
-    "views": 18900,
-    "downloads": 11200,
-    "rating": 4.8
-  },
-  {
-    "id": "b007",
-    "title": "Мухтасар Сахих аль-Бухари",
-    "titleAr": "مختصر صحيح البخاري",
-    "author": "Имам аль-Бухари",
-    "authorId": "a004",
-    "category": "Хадисы",
-    "language": "Русский",
-    "pages": 1200,
-    "size": "18.6 МБ",
-    "description": "Сокращённая версия наиболее достоверного сборника хадисов — Сахих аль-Бухари. Включает отборные хадисы по важнейшим темам.",
-    "coverColor": "#3a1a1a",
-    "coverEmoji": "📔",
-    "tags": [
-      "хадисы",
-      "бухари",
-      "достоверные хадисы"
-    ],
-    "year": "2017",
-    "featured": true,
-    "relatedBooks": [
-      "b005",
-      "b006"
-    ],
-    "views": 24500,
-    "downloads": 16300,
-    "rating": 4.9
-  },
-  {
-    "id": "b008",
-    "title": "Методология призыва",
-    "titleAr": "منهج الدعوة",
-    "author": "Шейх Ибн Баз",
-    "authorId": "a005",
-    "category": "Даава",
-    "language": "Русский",
-    "pages": 186,
-    "size": "2.9 МБ",
-    "description": "Книга о правильном методе исламского призыва согласно Корану и Сунне. Разъясняет условия, требования и принципы правильной даавы.",
-    "coverColor": "#1a2a1a",
-    "coverEmoji": "📢",
-    "tags": [
-      "даава",
-      "призыв",
-      "методология",
-      "сунна"
-    ],
-    "year": "2021",
-    "isNew": true,
-    "relatedBooks": [
-      "b009",
-      "b010"
-    ],
-    "views": 7820,
-    "downloads": 4100,
-    "rating": 4.7
-  },
-  {
-    "id": "b009",
-    "title": "Правила арабского языка",
-    "titleAr": "قواعد اللغة العربية",
-    "author": "Шейх Мухаммад аль-Усаймин",
-    "authorId": "a006",
-    "category": "Арабский язык",
-    "language": "Русский",
-    "pages": 220,
-    "size": "3.2 МБ",
-    "description": "Доступное изложение грамматики арабского языка для начинающих с разъяснениями и примерами из Корана.",
-    "coverColor": "#1a1a3a",
-    "coverEmoji": "🔤",
-    "tags": [
-      "арабский",
-      "грамматика",
-      "нахв",
-      "сарф"
-    ],
-    "year": "2022",
-    "isNew": true,
-    "relatedBooks": [
-      "b010"
-    ],
-    "views": 11300,
-    "downloads": 6700,
-    "rating": 4.6
-  },
-  {
-    "id": "b010",
-    "title": "Основы тафсира",
-    "titleAr": "أصول في التفسير",
-    "author": "Шейх Мухаммад аль-Усаймин",
-    "authorId": "a006",
-    "category": "Таfsир",
-    "language": "Русский",
-    "pages": 98,
-    "size": "1.5 МБ",
-    "description": "Краткое и полезное введение в науку тафсира — толкования Корана. Разъясняет методологию правильного толкования.",
-    "coverColor": "#2a1a1a",
-    "coverEmoji": "🕌",
-    "tags": [
-      "тафсир",
-      "коран",
-      "методология",
-      "науки"
-    ],
-    "year": "2020",
-    "relatedBooks": [
-      "b009",
-      "b011"
-    ],
-    "views": 9800,
-    "downloads": 5400,
-    "rating": 4.8
-  },
-  {
-    "id": "b011",
-    "title": "Тафсир Джалалейн",
-    "titleAr": "تفسير الجلالين",
-    "author": "Джалалуддин ас-Суюти",
-    "authorId": "a007",
-    "category": "Тафсир",
-    "language": "Русский",
-    "pages": 1100,
-    "size": "16.8 МБ",
-    "description": "Классический краткий тафсир Корана, написанный двумя учёными — Джалалуддином аль-Махалли и Джалалуддином ас-Суюти.",
-    "coverColor": "#3a3a1a",
-    "coverEmoji": "🌙",
-    "tags": [
-      "тафсир",
-      "коран",
-      "классика"
-    ],
-    "year": "2016",
-    "popular": true,
-    "relatedBooks": [
-      "b010",
-      "b012"
-    ],
-    "views": 19700,
-    "downloads": 12400,
-    "rating": 4.8
-  },
-  {
-    "id": "b012",
-    "title": "Путь мусульманина",
-    "titleAr": "منهج المسلم",
-    "author": "Абу Бакр аль-Джазаири",
-    "authorId": "a008",
-    "category": "Фикх",
-    "language": "Русский",
-    "pages": 642,
-    "size": "9.8 МБ",
-    "description": "Полная энциклопедия мусульманина. Включает акыду, фикх, адаб, мораль и воспитание. Одна из лучших книг для изучения всех аспектов ислама.",
-    "coverColor": "#1a3a3a",
-    "coverEmoji": "🕋",
-    "tags": [
-      "фикх",
-      "акыда",
-      "адаб",
-      "полная книга"
-    ],
-    "year": "2019",
-    "featured": true,
-    "popular": true,
-    "relatedBooks": [
-      "b005",
-      "b002"
-    ],
-    "views": 28400,
-    "downloads": 17600,
-    "rating": 4.9
-  },
-  {
-    "id": "b013",
-    "title": "Фикх Сунны",
-    "titleAr": "فقه السنة",
-    "author": "Сейид Сабик",
-    "authorId": "a009",
-    "category": "Фикх",
-    "language": "Русский",
-    "pages": 890,
-    "size": "13.5 МБ",
-    "description": "Трёхтомное произведение по исламскому праву, основанное на Коране и хадисах. Охватывает все разделы фикха от поклонения до семейного права.",
-    "coverColor": "#2a2a1a",
-    "coverEmoji": "⚖️",
-    "tags": [
-      "фикх",
-      "сунна",
-      "право",
-      "ибадат"
-    ],
-    "year": "2018",
-    "popular": true,
-    "relatedBooks": [
-      "b012",
-      "b014"
-    ],
-    "views": 21300,
-    "downloads": 13800,
-    "rating": 4.8
-  },
-  {
-    "id": "b014",
-    "title": "История ислама",
-    "titleAr": "تاريخ الإسلام",
-    "author": "Имам аз-Захаби",
-    "authorId": "a010",
-    "category": "История",
-    "language": "Русский",
-    "pages": 1450,
-    "size": "22.1 МБ",
-    "description": "Монументальный труд по истории ислама от имама аз-Захаби, охватывающий века исламской цивилизации с подробными биографиями учёных.",
-    "coverColor": "#3a2a2a",
-    "coverEmoji": "🏛️",
-    "tags": [
-      "история",
-      "биографии",
-      "цивилизация",
-      "классика"
-    ],
-    "year": "2015",
-    "popular": true,
-    "relatedBooks": [
-      "b015",
-      "b016"
-    ],
-    "views": 16800,
-    "downloads": 9200,
-    "rating": 4.7
-  },
-  {
-    "id": "b015",
-    "title": "Сира пророка Мухаммада ﷺ",
-    "titleAr": "السيرة النبوية",
-    "author": "Ибн Хишам",
-    "authorId": "a011",
-    "category": "Сира",
-    "language": "Русский",
-    "pages": 980,
-    "size": "15.2 МБ",
-    "description": "Полная биография пророка Мухаммада ﷺ, записанная Ибн Хишамом на основе сиры Ибн Исхака. Одна из наиболее достоверных книг о жизни пророка.",
-    "coverColor": "#1a2a2a",
-    "coverEmoji": "🌟",
-    "tags": [
-      "сира",
-      "пророк",
-      "биография",
-      "история"
-    ],
-    "year": "2020",
-    "featured": true,
-    "popular": true,
-    "relatedBooks": [
-      "b016",
-      "b017"
-    ],
-    "views": 35600,
-    "downloads": 23100,
-    "rating": 5
-  },
-  {
-    "id": "b016",
-    "title": "Запечатанный нектар",
-    "titleAr": "الرحيق المختوم",
-    "author": "Сафиюр-Рахман аль-Мубаракфури",
-    "authorId": "a012",
-    "category": "Сира",
-    "language": "Русский",
-    "pages": 560,
-    "size": "8.4 МБ",
-    "description": "Лауреат международной конкурса сир. Полная биография пророка Мухаммада ﷺ с современным языком изложения и богатой исторической детализацией.",
-    "coverColor": "#2a1a2a",
-    "coverEmoji": "💎",
-    "tags": [
-      "сира",
-      "пророк",
-      "история",
-      "классика"
-    ],
-    "year": "2019",
-    "featured": true,
-    "popular": true,
-    "relatedBooks": [
-      "b015",
-      "b017"
-    ],
-    "views": 42100,
-    "downloads": 28700,
-    "rating": 5
-  },
-  {
-    "id": "b017",
-    "title": "Правильная акыда",
-    "titleAr": "العقيدة الصحيحة",
-    "author": "Шейх Ибн Баз",
-    "authorId": "a005",
-    "category": "Акыда",
-    "language": "Русский",
-    "pages": 96,
-    "size": "1.4 МБ",
-    "description": "Важная книга шейха Ибн База о правильном вероубеждении мусульманина согласно Корану и Сунне.",
-    "coverColor": "#1a3a2a",
-    "coverEmoji": "🎯",
-    "tags": [
-      "акыда",
-      "основы",
-      "иман",
-      "убеждения"
-    ],
-    "year": "2021",
-    "isNew": true,
-    "relatedBooks": [
-      "b001",
-      "b002",
-      "b003"
-    ],
-    "views": 12400,
-    "downloads": 7800,
-    "rating": 4.9
-  },
-  {
-    "id": "b018",
-    "title": "Дорога к Корану",
-    "titleAr": "طريق إلى القرآن",
-    "author": "Шейх Мухаммад аль-Усаймин",
-    "authorId": "a006",
-    "category": "Коран",
-    "language": "Русский",
-    "pages": 148,
-    "size": "2.1 МБ",
-    "description": "Наставления о правильном отношении к Корану, его заучивании, чтении и размышлении над его смыслами.",
-    "coverColor": "#3a1a2a",
-    "coverEmoji": "📖",
-    "tags": [
-      "коран",
-      "тадаббур",
-      "заучивание",
-      "тилява"
-    ],
-    "year": "2022",
-    "isNew": true,
-    "relatedBooks": [
-      "b010",
-      "b011"
-    ],
-    "views": 8900,
-    "downloads": 5300,
-    "rating": 4.8
-  },
-  {
-    "id": "b019",
-    "title": "Воспитание детей в исламе",
-    "titleAr": "تربية الأبناء في الإسلام",
-    "author": "Шейх Мухаммад аль-Усаймин",
-    "authorId": "a006",
-    "category": "Воспитание",
-    "language": "Русский",
-    "pages": 204,
-    "size": "3.0 МБ",
-    "description": "Практическое руководство по исламскому воспитанию детей. Охватывает все аспекты: акыду, нравственность, образование и семейные отношения.",
-    "coverColor": "#2a3a2a",
-    "coverEmoji": "👨‍👩‍👧",
-    "tags": [
-      "воспитание",
-      "дети",
-      "семья",
-      "нравственность"
-    ],
-    "year": "2021",
-    "isNew": true,
-    "relatedBooks": [
-      "b020",
-      "b012"
-    ],
-    "views": 10200,
-    "downloads": 6100,
-    "rating": 4.7
-  },
-  {
-    "id": "b020",
-    "title": "Исламская этика",
-    "titleAr": "الأخلاق الإسلامية",
-    "author": "Имам аль-Газали",
-    "authorId": "a013",
-    "category": "Этика",
-    "language": "Русский",
-    "pages": 376,
-    "size": "5.7 МБ",
-    "description": "Классический труд о нравственности в исламе. Автор разъясняет похвальные и порицаемые качества характера с точки зрения Корана и Сунны.",
-    "coverColor": "#1a2a3a",
-    "coverEmoji": "⭐",
-    "tags": [
-      "этика",
-      "нравственность",
-      "адаб",
-      "характер"
-    ],
-    "year": "2018",
-    "popular": true,
-    "relatedBooks": [
-      "b004",
-      "b012"
-    ],
-    "views": 14800,
-    "downloads": 9000,
-    "rating": 4.8
-  },
-  {
-    "id": "b021",
     "title": "100 дуа",
     "author": "Автор не указан",
     "category": "Дуа и зикр",
     "language": "Русский",
     "size": "20 МБ",
-    "description": "Книга «100 дуа» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «100 дуа» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
       "дуа и зикр",
-      "дуа"
+      "дуа",
+      "зикр"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/100%20%D0%B4%D1%83%D0%B0.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/100%20%D0%B4%D1%83%D0%B0.pdf",
@@ -605,19 +20,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/100%20%D0%B4%D1%83%D0%B0.pdf"
   },
   {
-    "id": "b022",
+    "id": "b002",
     "title": "3 ОСНОВЫ ХИКМА",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "6.3 МБ",
-    "description": "Книга «3 ОСНОВЫ ХИКМА» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «3 ОСНОВЫ ХИКМА» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -629,24 +44,25 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/3%20%D0%9E%D0%A1%D0%9D%D0%9E%D0%92%D0%AB%20%D0%A5%D0%98%D0%9A%D0%9C%D0%90.pdf"
   },
   {
-    "id": "b023",
+    "id": "b003",
     "title": "30 дуа из Корана в месяц Рамадан",
     "author": "Автор не указан",
     "category": "Дуа и зикр",
     "language": "Русский",
     "size": "0.3 МБ",
-    "description": "Книга «30 дуа из Корана в месяц Рамадан» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «30 дуа из Корана в месяц Рамадан» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
       "дуа и зикр",
       "дуа",
+      "зикр",
       "рамадан",
       "коран"
     ],
@@ -656,19 +72,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/30%20%D0%B4%D1%83%D0%B0%20%D0%B8%D0%B7%20%D0%9A%D0%BE%D1%80%D0%B0%D0%BD%D0%B0%20%D0%B2%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%20%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD.pdf"
   },
   {
-    "id": "b024",
+    "id": "b004",
     "title": "4 главы из 1-ой Части",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.2 МБ",
-    "description": "Книга «4 главы из 1-ой Части» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «4 главы из 1-ой Части» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -680,19 +96,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/4%20%D0%B3%D0%BB%D0%B0%D0%B2%D1%8B%20%D0%B8%D0%B7%201-%D0%BE%D0%B8%CC%86%20%D0%A7%D0%B0%D1%81%D1%82%D0%B8.pdf"
   },
   {
-    "id": "b025",
+    "id": "b005",
     "title": "40 хадисов",
     "author": "аль-Аджуррий",
     "category": "Хадисы",
     "language": "Русский",
     "size": "4.2 МБ",
-    "description": "Книга «40 хадисов» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «40 хадисов» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -704,19 +120,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/40%20%D1%85%D0%B0%D0%B4%D0%B8%D1%81%D0%BE%D0%B2,%20%D0%B0%D0%BB%D1%8C-%D0%90%D0%B4%D0%B6%D1%83%D1%80%D1%80%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b026",
+    "id": "b006",
     "title": "44 пользы 10 дней Зуль Хиджи",
     "author": "Шейх аль Мунаджид",
     "category": "Фаваиды",
     "language": "Русский",
     "size": "0.9 МБ",
-    "description": "Книга «44 пользы 10 дней Зуль Хиджи» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «44 пользы 10 дней Зуль Хиджи» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -729,19 +145,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/44_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%8B_10_%D0%B4%D0%BD%D0%B5%D0%B8%CC%86_%D0%97%D1%83%D0%BB%D1%8C_%D0%A5%D0%B8%D0%B4%D0%B6%D0%B8_%E2%80%94_%D0%A8%D0%B5%D0%B8%CC%86%D1%85_%D0%B0%D0%BB%D1%8C_%D0%9C%D1%83%D0%BD%D0%B0%D0%B4%D0%B6%D0%B8%D0%B4.pdf"
   },
   {
-    "id": "b027",
+    "id": "b007",
     "title": "48 вопросов о посте-Усаймин",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "0.5 МБ",
-    "description": "Книга «48 вопросов о посте-Усаймин» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «48 вопросов о посте-Усаймин» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -755,19 +171,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/48%20%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%BE%20%D0%BF%D0%BE%D1%81%D1%82%D0%B5-%D0%A3%D1%81%D0%B0%D0%B9%D0%BC%D0%B8%D0%BD.pdf"
   },
   {
-    "id": "b028",
+    "id": "b008",
     "title": "4 правила шейх Мухаммад ибн Сулейман ат Тамими",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «4 правила шейх Мухаммад ибн Сулейман ат Тамими» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «4 правила шейх Мухаммад ибн Сулейман ат Тамими» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -779,19 +195,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/4_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D1%88%D0%B5%D0%B8%CC%86%D1%85_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B8%D0%B1%D0%BD_%D0%A1%D1%83%D0%BB%D0%B5%D0%B8%CC%86%D0%BC%D0%B0%D0%BD_%D0%B0%D1%82_%D0%A2%D0%B0%D0%BC%D0%B8%D0%BC%D0%B8.pdf"
   },
   {
-    "id": "b029",
+    "id": "b009",
     "title": "Cунан-Абу Дауд",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.2 МБ",
-    "description": "Книга «Cунан-Абу Дауд» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Cунан-Абу Дауд» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -803,19 +219,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/C%D1%83%D0%BD%D0%B0%D0%BD-%D0%90%D0%B1%D1%83%20%D0%94%D0%B0%D1%83%D0%B4.pdf"
   },
   {
-    "id": "b030",
+    "id": "b010",
     "title": "Shest osnov (2)",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.7 МБ",
-    "description": "Книга «Shest osnov (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Shest osnov (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -827,19 +243,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/Shest_osnov%20(2).pdf"
   },
   {
-    "id": "b031",
+    "id": "b011",
     "title": "conditions-of-prayer",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.7 МБ",
-    "description": "Книга «conditions-of-prayer» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «conditions-of-prayer» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -851,19 +267,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/conditions-of-prayer.pdf"
   },
   {
-    "id": "b032",
+    "id": "b012",
     "title": "key-to-good",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "2.4 МБ",
-    "description": "Книга «key-to-good» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «key-to-good» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -875,19 +291,19 @@
     "rating": 5,
     "downloads": 0,
     "views": 0,
-    "featured": false,
-    "popular": false,
+    "featured": true,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/key-to-good.pdf"
   },
   {
-    "id": "b033",
+    "id": "b013",
     "title": "kitab-sunnah",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "8.7 МБ",
-    "description": "Книга «kitab-sunnah» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «kitab-sunnah» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -900,18 +316,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/kitab-sunnah.pdf"
   },
   {
-    "id": "b034",
+    "id": "b014",
     "title": "sharh rasail",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "9.6 МБ",
-    "description": "Книга «sharh rasail» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «sharh rasail» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -924,18 +340,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/sharh%20rasail.pdf"
   },
   {
-    "id": "b035",
+    "id": "b015",
     "title": "Адабы чихания",
     "author": "Автор не указан",
     "category": "Фаваиды",
     "language": "Русский",
     "size": "1.3 МБ",
-    "description": "Книга «Адабы чихания» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Адабы чихания» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -948,18 +364,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%B4%D0%B0%D0%B1%D1%8B%20%D1%87%D0%B8%D1%85%D0%B0%D0%BD%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b036",
+    "id": "b016",
     "title": "Акыда имама Ибн Сурейджа",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Акыда имама Ибн Сурейджа» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Акыда имама Ибн Сурейджа» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -972,18 +388,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%BA%D1%8B%D0%B4%D0%B0%20%D0%B8%D0%BC%D0%B0%D0%BC%D0%B0%20%D0%98%D0%B1%D0%BD%20%D0%A1%D1%83%D1%80%D0%B5%D0%B8%CC%86%D0%B4%D0%B6%D0%B0.pdf"
   },
   {
-    "id": "b037",
+    "id": "b017",
     "title": "Аль-Васитыйя (2)",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.4 МБ",
-    "description": "Книга «Аль-Васитыйя (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Аль-Васитыйя (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -996,18 +412,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%BB%D1%8C-%D0%92%D0%B0%D1%81%D0%B8%D1%82%D1%8B%D0%B8%CC%86%D1%8F%20(2).pdf"
   },
   {
-    "id": "b038",
+    "id": "b018",
     "title": "Аль-Васитыйя",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.4 МБ",
-    "description": "Книга «Аль-Васитыйя» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Аль-Васитыйя» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1020,18 +436,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%BB%D1%8C-%D0%92%D0%B0%D1%81%D0%B8%D1%82%D1%8B%D0%B8%CC%86%D1%8F.pdf"
   },
   {
-    "id": "b039",
+    "id": "b019",
     "title": "Аль-Васитыя + Дискуссия",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.4 МБ",
-    "description": "Книга «Аль-Васитыя + Дискуссия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Аль-Васитыя + Дискуссия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1044,18 +460,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%BB%D1%8C-%D0%92%D0%B0%D1%81%D0%B8%D1%82%D1%8B%D1%8F%20%2B%20%D0%94%D0%B8%D1%81%D0%BA%D1%83%D1%81%D1%81%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b040",
+    "id": "b020",
     "title": "Аль-Фурук 5",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.2 МБ",
-    "description": "Книга «Аль-Фурук 5» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Аль-Фурук 5» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1068,18 +484,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D0%BB%D1%8C-%D0%A4%D1%83%D1%80%D1%83%D0%BA%205.pdf"
   },
   {
-    "id": "b041",
+    "id": "b021",
     "title": "Ас Сунна Абдуллах ибн имам Ахмад ибн Мухаммад ибн Ханбаль в одном",
     "author": "Автор не указан",
     "category": "Хадисы",
     "language": "Русский",
     "size": "8.7 МБ",
-    "description": "Книга «Ас Сунна Абдуллах ибн имам Ахмад ибн Мухаммад ибн Ханбаль в одном» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Ас Сунна Абдуллах ибн имам Ахмад ибн Мухаммад ибн Ханбаль в одном» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1092,18 +508,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%90%D1%81_%D0%A1%D1%83%D0%BD%D0%BD%D0%B0_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D0%BB%D0%B0%D1%85_%D0%B8%D0%B1%D0%BD_%D0%B8%D0%BC%D0%B0%D0%BC_%D0%90%D1%85%D0%BC%D0%B0%D0%B4_%D0%B8%D0%B1%D0%BD_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B8%D0%B1%D0%BD_%D0%A5%D0%B0%D0%BD%D0%B1%D0%B0%D0%BB%D1%8C_%D0%B2_%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC.pdf"
   },
   {
-    "id": "b042",
+    "id": "b022",
     "title": "БЛАГОДАТНЫЙ ДОЖДЬ ПРЕКРАСНЫХ СЛОВ",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.9 МБ",
-    "description": "Книга «БЛАГОДАТНЫЙ ДОЖДЬ ПРЕКРАСНЫХ СЛОВ» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «БЛАГОДАТНЫЙ ДОЖДЬ ПРЕКРАСНЫХ СЛОВ» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1116,18 +532,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%9B%D0%90%D0%93%D0%9E%D0%94%D0%90%D0%A2%D0%9D%D0%AB%D0%99_%D0%94%D0%9E%D0%96%D0%94%D0%AC_%D0%9F%D0%A0%D0%95%D0%9A%D0%A0%D0%90%D0%A1%D0%9D%D0%AB%D0%A5_%D0%A1%D0%9B%D0%9E%D0%92.pdf"
   },
   {
-    "id": "b043",
+    "id": "b023",
     "title": "Банки и современные финансовые операции",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Банки и современные финансовые операции» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Банки и современные финансовые операции» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1140,18 +556,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%B0%D0%BD%D0%BA%D0%B8_%D0%B8_%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%84%D0%B8%D0%BD%D0%B0%D0%BD%D1%81%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8.pdf"
   },
   {
-    "id": "b044",
+    "id": "b024",
     "title": "Биография Абдуррахмана ибн Хасана",
     "author": "Автор не указан",
     "category": "Сира",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Биография Абдуррахмана ибн Хасана» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Биография Абдуррахмана ибн Хасана» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1164,18 +580,18 @@
     "downloads": 0,
     "views": 0,
     "featured": false,
-    "popular": false,
+    "popular": true,
     "isNew": true,
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%B8%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F_%D0%90%D0%B1%D0%B4%D1%83%D1%80%D1%80%D0%B0%D1%85%D0%BC%D0%B0%D0%BD%D0%B0_%D0%B8%D0%B1%D0%BD_%D0%A5%D0%B0%D1%81%D0%B0%D0%BD%D0%B0.pdf"
   },
   {
-    "id": "b045",
+    "id": "b025",
     "title": "Блеск убеждений",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "6.1 МБ",
-    "description": "Книга «Блеск убеждений» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Блеск убеждений» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1193,13 +609,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%BB%D0%B5%D1%81%D0%BA%20%D1%83%D0%B1%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b046",
+    "id": "b026",
     "title": "Блестящее изложение аль Каннас",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.5 МБ",
-    "description": "Книга «Блестящее изложение аль Каннас» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Блестящее изложение аль Каннас» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1217,13 +633,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%BB%D0%B5%D1%81%D1%82%D1%8F%D1%89%D0%B5%D0%B5_%D0%B8%D0%B7%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B0%D0%BB%D1%8C_%D0%9A%D0%B0%D0%BD%D0%BD%D0%B0%D1%81.pdf"
   },
   {
-    "id": "b047",
+    "id": "b027",
     "title": "Блок Фатхуль Маджид111",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "6.7 МБ",
-    "description": "Книга «Блок Фатхуль Маджид111» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Блок Фатхуль Маджид111» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1241,13 +657,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%BB%D0%BE%D0%BA_%D0%A4%D0%B0%D1%82%D1%85%D1%83%D0%BB%D1%8C%20%D0%9C%D0%B0%D0%B4%D0%B6%D0%B8%D0%B4111.pdf"
   },
   {
-    "id": "b048",
+    "id": "b028",
     "title": "Борода. Фетвы Ибн Аббаса",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Борода. Фетвы Ибн Аббаса» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Борода. Фетвы Ибн Аббаса» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1265,13 +681,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%91%D0%BE%D1%80%D0%BE%D0%B4%D0%B0.%20%D0%A4%D0%B5%D1%82%D0%B2%D1%8B%20%D0%98%D0%B1%D0%BD%20%D0%90%D0%B1%D0%B1%D0%B0%D1%81%D0%B0.pdf"
   },
   {
-    "id": "b049",
+    "id": "b029",
     "title": "Вабиль Ибн Каййим",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "15 МБ",
-    "description": "Книга «Вабиль Ибн Каййим» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Вабиль Ибн Каййим» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1289,13 +705,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%92%D0%B0%D0%B1%D0%B8%D0%BB%D1%8C%20%D0%98%D0%B1%D0%BD%20%D0%9A%D0%B0%D0%B8%CC%86%D0%B8%CC%86%D0%B8%D0%BC.pdf"
   },
   {
-    "id": "b050",
+    "id": "b030",
     "title": "Важные уроки для всей общины",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.3 МБ",
-    "description": "Книга «Важные уроки для всей общины» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Важные уроки для всей общины» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1313,13 +729,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%92%D0%B0%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%83%D1%80%D0%BE%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BE%D0%B1%D1%89%D0%B8%D0%BD%D1%8B.pdf"
   },
   {
-    "id": "b051",
+    "id": "b031",
     "title": "Вечерние азкары",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.0 МБ",
-    "description": "Книга «Вечерние азкары» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Вечерние азкары» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1337,13 +753,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%92%D0%B5%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D0%B5%20%D0%B0%D0%B7%D0%BA%D0%B0%D1%80%D1%8B.pdf"
   },
   {
-    "id": "b052",
+    "id": "b032",
     "title": "Действия нарушающие пост",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "0.3 МБ",
-    "description": "Книга «Действия нарушающие пост» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Действия нарушающие пост» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1362,13 +778,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%94%D0%B5%D0%B8%CC%86%D1%81%D1%82%D0%B2%D0%B8%D1%8F%20%D0%BD%D0%B0%D1%80%D1%83%D1%88%D0%B0%D1%8E%D1%89%D0%B8%D0%B5%20%D0%BF%D0%BE%D1%81%D1%82.pdf"
   },
   {
-    "id": "b053",
+    "id": "b033",
     "title": "Достоинство поста и ночных молитв",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "0.9 МБ",
-    "description": "Книга «Достоинство поста и ночных молитв» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Достоинство поста и ночных молитв» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1387,20 +803,19 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE%D1%81%D1%82%D0%B0_%D0%B8_%D0%BD%D0%BE%D1%87%D0%BD%D1%8B%D1%85_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2.pdf"
   },
   {
-    "id": "b054",
+    "id": "b034",
     "title": "Достоинство поста и ночных молитв в Рамадан Абдульазиз",
     "author": "ибн Баз",
     "category": "Фикх",
     "language": "Русский",
     "size": "1.0 МБ",
-    "description": "Книга «Достоинство поста и ночных молитв в Рамадан Абдульазиз» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Достоинство поста и ночных молитв в Рамадан Абдульазиз» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
       "фикх",
       "рамадан",
-      "пост",
-      "ибн баз"
+      "пост"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE%D1%81%D1%82%D0%B0_%D0%B8_%D0%BD%D0%BE%D1%87%D0%BD%D1%8B%D1%85_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2_%D0%B2_%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%B0%D0%B7%D0%B8%D0%B7_%D0%B8%D0%B1%D0%BD_%D0%91%D0%B0%D0%B7.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE%D1%81%D1%82%D0%B0_%D0%B8_%D0%BD%D0%BE%D1%87%D0%BD%D1%8B%D1%85_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2_%D0%B2_%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%B0%D0%B7%D0%B8%D0%B7_%D0%B8%D0%B1%D0%BD_%D0%91%D0%B0%D0%B7.pdf",
@@ -1414,13 +829,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE%D1%81%D1%82%D0%B0_%D0%B8_%D0%BD%D0%BE%D1%87%D0%BD%D1%8B%D1%85_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2_%D0%B2_%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%B0%D0%B7%D0%B8%D0%B7_%D0%B8%D0%B1%D0%BD_%D0%91%D0%B0%D0%B7.pdf"
   },
   {
-    "id": "b055",
+    "id": "b035",
     "title": "Единобожие",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.0 МБ",
-    "description": "Книга «Единобожие» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Единобожие» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1438,13 +853,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%95%D0%B4%D0%B8%D0%BD%D0%BE%D0%B1%D0%BE%D0%B6%D0%B8%D0%B5.pdf"
   },
   {
-    "id": "b056",
+    "id": "b036",
     "title": "Жемчужины из высказываний шейха аль Ислама Ибн Теймии",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "2.6 МБ",
-    "description": "Книга «Жемчужины из высказываний шейха аль Ислама Ибн Теймии» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Жемчужины из высказываний шейха аль Ислама Ибн Теймии» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1462,13 +877,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%96%D0%B5%D0%BC%D1%87%D1%83%D0%B6%D0%B8%D0%BD%D1%8B_%D0%B8%D0%B7_%D0%B2%D1%8B%D1%81%D0%BA%D0%B0%D0%B7%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B8%CC%86_%D1%88%D0%B5%D0%B8%CC%86%D1%85%D0%B0_%D0%B0%D0%BB%D1%8C_%D0%98%D1%81%D0%BB%D0%B0%D0%BC%D0%B0_%D0%98%D0%B1%D0%BD_%D0%A2%D0%B5%D0%B8%CC%86%D0%BC%D0%B8%D0%B8.pdf"
   },
   {
-    "id": "b057",
+    "id": "b037",
     "title": "Жертвоприношение 1-2-3-4 (Матн)",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.5 МБ",
-    "description": "Книга «Жертвоприношение 1-2-3-4 (Матн)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Жертвоприношение 1-2-3-4 (Матн)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1486,17 +901,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%96%D0%B5%D1%80%D1%82%D0%B2%D0%BE%D0%BF%D1%80%D0%B8%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D0%B5%201-2-3-4%20(%D0%9C%D0%B0%D1%82%D0%BD).pdf"
   },
   {
-    "id": "b058",
+    "id": "b038",
     "title": "Законоположения молитвы, совершаемой сидя",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фикх",
     "language": "Русский",
     "size": "0.9 МБ",
-    "description": "Книга «Законоположения молитвы, совершаемой сидя» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Законоположения молитвы, совершаемой сидя» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фикх"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%97%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2%D1%8B,_%D1%81%D0%BE%D0%B2%D0%B5%D1%80%D1%88%D0%B0%D0%B5%D0%BC%D0%BE%D0%B8%CC%86_%D1%81%D0%B8%D0%B4%D1%8F.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%97%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2%D1%8B,_%D1%81%D0%BE%D0%B2%D0%B5%D1%80%D1%88%D0%B0%D0%B5%D0%BC%D0%BE%D0%B8%CC%86_%D1%81%D0%B8%D0%B4%D1%8F.pdf",
@@ -1510,13 +925,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%97%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2%D1%8B,_%D1%81%D0%BE%D0%B2%D0%B5%D1%80%D1%88%D0%B0%D0%B5%D0%BC%D0%BE%D0%B8%CC%86_%D1%81%D0%B8%D0%B4%D1%8F.pdf"
   },
   {
-    "id": "b059",
+    "id": "b039",
     "title": "Закят (2)",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "3.9 МБ",
-    "description": "Книга «Закят (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Закят (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1534,13 +949,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%97%D0%B0%D0%BA%D1%8F%D1%82%20(2).pdf"
   },
   {
-    "id": "b060",
+    "id": "b040",
     "title": "Здравое слово",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "3.5 МБ",
-    "description": "Книга «Здравое слово» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Здравое слово» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1558,13 +973,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D0%BE%D0%B5%20%D1%81%D0%BB%D0%BE%D0%B2%D0%BE.pdf"
   },
   {
-    "id": "b061",
+    "id": "b041",
     "title": "ИСКРЕННОСТЬ И НАМЕРЕНИЕ (1) (5)",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «ИСКРЕННОСТЬ И НАМЕРЕНИЕ (1) (5)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «ИСКРЕННОСТЬ И НАМЕРЕНИЕ (1) (5)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1582,13 +997,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%98%D0%A1%D0%9A%D0%A0%D0%95%D0%9D%D0%9D%D0%9E%D0%A1%D0%A2%D0%AC%20%D0%98%20%D0%9D%D0%90%D0%9C%D0%95%D0%A0%D0%95%D0%9D%D0%98%D0%95%20(1)%20(5).pdf"
   },
   {
-    "id": "b062",
+    "id": "b042",
     "title": "Ибн Теймийя История преследований",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «Ибн Теймийя История преследований» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Ибн Теймийя История преследований» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1606,13 +1021,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%98%D0%B1%D0%BD_%D0%A2%D0%B5%D0%B9%D0%BC%D0%B8%D0%B9%D1%8F_%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F_%D0%BF%D1%80%D0%B5%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9.pdf"
   },
   {
-    "id": "b063",
+    "id": "b043",
     "title": "Избранное",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "5.5 МБ",
-    "description": "Книга «Избранное» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Избранное» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1630,13 +1045,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%98%D0%B7%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5.pdf"
   },
   {
-    "id": "b064",
+    "id": "b044",
     "title": "Как начинать приобретать знания ‘Абду с Салям ибн Мухаммад аш Шувайир",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.9 МБ",
-    "description": "Книга «Как начинать приобретать знания ‘Абду с Салям ибн Мухаммад аш Шувайир» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Как начинать приобретать знания ‘Абду с Салям ибн Мухаммад аш Шувайир» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1654,13 +1069,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%B0%D0%BA_%D0%BD%D0%B0%D1%87%D0%B8%D0%BD%D0%B0%D1%82%D1%8C_%D0%BF%D1%80%D0%B8%D0%BE%D0%B1%D1%80%D0%B5%D1%82%D0%B0%D1%82%D1%8C_%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F_%E2%80%98%D0%90%D0%B1%D0%B4%D1%83_%D1%81_%D0%A1%D0%B0%D0%BB%D1%8F%D0%BC_%D0%B8%D0%B1%D0%BD_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B0%D1%88_%D0%A8%D1%83%D0%B2%D0%B0%D0%B9%D0%B8%D1%80.pdf"
   },
   {
-    "id": "b065",
+    "id": "b045",
     "title": "Как читать книгу Мухаммад Салих аль‐Мунаджид",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "2.9 МБ",
-    "description": "Книга «Как читать книгу Мухаммад Салих аль‐Мунаджид» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Как читать книгу Мухаммад Салих аль‐Мунаджид» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1678,13 +1093,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%B0%D0%BA_%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C_%D0%BA%D0%BD%D0%B8%D0%B3%D1%83_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%A1%D0%B0%D0%BB%D0%B8%D1%85_%D0%B0%D0%BB%D1%8C%E2%80%90%D0%9C%D1%83%D0%BD%D0%B0%D0%B4%D0%B6%D0%B8%D0%B4.pdf"
   },
   {
-    "id": "b066",
+    "id": "b046",
     "title": "Китаб аль иман",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "5.7 МБ",
-    "description": "Книга «Китаб аль иман» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Китаб аль иман» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1702,13 +1117,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%B8%D1%82%D0%B0%D0%B1%20%D0%B0%D0%BB%D1%8C%20%D0%B8%D0%BC%D0%B0%D0%BD.pdf"
   },
   {
-    "id": "b067",
+    "id": "b047",
     "title": "Кияму-ль-Лейль",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "3.0 МБ",
-    "description": "Книга «Кияму-ль-Лейль» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Кияму-ль-Лейль» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1726,13 +1141,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%B8%D1%8F%D0%BC%D1%83-%D0%BB%D1%8C-%D0%9B%D0%B5%D0%B8%CC%86%D0%BB%D1%8C.pdf"
   },
   {
-    "id": "b068",
+    "id": "b048",
     "title": "Ключ к благу",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "2.4 МБ",
-    "description": "Книга «Ключ к благу» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Ключ к благу» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1750,13 +1165,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BB%D1%8E%D1%87%20%D0%BA%20%D0%B1%D0%BB%D0%B0%D0%B3%D1%83.pdf"
   },
   {
-    "id": "b069",
+    "id": "b049",
     "title": "Книга Имана-ибн Таймия",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "8.1 МБ",
-    "description": "Книга «Книга Имана-ибн Таймия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Книга Имана-ибн Таймия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1774,13 +1189,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0%20%D0%98%D0%BC%D0%B0%D0%BD%D0%B0-%D0%B8%D0%B1%D0%BD%20%D0%A2%D0%B0%D0%B9%D0%BC%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b070",
+    "id": "b050",
     "title": "Книга Имана",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.9 МБ",
-    "description": "Книга «Книга Имана» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Книга Имана» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1798,13 +1213,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0%20%D0%98%D0%BC%D0%B0%D0%BD%D0%B0.pdf"
   },
   {
-    "id": "b071",
+    "id": "b051",
     "title": "Книга поста",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "3.7 МБ",
-    "description": "Книга «Книга поста» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Книга поста» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1823,13 +1238,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0%20%D0%BF%D0%BE%D1%81%D1%82%D0%B0.pdf"
   },
   {
-    "id": "b072",
+    "id": "b052",
     "title": "Комментарии на три основы (2)",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "4.9 МБ",
-    "description": "Книга «Комментарии на три основы (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Комментарии на три основы (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1847,13 +1262,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B8%20%D0%BD%D0%B0%20%D1%82%D1%80%D0%B8%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20(2).pdf"
   },
   {
-    "id": "b073",
+    "id": "b053",
     "title": "Комментарии на три основы",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "4.9 МБ",
-    "description": "Книга «Комментарии на три основы» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Комментарии на три основы» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1871,13 +1286,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B8%20%D0%BD%D0%B0%20%D1%82%D1%80%D0%B8%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.pdf"
   },
   {
-    "id": "b074",
+    "id": "b054",
     "title": "Краткое пособие о нравах Мухаммад Ахмад",
     "author": "Автор не указан",
     "category": "Фаваиды",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «Краткое пособие о нравах Мухаммад Ахмад» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Краткое пособие о нравах Мухаммад Ахмад» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1895,13 +1310,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%BE%D0%B5_%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%B8%D0%B5_%D0%BE_%D0%BD%D1%80%D0%B0%D0%B2%D0%B0%D1%85_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%90%D1%85%D0%BC%D0%B0%D0%B4.pdf"
   },
   {
-    "id": "b075",
+    "id": "b055",
     "title": "Лейлятуль-кадр",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.2 МБ",
-    "description": "Книга «Лейлятуль-кадр» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Лейлятуль-кадр» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1919,13 +1334,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9B%D0%B5%D0%B9%D0%BB%D1%8F%D1%82%D1%83%D0%BB%D1%8C-%D0%BA%D0%B0%D0%B4%D1%80.pdf"
   },
   {
-    "id": "b076",
+    "id": "b056",
     "title": "Матн Три Основы Перевод на русском",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.5 МБ",
-    "description": "Книга «Матн Три Основы Перевод на русском» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Матн Три Основы Перевод на русском» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -1943,17 +1358,19 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9C%D0%B0%D1%82%D0%BD_%D0%A2%D1%80%D0%B8_%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B_%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC.pdf"
   },
   {
-    "id": "b077",
+    "id": "b057",
     "title": "Мольба, аль-Бадр",
     "author": "Автор не указан",
     "category": "Дуа и зикр",
     "language": "Русский",
     "size": "1.9 МБ",
-    "description": "Книга «Мольба, аль-Бадр» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Мольба, аль-Бадр» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "дуа и зикр"
+      "дуа и зикр",
+      "дуа",
+      "зикр"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0,%20%D0%B0%D0%BB%D1%8C-%D0%91%D0%B0%D0%B4%D1%80.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0,%20%D0%B0%D0%BB%D1%8C-%D0%91%D0%B0%D0%B4%D1%80.pdf",
@@ -1967,17 +1384,19 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0,%20%D0%B0%D0%BB%D1%8C-%D0%91%D0%B0%D0%B4%D1%80.pdf"
   },
   {
-    "id": "b078",
+    "id": "b058",
     "title": "Мольба",
     "author": "Автор не указан",
     "category": "Дуа и зикр",
     "language": "Русский",
     "size": "2.7 МБ",
-    "description": "Книга «Мольба» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Мольба» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "дуа и зикр"
+      "дуа и зикр",
+      "дуа",
+      "зикр"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0.pdf",
@@ -1991,13 +1410,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9C%D0%BE%D0%BB%D1%8C%D0%B1%D0%B0.pdf"
   },
   {
-    "id": "b079",
+    "id": "b059",
     "title": "НЕКОТОРЫЕ ВЫСКАЗЫВАНИЯ ИМАМА АХМАДА, ПЕРЕДАННЫЕ АБУ ДАУДОМ3 исправленное",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.7 МБ",
-    "description": "Книга «НЕКОТОРЫЕ ВЫСКАЗЫВАНИЯ ИМАМА АХМАДА, ПЕРЕДАННЫЕ АБУ ДАУДОМ3 исправленное» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «НЕКОТОРЫЕ ВЫСКАЗЫВАНИЯ ИМАМА АХМАДА, ПЕРЕДАННЫЕ АБУ ДАУДОМ3 исправленное» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2015,13 +1434,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9D%D0%95%D0%9A%D0%9E%D0%A2%D0%9E%D0%A0%D0%AB%D0%95_%D0%92%D0%AB%D0%A1%D0%9A%D0%90%D0%97%D0%AB%D0%92%D0%90%D0%9D%D0%98%D0%AF_%D0%98%D0%9C%D0%90%D0%9C%D0%90_%D0%90%D0%A5%D0%9C%D0%90%D0%94%D0%90,_%D0%9F%D0%95%D0%A0%D0%95%D0%94%D0%90%D0%9D%D0%9D%D0%AB%D0%95_%D0%90%D0%91%D0%A3_%D0%94%D0%90%D0%A3%D0%94%D0%9E%D0%9C3_%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5.pdf"
   },
   {
-    "id": "b080",
+    "id": "b060",
     "title": "Навакид аль-Ислям",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "3.5 МБ",
-    "description": "Книга «Навакид аль-Ислям» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Навакид аль-Ислям» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2039,13 +1458,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9D%D0%B0%D0%B2%D0%B0%D0%BA%D0%B8%D0%B4%20%D0%B0%D0%BB%D1%8C-%D0%98%D1%81%D0%BB%D1%8F%D0%BC.pdf"
   },
   {
-    "id": "b081",
+    "id": "b061",
     "title": "Навакиду ль-ислам",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "4.2 МБ",
-    "description": "Книга «Навакиду ль-ислам» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Навакиду ль-ислам» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2063,13 +1482,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9D%D0%B0%D0%B2%D0%B0%D0%BA%D0%B8%D0%B4%D1%83%20%D0%BB%D1%8C-%D0%B8%D1%81%D0%BB%D0%B0%D0%BC.pdf"
   },
   {
-    "id": "b082",
+    "id": "b062",
     "title": "Наилучшие качества",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.3 МБ",
-    "description": "Книга «Наилучшие качества» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Наилучшие качества» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2087,13 +1506,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9D%D0%B0%D0%B8%D0%BB%D1%83%D1%87%D1%88%D0%B8%D0%B5%20%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0.pdf"
   },
   {
-    "id": "b083",
+    "id": "b063",
     "title": "Нравы",
     "author": "Автор не указан",
     "category": "Фаваиды",
     "language": "Русский",
     "size": "4.3 МБ",
-    "description": "Книга «Нравы» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Нравы» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2111,13 +1530,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9D%D1%80%D0%B0%D0%B2%D1%8B.pdf"
   },
   {
-    "id": "b084",
+    "id": "b064",
     "title": "О малых грехах",
     "author": "Автор не указан",
     "category": "Фаваиды",
     "language": "Русский",
     "size": "0.3 МБ",
-    "description": "Книга «О малых грехах» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «О малых грехах» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2135,13 +1554,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%20%D0%BC%D0%B0%D0%BB%D1%8B%D1%85%20%D0%B3%D1%80%D0%B5%D1%85%D0%B0%D1%85.pdf"
   },
   {
-    "id": "b085",
+    "id": "b065",
     "title": "О великих достоинствах Корана, его чтения",
     "author": "Автор не указан",
     "category": "Коран",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «О великих достоинствах Корана, его чтения» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «О великих достоинствах Корана, его чтения» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2159,13 +1578,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E_%D0%B2%D0%B5%D0%BB%D0%B8%D0%BA%D0%B8%D1%85_%D0%B4%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B0%D1%85_%D0%9A%D0%BE%D1%80%D0%B0%D0%BD%D0%B0,_%D0%B5%D0%B3%D0%BE_%D1%87%D1%82%D0%B5%D0%BD%D0%B8%D1%8F_.pdf"
   },
   {
-    "id": "b086",
+    "id": "b066",
     "title": "О достоинствах чтения Корана в Рамадан",
     "author": "Автор не указан",
     "category": "Коран",
     "language": "Русский",
     "size": "0.3 МБ",
-    "description": "Книга «О достоинствах чтения Корана в Рамадан» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «О достоинствах чтения Корана в Рамадан» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2184,13 +1603,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E_%D0%B4%D0%BE%D1%81%D1%82%D0%BE%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B0%D1%85_%D1%87%D1%82%D0%B5%D0%BD%D0%B8%D1%8F_%D0%9A%D0%BE%D1%80%D0%B0%D0%BD%D0%B0_%D0%B2_%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD.pdf"
   },
   {
-    "id": "b087",
+    "id": "b067",
     "title": "О необходимости требовать доказательства",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.2 МБ",
-    "description": "Книга «О необходимости требовать доказательства» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «О необходимости требовать доказательства» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2208,13 +1627,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E_%D0%BD%D0%B5%D0%BE%D0%B1%D1%85%D0%BE%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8_%D1%82%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D1%82%D1%8C_%D0%B4%D0%BE%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%B0.pdf"
   },
   {
-    "id": "b088",
+    "id": "b068",
     "title": "Обряды умры и хаджа блок 2022 с арабским 224 стр",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "2.7 МБ",
-    "description": "Книга «Обряды умры и хаджа блок 2022 с арабским 224 стр» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Обряды умры и хаджа блок 2022 с арабским 224 стр» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2232,13 +1651,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D0%B1%D1%80%D1%8F%D0%B4%D1%8B_%D1%83%D0%BC%D1%80%D1%8B_%D0%B8_%D1%85%D0%B0%D0%B4%D0%B6%D0%B0_%D0%B1%D0%BB%D0%BE%D0%BA_2022_%D1%81_%D0%B0%D1%80%D0%B0%D0%B1%D1%81%D0%BA%D0%B8%D0%BC_224_%D1%81%D1%82%D1%80.pdf"
   },
   {
-    "id": "b089",
+    "id": "b069",
     "title": "Опровержение сомнительных аргументаций",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "3.4 МБ",
-    "description": "Книга «Опровержение сомнительных аргументаций» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Опровержение сомнительных аргументаций» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2256,13 +1675,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81%D0%BE%D0%BC%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B0%D1%80%D0%B3%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b090",
+    "id": "b070",
     "title": "Основа религии Ислам",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "11 МБ",
-    "description": "Книга «Основа религии Ислам» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Основа религии Ислам» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2280,13 +1699,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%20%D1%80%D0%B5%D0%BB%D0%B8%D0%B3%D0%B8%D0%B8%20%D0%98%D1%81%D0%BB%D0%B0%D0%BC.pdf"
   },
   {
-    "id": "b091",
+    "id": "b071",
     "title": "Основы религиозных убеждений",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "1.3 МБ",
-    "description": "Книга «Основы религиозных убеждений» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Основы религиозных убеждений» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2304,13 +1723,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D1%80%D0%B5%D0%BB%D0%B8%D0%B3%D0%B8%D0%BE%D0%B7%D0%BD%D1%8B%D1%85%20%D1%83%D0%B1%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b092",
+    "id": "b072",
     "title": "Ответ на сомнения къубуритов",
     "author": "Шейх Салих Синди",
     "category": "Общее",
     "language": "Русский",
     "size": "0.7 МБ",
-    "description": "Книга «Ответ на сомнения къубуритов» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Ответ на сомнения къубуритов» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2328,13 +1747,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D1%82%D0%B2%D0%B5%D1%82_%D0%BD%D0%B0_%D1%81%D0%BE%D0%BC%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA%D1%8A%D1%83%D0%B1%D1%83%D1%80%D0%B8%D1%82%D0%BE%D0%B2_%E2%80%94_%D0%A8%D0%B5%D0%B9%D1%85_%D0%A1%D0%B0%D0%BB%D0%B8%D1%85_%D0%A1%D0%B8%D0%BD%D0%B4%D0%B8.pdf"
   },
   {
-    "id": "b093",
+    "id": "b073",
     "title": "Отношение мусульманина к мазхабам",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.4 МБ",
-    "description": "Книга «Отношение мусульманина к мазхабам» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Отношение мусульманина к мазхабам» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2352,13 +1771,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9E%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BC%D1%83%D1%81%D1%83%D0%BB%D1%8C%D0%BC%D0%B0%D0%BD%D0%B8%D0%BD%D0%B0_%D0%BA_%D0%BC%D0%B0%D0%B7%D1%85%D0%B0%D0%B1%D0%B0%D0%BC.pdf"
   },
   {
-    "id": "b094",
+    "id": "b074",
     "title": "Побуждение к единству мусульман ас Саади",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "12 МБ",
-    "description": "Книга «Побуждение к единству мусульман ас Саади» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Побуждение к единству мусульман ас Саади» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2376,13 +1795,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D0%BE%D0%B1%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BA_%D0%B5%D0%B4%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D1%83_%D0%BC%D1%83%D1%81%D1%83%D0%BB%D1%8C%D0%BC%D0%B0%D0%BD_%D0%B0%D1%81_%D0%A1%D0%B0%D0%B0%D0%B4%D0%B8.pdf"
   },
   {
-    "id": "b095",
+    "id": "b075",
     "title": "Погонщик Душ имам Ибн аль Каййим",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.8 МБ",
-    "description": "Книга «Погонщик Душ имам Ибн аль Каййим» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Погонщик Душ имам Ибн аль Каййим» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2400,13 +1819,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D0%BE%D0%B3%D0%BE%D0%BD%D1%89%D0%B8%D0%BA_%D0%94%D1%83%D1%88_%D0%B8%D0%BC%D0%B0%D0%BC_%D0%98%D0%B1%D0%BD_%D0%B0%D0%BB%D1%8C_%D0%9A%D0%B0%D0%B8%CC%86%D0%B8%CC%86%D0%B8%D0%BC.pdf"
   },
   {
-    "id": "b096",
+    "id": "b076",
     "title": "Постулаты единобожия",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "6.0 МБ",
-    "description": "Книга «Постулаты единобожия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Постулаты единобожия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2425,13 +1844,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D0%BE%D1%81%D1%82%D1%83%D0%BB%D0%B0%D1%82%D1%8B%20%D0%B5%D0%B4%D0%B8%D0%BD%D0%BE%D0%B1%D0%BE%D0%B6%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b097",
+    "id": "b077",
     "title": "Пояснение к книге единобожия",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "11 МБ",
-    "description": "Книга «Пояснение к книге единобожия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Пояснение к книге единобожия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2449,13 +1868,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D0%BE%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B5%20%D0%B5%D0%B4%D0%B8%D0%BD%D0%BE%D0%B1%D0%BE%D0%B6%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b098",
+    "id": "b078",
     "title": "Права, которые должен соблюдать мусульманин",
     "author": "Ибн Усеймин",
     "category": "Общее",
     "language": "Русский",
     "size": "1.5 МБ",
-    "description": "Книга «Права, которые должен соблюдать мусульманин» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Права, которые должен соблюдать мусульманин» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2473,13 +1892,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D1%80%D0%B0%D0%B2%D0%B0,_%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5_%D0%B4%D0%BE%D0%BB%D0%B6%D0%B5%D0%BD_%D1%81%D0%BE%D0%B1%D0%BB%D1%8E%D0%B4%D0%B0%D1%82%D1%8C_%D0%BC%D1%83%D1%81%D1%83%D0%BB%D1%8C%D0%BC%D0%B0%D0%BD%D0%B8%D0%BD_%E2%80%94_%D0%98%D0%B1%D0%BD_%D0%A3%D1%81%D0%B5%D0%B8%CC%86%D0%BC%D0%B8%D0%BD.pdf"
   },
   {
-    "id": "b099",
+    "id": "b079",
     "title": "Правила поста шейх Уалид аль Сувейдан",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "1.0 МБ",
-    "description": "Книга «Правила поста шейх Уалид аль Сувейдан» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Правила поста шейх Уалид аль Сувейдан» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2498,13 +1917,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B0_%D1%88%D0%B5%D0%B9%D1%85_%D0%A3%D0%B0%D0%BB%D0%B8%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%A1%D1%83%D0%B2%D0%B5%D0%B9%D0%B4%D0%B0%D0%BD.pdf"
   },
   {
-    "id": "b100",
+    "id": "b080",
     "title": "Предание Муджахида",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "1.6 МБ",
-    "description": "Книга «Предание Муджахида» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Предание Муджахида» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2522,13 +1941,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D1%80%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%9C%D1%83%D0%B4%D0%B6%D0%B0%D1%85%D0%B8%D0%B4%D0%B0.pdf"
   },
   {
-    "id": "b101",
+    "id": "b081",
     "title": "Программа по изучению хадисов",
     "author": "Автор не указан",
     "category": "Хадисы",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «Программа по изучению хадисов» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Программа по изучению хадисов» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2546,13 +1965,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%20%D0%BF%D0%BE%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8E%20%D1%85%D0%B0%D0%B4%D0%B8%D1%81%D0%BE%D0%B2.pdf"
   },
   {
-    "id": "b102",
+    "id": "b082",
     "title": "Различия",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "8.7 МБ",
-    "description": "Книга «Различия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Различия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2570,13 +1989,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A0%D0%B0%D0%B7%D0%BB%D0%B8%D1%87%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b103",
+    "id": "b083",
     "title": "Разъяснение к книге «Четыре правила» Интерактив 3",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "2.9 МБ",
-    "description": "Книга «Разъяснение к книге «Четыре правила» Интерактив 3» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Разъяснение к книге «Четыре правила» Интерактив 3» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2594,13 +2013,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A0%D0%B0%D0%B7%D1%8A%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BA_%D0%BA%D0%BD%D0%B8%D0%B3%D0%B5_%C2%AB%D0%A7%D0%B5%D1%82%D1%8B%D1%80%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0%C2%BB_%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%B2_3.pdf"
   },
   {
-    "id": "b104",
+    "id": "b084",
     "title": "Рамадан Шейх Абд ас Салям аш Шувейир",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «Рамадан Шейх Абд ас Салям аш Шувейир» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Рамадан Шейх Абд ас Салям аш Шувейир» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2619,13 +2038,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD_%D0%A8%D0%B5%D0%B9%D1%85_%D0%90%D0%B1%D0%B4_%D0%B0%D1%81_%D0%A1%D0%B0%D0%BB%D1%8F%D0%BC_%D0%B0%D1%88_%D0%A8%D1%83%D0%B2%D0%B5%D0%B9%D0%B8%D1%80.pdf"
   },
   {
-    "id": "b105",
+    "id": "b085",
     "title": "Сборник поминаний Абдулла ибн Абдуррахман ас Саад",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "5.5 МБ",
-    "description": "Книга «Сборник поминаний Абдулла ибн Абдуррахман ас Саад» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Сборник поминаний Абдулла ибн Абдуррахман ас Саад» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2643,17 +2062,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D0%B1%D0%BE%D1%80%D0%BD%D0%B8%D0%BA_%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D0%B8%CC%86_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D0%BB%D0%B0_%D0%B8%D0%B1%D0%BD_%D0%90%D0%B1%D0%B4%D1%83%D1%80%D1%80%D0%B0%D1%85%D0%BC%D0%B0%D0%BD_%D0%B0%D1%81_%D0%A1%D0%B0%D0%B0%D0%B4.pdf"
   },
   {
-    "id": "b106",
+    "id": "b086",
     "title": "Слова поминания и нормы этикета Абдуль Мухсин ибн Мухаммад аль Касим",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "2.5 МБ",
-    "description": "Книга «Слова поминания и нормы этикета Абдуль Мухсин ибн Мухаммад аль Касим» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Слова поминания и нормы этикета Абдуль Мухсин ибн Мухаммад аль Касим» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0_%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F_%D0%B8_%D0%BD%D0%BE%D1%80%D0%BC%D1%8B_%D1%8D%D1%82%D0%B8%D0%BA%D0%B5%D1%82%D0%B0_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C_%D0%9C%D1%83%D1%85%D1%81%D0%B8%D0%BD_%D0%B8%D0%B1%D0%BD_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%9A%D0%B0%D1%81%D0%B8%D0%BC.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0_%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F_%D0%B8_%D0%BD%D0%BE%D1%80%D0%BC%D1%8B_%D1%8D%D1%82%D0%B8%D0%BA%D0%B5%D1%82%D0%B0_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C_%D0%9C%D1%83%D1%85%D1%81%D0%B8%D0%BD_%D0%B8%D0%B1%D0%BD_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%9A%D0%B0%D1%81%D0%B8%D0%BC.pdf",
@@ -2667,13 +2086,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0_%D0%BF%D0%BE%D0%BC%D0%B8%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F_%D0%B8_%D0%BD%D0%BE%D1%80%D0%BC%D1%8B_%D1%8D%D1%82%D0%B8%D0%BA%D0%B5%D1%82%D0%B0_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C_%D0%9C%D1%83%D1%85%D1%81%D0%B8%D0%BD_%D0%B8%D0%B1%D0%BD_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%9A%D0%B0%D1%81%D0%B8%D0%BC.pdf"
   },
   {
-    "id": "b107",
+    "id": "b087",
     "title": "Соблюдение правил этикета залог счастья Салих ибн Абд аль Азиз ибн",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.4 МБ",
-    "description": "Книга «Соблюдение правил этикета залог счастья Салих ибн Абд аль Азиз ибн» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Соблюдение правил этикета залог счастья Салих ибн Абд аль Азиз ибн» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2691,13 +2110,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D0%BE%D0%B1%D0%BB%D1%8E%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB_%D1%8D%D1%82%D0%B8%D0%BA%D0%B5%D1%82%D0%B0_%D0%B7%D0%B0%D0%BB%D0%BE%D0%B3_%D1%81%D1%87%D0%B0%D1%81%D1%82%D1%8C%D1%8F_%D0%A1%D0%B0%D0%BB%D0%B8%D1%85_%D0%B8%D0%B1%D0%BD_%D0%90%D0%B1%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%90%D0%B7%D0%B8%D0%B7_%D0%B8%D0%B1%D0%BD.pdf"
   },
   {
-    "id": "b108",
+    "id": "b088",
     "title": "Собрания в месяц Рамадан",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "2.0 МБ",
-    "description": "Книга «Собрания в месяц Рамадан» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Собрания в месяц Рамадан» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2716,13 +2135,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D0%BE%D0%B1%D1%80%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B2%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%20%D0%A0%D0%B0%D0%BC%D0%B0%D0%B4%D0%B0%D0%BD.pdf"
   },
   {
-    "id": "b109",
+    "id": "b089",
     "title": "Сокращенное изложение законоположений о посте",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "0.7 МБ",
-    "description": "Книга «Сокращенное изложение законоположений о посте» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Сокращенное изложение законоположений о посте» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2741,13 +2160,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5_%D0%B8%D0%B7%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B8%CC%86_%D0%BE_%D0%BF%D0%BE%D1%81%D1%82%D0%B5.pdf"
   },
   {
-    "id": "b110",
+    "id": "b090",
     "title": "Сунна, Кирмани",
     "author": "Автор не указан",
     "category": "Хадисы",
     "language": "Русский",
     "size": "6.2 МБ",
-    "description": "Книга «Сунна, Кирмани» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Сунна, Кирмани» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2765,13 +2184,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D1%83%D0%BD%D0%BD%D0%B0,%20%D0%9A%D0%B8%D1%80%D0%BC%D0%B0%D0%BD%D0%B8.pdf"
   },
   {
-    "id": "b111",
+    "id": "b091",
     "title": "Сунна",
     "author": "Автор не указан",
     "category": "Хадисы",
     "language": "Русский",
     "size": "8.7 МБ",
-    "description": "Книга «Сунна» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Сунна» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2789,13 +2208,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D1%83%D0%BD%D0%BD%D0%B0.pdf"
   },
   {
-    "id": "b112",
+    "id": "b092",
     "title": "Схема книги Три основы",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.5 МБ",
-    "description": "Книга «Схема книги Три основы» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Схема книги Три основы» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2813,13 +2232,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A1%D1%85%D0%B5%D0%BC%D0%B0%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B8%20%D0%A2%D1%80%D0%B8%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B.pdf"
   },
   {
-    "id": "b113",
+    "id": "b093",
     "title": "Тибьян",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "2.9 МБ",
-    "description": "Книга «Тибьян» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Тибьян» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2837,13 +2256,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A2%D0%B8%D0%B1%D1%8C%D1%8F%D0%BD.pdf"
   },
   {
-    "id": "b114",
+    "id": "b094",
     "title": "Три основы (2)",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "8.4 МБ",
-    "description": "Книга «Три основы (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Три основы (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2861,13 +2280,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A2%D1%80%D0%B8%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20(2).pdf"
   },
   {
-    "id": "b115",
+    "id": "b095",
     "title": "Устранение cомнений",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.1 МБ",
-    "description": "Книга «Устранение cомнений» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Устранение cомнений» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2885,13 +2304,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A3%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20c%D0%BE%D0%BC%D0%BD%D0%B5%D0%BD%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b116",
+    "id": "b096",
     "title": "Устранение сомнений",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "4.2 МБ",
-    "description": "Книга «Устранение сомнений» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Устранение сомнений» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2909,13 +2328,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A3%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%81%D0%BE%D0%BC%D0%BD%D0%B5%D0%BD%D0%B8%D0%B8%CC%86.pdf"
   },
   {
-    "id": "b117",
+    "id": "b097",
     "title": "Утдверждение возвышенности Аллаха",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.4 МБ",
-    "description": "Книга «Утдверждение возвышенности Аллаха» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Утдверждение возвышенности Аллаха» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2933,13 +2352,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A3%D1%82%D0%B4%D0%B2%D0%B5%D1%80%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%BE%D0%B7%D0%B2%D1%8B%D1%88%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D0%90%D0%BB%D0%BB%D0%B0%D1%85%D0%B0_.pdf"
   },
   {
-    "id": "b118",
+    "id": "b098",
     "title": "Утренние азкары",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "7.7 МБ",
-    "description": "Книга «Утренние азкары» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Утренние азкары» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2957,13 +2376,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A3%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D0%B8%D0%B5%20%D0%B0%D0%B7%D0%BA%D0%B0%D1%80%D1%8B.pdf"
   },
   {
-    "id": "b119",
+    "id": "b099",
     "title": "Хадж шейх АбдульАзиз ар Раджихи",
     "author": "Автор не указан",
     "category": "Фикх",
     "language": "Русский",
     "size": "1.2 МБ",
-    "description": "Книга «Хадж шейх АбдульАзиз ар Раджихи» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Хадж шейх АбдульАзиз ар Раджихи» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -2981,13 +2400,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A5%D0%B0%D0%B4%D0%B6_%D1%88%D0%B5%D0%B8%CC%86%D1%85_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%90%D0%B7%D0%B8%D0%B7_%D0%B0%D1%80_%D0%A0%D0%B0%D0%B4%D0%B6%D0%B8%D1%85%D0%B8.pdf"
   },
   {
-    "id": "b120",
+    "id": "b100",
     "title": "Хадисы о Даджжале",
     "author": "Автор не указан",
     "category": "Хадисы",
     "language": "Русский",
     "size": "5.7 МБ",
-    "description": "Книга «Хадисы о Даджжале» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Хадисы о Даджжале» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3005,13 +2424,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A5%D0%B0%D0%B4%D0%B8%D1%81%D1%8B%20%D0%BE%20%D0%94%D0%B0%D0%B4%D0%B6%D0%B6%D0%B0%D0%BB%D0%B5.pdf"
   },
   {
-    "id": "b121",
+    "id": "b101",
     "title": "Четыре правила (2)",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "7.1 МБ",
-    "description": "Книга «Четыре правила (2)» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Четыре правила (2)» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3029,13 +2448,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A7%D0%B5%D1%82%D1%8B%D1%80%D0%B5%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0%20(2).pdf"
   },
   {
-    "id": "b122",
+    "id": "b102",
     "title": "Четыре правила",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "1.4 МБ",
-    "description": "Книга «Четыре правила» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Четыре правила» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3053,13 +2472,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A7%D0%B5%D1%82%D1%8B%D1%80%D0%B5%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0.pdf"
   },
   {
-    "id": "b123",
+    "id": "b103",
     "title": "Четыре правила",
     "author": "шейх Халид аль Фулейдж",
     "category": "Акыда",
     "language": "Русский",
     "size": "2.5 МБ",
-    "description": "Книга «Четыре правила» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Четыре правила» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3077,13 +2496,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A7%D0%B5%D1%82%D1%8B%D1%80%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%E2%80%94_%D1%88%D0%B5%D0%B8%CC%86%D1%85_%D0%A5%D0%B0%D0%BB%D0%B8%D0%B4_%D0%B0%D0%BB%D1%8C_%D0%A4%D1%83%D0%BB%D0%B5%D0%B8%CC%86%D0%B4%D0%B6.pdf"
   },
   {
-    "id": "b124",
+    "id": "b104",
     "title": "Шаги к счастью",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "12 МБ",
-    "description": "Книга «Шаги к счастью» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Шаги к счастью» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3101,13 +2520,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A8%D0%B0%D0%B3%D0%B8%20%D0%BA%20%D1%81%D1%87%D0%B0%D1%81%D1%82%D1%8C%D1%8E.pdf"
   },
   {
-    "id": "b125",
+    "id": "b105",
     "title": "Шарх Трех Основ",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "12 МБ",
-    "description": "Книга «Шарх Трех Основ» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Шарх Трех Основ» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3125,13 +2544,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A8%D0%B0%D1%80%D1%85%20%D0%A2%D1%80%D0%B5%D1%85%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2.pdf"
   },
   {
-    "id": "b126",
+    "id": "b106",
     "title": "Шейхуль Ислям Ибн Таймия о запрете уподобляться",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "2.6 МБ",
-    "description": "Книга «Шейхуль Ислям Ибн Таймия о запрете уподобляться» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Шейхуль Ислям Ибн Таймия о запрете уподобляться» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3149,17 +2568,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A8%D0%B5%D0%B8%CC%86%D1%85%D1%83%D0%BB%D1%8C_%D0%98%D1%81%D0%BB%D1%8F%D0%BC_%D0%98%D0%B1%D0%BD_%D0%A2%D0%B0%D0%B8%CC%86%D0%BC%D0%B8%D1%8F_%D0%BE_%D0%B7%D0%B0%D0%BF%D1%80%D0%B5%D1%82%D0%B5_%D1%83%D0%BF%D0%BE%D0%B4%D0%BE%D0%B1%D0%BB%D1%8F%D1%82%D1%8C%D1%81%D1%8F.pdf"
   },
   {
-    "id": "b127",
+    "id": "b107",
     "title": "Шейх Усеймин Этикет приветствия",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Шейх Усеймин Этикет приветствия» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Шейх Усеймин Этикет приветствия» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%A8%D0%B5%D0%B9%D1%85_%D0%A3%D1%81%D0%B5%D0%B9%D0%BC%D0%B8%D0%BD_%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D1%8F.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%A8%D0%B5%D0%B9%D1%85_%D0%A3%D1%81%D0%B5%D0%B9%D0%BC%D0%B8%D0%BD_%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D1%8F.pdf",
@@ -3173,13 +2592,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%A8%D0%B5%D0%B9%D1%85_%D0%A3%D1%81%D0%B5%D0%B9%D0%BC%D0%B8%D0%BD_%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D1%8F.pdf"
   },
   {
-    "id": "b128",
+    "id": "b108",
     "title": "Этапы жизни человека",
     "author": "Автор не указан",
     "category": "Общее",
     "language": "Русский",
     "size": "0.8 МБ",
-    "description": "Книга «Этапы жизни человека» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этапы жизни человека» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3197,17 +2616,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B0%D0%BF%D1%8B%20%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8%20%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0.pdf"
   },
   {
-    "id": "b129",
+    "id": "b109",
     "title": "Этикет внешнего вида",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "1.7 МБ",
-    "description": "Книга «Этикет внешнего вида» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет внешнего вида» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B5%D0%B3%D0%BE%20%D0%B2%D0%B8%D0%B4%D0%B0%20.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B5%D0%B3%D0%BE%20%D0%B2%D0%B8%D0%B4%D0%B0%20.pdf",
@@ -3221,13 +2640,13 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B5%D0%B3%D0%BE%20%D0%B2%D0%B8%D0%B4%D0%B0%20.pdf"
   },
   {
-    "id": "b130",
+    "id": "b110",
     "title": "Этикет вопросов по Исламу",
     "author": "Автор не указан",
     "category": "Акыда",
     "language": "Русский",
     "size": "0.4 МБ",
-    "description": "Книга «Этикет вопросов по Исламу» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет вопросов по Исламу» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
@@ -3245,17 +2664,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2%20%D0%BF%D0%BE%20%D0%98%D1%81%D0%BB%D0%B0%D0%BC%D1%83.pdf"
   },
   {
-    "id": "b131",
+    "id": "b111",
     "title": "Этикет посещения мечети",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "1.1 МБ",
-    "description": "Книга «Этикет посещения мечети» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет посещения мечети» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BC%D0%B5%D1%87%D0%B5%D1%82%D0%B8.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BC%D0%B5%D1%87%D0%B5%D1%82%D0%B8.pdf",
@@ -3269,17 +2688,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82%20%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BC%D0%B5%D1%87%D0%B5%D1%82%D0%B8.pdf"
   },
   {
-    "id": "b132",
+    "id": "b112",
     "title": "Этикет",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "4.8 МБ",
-    "description": "Книга «Этикет» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82.pdf",
@@ -3293,18 +2712,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82.pdf"
   },
   {
-    "id": "b133",
+    "id": "b113",
     "title": "Этикет бракосочетания Мухаммад Насыр ад Дин",
     "author": "аль Альбани",
-    "category": "Общее",
+    "category": "Фаваиды",
     "language": "Русский",
     "size": "1.2 МБ",
-    "description": "Книга «Этикет бракосочетания Мухаммад Насыр ад Дин» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет бракосочетания Мухаммад Насыр ад Дин» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее",
-      "альбани"
+      "фаваиды"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%B1%D1%80%D0%B0%D0%BA%D0%BE%D1%81%D0%BE%D1%87%D0%B5%D1%82%D0%B0%D0%BD%D0%B8%D1%8F_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%9D%D0%B0%D1%81%D1%8B%D1%80_%D0%B0%D0%B4_%D0%94%D0%B8%D0%BD_%D0%B0%D0%BB%D1%8C_%D0%90%D0%BB%D1%8C%D0%B1%D0%B0%D0%BD%D0%B8.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%B1%D1%80%D0%B0%D0%BA%D0%BE%D1%81%D0%BE%D1%87%D0%B5%D1%82%D0%B0%D0%BD%D0%B8%D1%8F_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%9D%D0%B0%D1%81%D1%8B%D1%80_%D0%B0%D0%B4_%D0%94%D0%B8%D0%BD_%D0%B0%D0%BB%D1%8C_%D0%90%D0%BB%D1%8C%D0%B1%D0%B0%D0%BD%D0%B8.pdf",
@@ -3318,17 +2736,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D0%B1%D1%80%D0%B0%D0%BA%D0%BE%D1%81%D0%BE%D1%87%D0%B5%D1%82%D0%B0%D0%BD%D0%B8%D1%8F_%D0%9C%D1%83%D1%85%D0%B0%D0%BC%D0%BC%D0%B0%D0%B4_%D0%9D%D0%B0%D1%81%D1%8B%D1%80_%D0%B0%D0%B4_%D0%94%D0%B8%D0%BD_%D0%B0%D0%BB%D1%8C_%D0%90%D0%BB%D1%8C%D0%B1%D0%B0%D0%BD%D0%B8.pdf"
   },
   {
-    "id": "b134",
+    "id": "b114",
     "title": "Этикет справления нужды и посещения отхожих мест",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Фикх",
     "language": "Русский",
     "size": "3.6 МБ",
-    "description": "Книга «Этикет справления нужды и посещения отхожих мест» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Этикет справления нужды и посещения отхожих мест» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "фикх"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BD%D1%83%D0%B6%D0%B4%D1%8B_%D0%B8_%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE%D1%82%D1%85%D0%BE%D0%B6%D0%B8%D1%85_%D0%BC%D0%B5%D1%81%D1%82.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BD%D1%83%D0%B6%D0%B4%D1%8B_%D0%B8_%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE%D1%82%D1%85%D0%BE%D0%B6%D0%B8%D1%85_%D0%BC%D0%B5%D1%81%D1%82.pdf",
@@ -3342,17 +2760,17 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%B8%D0%BA%D0%B5%D1%82_%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BD%D1%83%D0%B6%D0%B4%D1%8B_%D0%B8_%D0%BF%D0%BE%D1%81%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE%D1%82%D1%85%D0%BE%D0%B6%D0%B8%D1%85_%D0%BC%D0%B5%D1%81%D1%82.pdf"
   },
   {
-    "id": "b135",
+    "id": "b115",
     "title": "Это мое Вероубеждение АбдульАзиз Раджихи",
     "author": "Автор не указан",
-    "category": "Общее",
+    "category": "Акыда",
     "language": "Русский",
     "size": "7.7 МБ",
-    "description": "Книга «Это мое Вероубеждение АбдульАзиз Раджихи» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Это мое Вероубеждение АбдульАзиз Раджихи» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "акыда"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%BE_%D0%BC%D0%BE%D0%B5_%D0%92%D0%B5%D1%80%D0%BE%D1%83%D0%B1%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%90%D0%B7%D0%B8%D0%B7_%D0%A0%D0%B0%D0%B4%D0%B6%D0%B8%D1%85%D0%B8.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AD%D1%82%D0%BE_%D0%BC%D0%BE%D0%B5_%D0%92%D0%B5%D1%80%D0%BE%D1%83%D0%B1%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%90%D0%B7%D0%B8%D0%B7_%D0%A0%D0%B0%D0%B4%D0%B6%D0%B8%D1%85%D0%B8.pdf",
@@ -3366,17 +2784,18 @@
     "externalSource": "https://github.com/aminmod-bit/salaf-library/blob/main/books/%D0%AD%D1%82%D0%BE_%D0%BC%D0%BE%D0%B5_%D0%92%D0%B5%D1%80%D0%BE%D1%83%D0%B1%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5_%D0%90%D0%B1%D0%B4%D1%83%D0%BB%D1%8C%D0%90%D0%B7%D0%B8%D0%B7_%D0%A0%D0%B0%D0%B4%D0%B6%D0%B8%D1%85%D0%B8.pdf"
   },
   {
-    "id": "b136",
+    "id": "b116",
     "title": "Является ли Мессия богом",
     "author": "Маджид ибн Сулейман",
-    "category": "Общее",
+    "category": "Акыда",
     "language": "Русский",
     "size": "5.3 МБ",
-    "description": "Книга «Является ли Мессия богом» автоматически импортирована из репозитория aminmod-bit/salaf-library.",
+    "description": "Электронная книга «Является ли Мессия богом» доступна для онлайн-чтения в Salaf Library. Материал добавлен в официальный каталог библиотеки.",
     "coverColor": "#1a3a2a",
     "coverEmoji": "📖",
     "tags": [
-      "общее"
+      "акыда",
+      "ислам и христианство"
     ],
     "fileUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AF%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F_%D0%BB%D0%B8_%D0%9C%D0%B5%D1%81%D1%81%D0%B8%D1%8F_%D0%B1%D0%BE%D0%B3%D0%BE%D0%BC_%E2%80%94_%D0%9C%D0%B0%D0%B4%D0%B6%D0%B8%D0%B4_%D0%B8%D0%B1%D0%BD_%D0%A1%D1%83%D0%BB%D0%B5%D0%B9%D0%BC%D0%B0%D0%BD.pdf",
     "downloadUrl": "https://raw.githubusercontent.com/aminmod-bit/salaf-library/main/books/%D0%AF%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F_%D0%BB%D0%B8_%D0%9C%D0%B5%D1%81%D1%81%D0%B8%D1%8F_%D0%B1%D0%BE%D0%B3%D0%BE%D0%BC_%E2%80%94_%D0%9C%D0%B0%D0%B4%D0%B6%D0%B8%D0%B4_%D0%B8%D0%B1%D0%BD_%D0%A1%D1%83%D0%BB%D0%B5%D0%B9%D0%BC%D0%B0%D0%BD.pdf",

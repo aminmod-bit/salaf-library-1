@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BarChart3, BookOpen, Users, Headphones, Sparkles,
   Plus, Edit, Trash2, Eye, Download, Upload,
@@ -10,6 +11,7 @@ import toast from 'react-hot-toast';
 type AdminTab = 'dashboard' | 'books' | 'authors' | 'bios' | 'audio' | 'fawaid';
 
 export default function AdminPage() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<AdminTab>('dashboard');
   const [showAddBook, setShowAddBook] = useState(false);
   const { books, biographies, audioLessons, fawaid, categories } = useStore();
@@ -42,11 +44,11 @@ export default function AdminPage() {
           <p style={{ color: '#9db8a3', fontSize: '13px', marginTop: '4px' }}>Salaf Library — Управление контентом</p>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button className="btn-secondary" onClick={() => toast('GitHub API публикация (демо)', { icon: '🚀' })}>
-            <Upload size={14} /> Опубликовать
+          <button className="btn-secondary" onClick={() => navigate('/admin/import')}>
+            <Upload size={14} /> Импортировать
           </button>
-          <button className="btn-ghost" onClick={() => toast('Экспорт данных (демо)', { icon: '💾' })}>
-            <Download size={14} /> Экспорт
+          <button className="btn-ghost" onClick={() => navigate('/admin/settings')}>
+            <Settings size={14} /> GitHub API
           </button>
         </div>
       </div>
@@ -115,10 +117,10 @@ export default function AdminPage() {
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px', marginBottom: '28px' }}>
                 {[
-                  { icon: '📚', title: 'Добавить книгу', desc: 'Создать новую запись книги', action: () => { setTab('books'); setShowAddBook(true); } },
-                  { icon: '🔄', title: 'Обновить индекс поиска', desc: 'Перегенерировать search-index.json', action: () => toast('Индекс обновлён', { icon: '✅' }) },
-                  { icon: '🌐', title: 'Обновить sitemap', desc: 'Перегенерировать sitemap.xml', action: () => toast('Sitemap обновлён', { icon: '✅' }) },
-                  { icon: '📡', title: 'RSS лента', desc: 'Обновить RSS ленту', action: () => toast('RSS обновлён', { icon: '✅' }) },
+                  { icon: '📚', title: 'Добавить книги', desc: 'Массовая публикация PDF через GitHub API', action: () => navigate('/admin/import') },
+                  { icon: '🐙', title: 'GitHub API', desc: 'Токен, репозиторий и проверка подключения', action: () => navigate('/admin/settings') },
+                  { icon: '🔎', title: 'Проверить каталог', desc: 'Открыть публичный каталог книг', action: () => navigate('/books') },
+                  { icon: '📖', title: 'Онлайн-читалка', desc: 'Проверить чтение первой книги с PDF', action: () => { const first = books.find(b => b.fileUrl); first ? navigate(`/read/${first.id}`) : toast('Сначала добавьте PDF книгу', { icon: '📖' }); } },
                 ].map(({ icon, title, desc, action }) => (
                   <div
                     key={title}
@@ -179,8 +181,8 @@ export default function AdminPage() {
                     />
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <button className="btn-primary" onClick={() => toast('GitHub подключён (демо)', { icon: '✅' })}>
-                      <Globe size={14} /> Подключить
+                    <button className="btn-primary" onClick={() => navigate('/admin/settings')}>
+                      <Globe size={14} /> Открыть настройки
                     </button>
                   </div>
                 </div>
@@ -193,8 +195,8 @@ export default function AdminPage() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
                 <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#f0f4f1' }}>📚 Управление книгами</h2>
-                <button className="btn-primary" onClick={() => setShowAddBook(!showAddBook)}>
-                  <Plus size={14} /> Добавить книгу
+                <button className="btn-primary" onClick={() => navigate('/admin/import')}>
+                  <Plus size={14} /> Импорт PDF
                 </button>
               </div>
 
@@ -238,8 +240,8 @@ export default function AdminPage() {
                     />
                   </div>
                   <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-                    <button className="btn-primary" onClick={() => { toast('Книга добавлена (демо)', { icon: '✅' }); setShowAddBook(false); }}>
-                      Сохранить
+                    <button className="btn-primary" onClick={() => navigate('/admin/import')}>
+                      Перейти к импорту
                     </button>
                     <button className="btn-ghost" onClick={() => setShowAddBook(false)}>Отмена</button>
                   </div>
@@ -269,7 +271,7 @@ export default function AdminPage() {
                       {book.isNew && <span className="badge badge-green" style={{ fontSize: '9px' }}>NEW</span>}
                       {book.featured && <span className="badge badge-gold" style={{ fontSize: '9px' }}>⭐</span>}
                       <button
-                        onClick={() => toast('Редактирование (демо)', { icon: '✏️' })}
+                        onClick={() => navigate(`/books/${book.id}`)}
                         style={{ background: 'none', border: 'none', color: '#9db8a3', cursor: 'pointer', padding: '4px' }}
                       >
                         <Edit size={14} />
@@ -310,8 +312,8 @@ export default function AdminPage() {
                   </div>
                   <div style={{ fontSize: '12px', color: '#9db8a3' }}>записей в базе</div>
                 </div>
-                <button className="btn-primary" onClick={() => toast('Добавление (демо)', { icon: '➕' })}>
-                  <Plus size={14} /> Добавить
+                <button className="btn-primary" onClick={() => tab === 'audio' ? navigate('/admin/import') : navigate('/admin/settings')}>
+                  <Plus size={14} /> Управлять
                 </button>
               </div>
 

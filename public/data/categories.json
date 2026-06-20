@@ -6,7 +6,7 @@
     "icon": "🎯",
     "color": "#1a3a2a",
     "description": "Исламское вероубеждение и основы веры",
-    "count": 245,
+    "count": 22,
     "type": "books"
   },
   {
@@ -16,7 +16,7 @@
     "icon": "📿",
     "color": "#2a1a3a",
     "description": "Изречения и действия пророка ﷺ",
-    "count": 312,
+    "count": 6,
     "type": "books"
   },
   {
@@ -26,7 +26,7 @@
     "icon": "🌙",
     "color": "#3a2a1a",
     "description": "Толкование Корана",
-    "count": 186,
+    "count": 0,
     "type": "books"
   },
   {
@@ -36,7 +36,7 @@
     "icon": "⚖️",
     "color": "#1a2a3a",
     "description": "Исламское право",
-    "count": 428,
+    "count": 14,
     "type": "books"
   },
   {
@@ -46,7 +46,7 @@
     "icon": "🌟",
     "color": "#1a3a3a",
     "description": "Биография пророка ﷺ",
-    "count": 134,
+    "count": 1,
     "type": "books"
   },
   {
@@ -56,7 +56,7 @@
     "icon": "💫",
     "color": "#2a3a2a",
     "description": "Духовность и аскетизм",
-    "count": 167,
+    "count": 0,
     "type": "books"
   },
   {
@@ -66,7 +66,7 @@
     "icon": "🏛️",
     "color": "#3a1a2a",
     "description": "Исламская история",
-    "count": 213,
+    "count": 0,
     "type": "books"
   },
   {
@@ -76,7 +76,7 @@
     "icon": "🔤",
     "color": "#1a1a3a",
     "description": "Грамматика и язык Корана",
-    "count": 156,
+    "count": 0,
     "type": "books"
   },
   {
@@ -86,7 +86,7 @@
     "icon": "📢",
     "color": "#3a3a1a",
     "description": "Исламский призыв",
-    "count": 98,
+    "count": 0,
     "type": "books"
   },
   {
@@ -96,7 +96,7 @@
     "icon": "👨‍👩‍👧",
     "color": "#2a1a2a",
     "description": "Воспитание детей и семья",
-    "count": 142,
+    "count": 0,
     "type": "books"
   },
   {
@@ -106,7 +106,7 @@
     "icon": "⭐",
     "color": "#1a2a2a",
     "description": "Нравственность и характер",
-    "count": 189,
+    "count": 0,
     "type": "books"
   },
   {
@@ -116,7 +116,34 @@
     "icon": "📖",
     "color": "#3a1a1a",
     "description": "Науки о Коране",
-    "count": 201,
+    "count": 2,
+    "type": "books"
+  },
+  {
+    "id": "дуа-и-зикр",
+    "name": "Дуа и зикр",
+    "icon": "🤲",
+    "color": "#1a3a2a",
+    "description": "Раздел «Дуа и зикр»",
+    "count": 4,
+    "type": "books"
+  },
+  {
+    "id": "общее",
+    "name": "Общее",
+    "icon": "📘",
+    "color": "#1a3a2a",
+    "description": "Раздел «Общее»",
+    "count": 56,
+    "type": "books"
+  },
+  {
+    "id": "фаваиды",
+    "name": "Фаваиды",
+    "icon": "📖",
+    "color": "#1a3a2a",
+    "description": "Раздел «Фаваиды»",
+    "count": 11,
     "type": "books"
   }
 ]

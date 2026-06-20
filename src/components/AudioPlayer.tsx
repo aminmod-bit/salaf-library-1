@@ -14,7 +14,7 @@ export default function AudioPlayer() {
     if (isPlaying) {
       audioRef.current.play().catch(() => {
         setIsPlaying(false);
-        toast('Аудио недоступно в демо-режиме', { icon: '🎧' });
+        toast('Аудиофайл пока не добавлен', { icon: '🎧' });
       });
     } else {
       audioRef.current.pause();
