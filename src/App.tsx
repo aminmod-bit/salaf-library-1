@@ -7,6 +7,7 @@ import { loadLibraryData } from './utils/loadLibraryData';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import AudioPlayer from './components/AudioPlayer';
+import GlobalTextTranslator from './components/GlobalTextTranslator';
 import HomePage from './pages/HomePage';
 import BooksPage from './pages/BooksPage';
 import BookDetailPage from './pages/BookDetailPage';
@@ -29,6 +30,7 @@ import ReadingPlansPage from './pages/ReadingPlansPage';
 import AboutPage from './pages/AboutPage';
 import ReportIssuePage from './pages/ReportIssuePage';
 import QuranPage from './pages/QuranPage';
+import BookLanguagesPage from './pages/BookLanguagesPage';
 
 const BookReaderPage = lazy(() => import('./pages/BookReaderPage'));
 
@@ -72,6 +74,7 @@ export default function App() {
 
   return (
     <HashRouter>
+      <GlobalTextTranslator />
       <div className="app-layout">
         <Sidebar />
         <div className="main-content">
@@ -101,6 +104,7 @@ export default function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/report" element={<ReportIssuePage />} />
               <Route path="/quran" element={<QuranPage />} />
+              <Route path="/book-languages" element={<BookLanguagesPage />} />
             </Routes>
             </Suspense>
           </div>

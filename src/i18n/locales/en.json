@@ -157,5 +157,14 @@
   },
   "report": {
     "title": "Report an issue"
+  },
+  "bookLanguages": {
+    "eyebrow": "Multilingual library",
+    "title": "Books and materials by language",
+    "description": "Books, articles, benefits and materials will be organized by language. We do not show artificial translations: if content is not available in a language, the section clearly shows that it is awaiting content.",
+    "books": "Books",
+    "articles": "Articles",
+    "openBooks": "Open books",
+    "comingSoon": "Content will be added"
   }
 }

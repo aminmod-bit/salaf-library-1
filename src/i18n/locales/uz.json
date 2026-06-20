@@ -110,5 +110,14 @@
   },
   "report": {
     "title": "Xato haqida xabar berish"
+  },
+  "bookLanguages": {
+    "eyebrow": "Ko‘p tilli kutubxona",
+    "title": "Kitoblar va materiallar til bo‘yicha",
+    "description": "Kitoblar, maqolalar va favoid til bo‘yicha tartiblanadi. Biz sun’iy tarjimalarni ko‘rsatmaymiz: agar material bir tilda bo‘lmasa, bu aniq ko‘rsatiladi.",
+    "books": "Kitoblar",
+    "articles": "Maqolalar",
+    "openBooks": "Kitoblarni ochish",
+    "comingSoon": "Materiallar qo‘shiladi"
   }
 }

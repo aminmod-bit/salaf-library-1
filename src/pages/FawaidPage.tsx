@@ -1,26 +1,31 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, Heart, Share2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import toast from 'react-hot-toast';
 
+const contentLanguage: Record<string, string> = { ru: 'Русский', ar: 'Арабский', en: 'Английский', tg: 'Таджикский', uz: 'Узбекский', fa: 'Персидский' };
+
 export default function FawaidPage() {
+  const { i18n } = useTranslation();
+  const activeLang = contentLanguage[(i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0]] || 'Русский';
   const { fawaid } = useStore();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
   const [authorFilter, setAuthorFilter] = useState('all');
 
   const categories = useMemo(() => {
-    const cats = new Set(fawaid.map(f => f.category));
+    const cats = new Set(fawaid.filter(f => (f.language || 'Русский') === activeLang).map(f => f.category));
     return Array.from(cats);
-  }, [fawaid]);
+  }, [fawaid, activeLang]);
 
   const authors = useMemo(() => {
-    const a = new Set(fawaid.map(f => f.author));
+    const a = new Set(fawaid.filter(f => (f.language || 'Русский') === activeLang).map(f => f.author));
     return Array.from(a);
-  }, [fawaid]);
+  }, [fawaid, activeLang]);
 
   const filtered = useMemo(() => {
-    let result = [...fawaid];
+    let result = fawaid.filter(f => (f.language || 'Русский') === activeLang);
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(f =>
@@ -32,7 +37,7 @@ export default function FawaidPage() {
     if (category !== 'all') result = result.filter(f => f.category === category);
     if (authorFilter !== 'all') result = result.filter(f => f.author === authorFilter);
     return result;
-  }, [fawaid, search, category, authorFilter]);
+  }, [fawaid, search, category, authorFilter, activeLang]);
 
   const handleShare = (f: typeof fawaid[0]) => {
     const text = `"${f.text}"\n— ${f.author}`;

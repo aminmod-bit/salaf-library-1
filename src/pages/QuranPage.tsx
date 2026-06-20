@@ -103,10 +103,18 @@ export default function QuranPage() {
 
 
 function getAyahTranslation(ayah: Ayah, lang: string) {
-  if (lang === 'en') return ayah.translationEn || ayah.translationRu;
-  if (lang === 'tg') return ayah.translationTg || ayah.translationRu;
-  if (lang === 'uz') return ayah.translationUz || ayah.translationRu;
-  if (lang === 'fa') return ayah.translationFa || ayah.translationRu;
+  const unavailable: Record<string, string> = {
+    en: 'Translation for this language will be added soon.',
+    tg: 'Тарҷума ба ин забон дертар илова мешавад.',
+    uz: 'Bu til uchun tarjima keyinroq qo‘shiladi.',
+    fa: 'ترجمه این زبان به‌زودی اضافه خواهد شد.',
+    ar: 'الترجمة لهذه اللغة ستضاف قريبًا.'
+  };
+  if (lang === 'en') return ayah.translationEn || unavailable.en;
+  if (lang === 'tg') return ayah.translationTg || unavailable.tg;
+  if (lang === 'uz') return ayah.translationUz || unavailable.uz;
+  if (lang === 'fa') return ayah.translationFa || unavailable.fa;
+  if (lang === 'ar') return unavailable.ar;
   return ayah.translationRu;
 }
 

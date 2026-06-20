@@ -19,6 +19,7 @@ const pageNames: Record<string, string> = {
   '/about': 'О проекте',
   '/report': 'Сообщить об ошибке',
   '/quran': 'Коран',
+  '/book-languages': 'Языки книг',
 };
 
 export default function Header() {
@@ -34,6 +35,7 @@ export default function Header() {
   const pageName = location.pathname === '/' ? t('nav.home', pageNameRaw)
     : location.pathname === '/books' ? t('nav.books', pageNameRaw)
     : location.pathname === '/quran' ? t('nav.quran', pageNameRaw)
+    : location.pathname === '/book-languages' ? t('nav.bookLanguages', pageNameRaw)
     : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
     : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
     : location.pathname === '/fawaid' ? t('nav.fawaid', pageNameRaw)

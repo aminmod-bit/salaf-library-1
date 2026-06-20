@@ -82,6 +82,7 @@ export interface Faidah {
   author: string;
   authorId?: string;
   category: string;
+  language?: string;
   source?: string;
   tags: string[];
   year?: string;

@@ -21,7 +21,7 @@ export default function BooksPage() {
   const [selectedCat, setSelectedCat] = useState(searchParams.get('category') || 'all');
   const [sort, setSort] = useState(searchParams.get('filter') === 'new' ? 'new' : 'popular');
   const [view, setView] = useState<'grid' | 'list'>('grid');
-  const [lang, setLang] = useState('all');
+  const [lang, setLang] = useState(searchParams.get('language') || 'all');
 
   const filtered = useMemo(() => {
     let result = [...books];

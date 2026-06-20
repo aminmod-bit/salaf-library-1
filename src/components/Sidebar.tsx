@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
-  X, BookMarked, Star, Info, MessageSquare
+  X, BookMarked, Star, Info, MessageSquare, Languages
 } from 'lucide-react';
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { path: '/dashboard', icon: BookOpen, label: 'Панель', key: 'dashboard' },
   { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
   { path: '/quran', icon: BookMarked, label: 'Коран', key: 'quran' },
+  { path: '/book-languages', icon: Languages, label: 'Языки книг', key: 'bookLanguages' },
   { path: '/biographies', icon: Users, label: 'Биографии', key: 'biographies' },
   { path: '/audio', icon: Headphones, label: 'Аудиоуроки', key: 'audio' },
   { path: '/fawaid', icon: Sparkles, label: 'Фаваиды', key: 'fawaid' },
