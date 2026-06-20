@@ -10,6 +10,7 @@ import AudioPlayer from './components/AudioPlayer';
 import HomePage from './pages/HomePage';
 import BooksPage from './pages/BooksPage';
 import BookDetailPage from './pages/BookDetailPage';
+import BookReaderPage from './pages/BookReaderPage';
 import BiographiesPage from './pages/BiographiesPage';
 import BiographyDetailPage from './pages/BiographyDetailPage';
 import AudioPage from './pages/AudioPage';
@@ -67,6 +68,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/books" element={<BooksPage />} />
               <Route path="/books/:id" element={<BookDetailPage />} />
+              <Route path="/read/:id" element={<BookReaderPage />} />
               <Route path="/biographies" element={<BiographiesPage />} />
               <Route path="/biographies/:id" element={<BiographyDetailPage />} />
               <Route path="/audio" element={<AudioPage />} />

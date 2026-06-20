@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Heart, BookOpen, Download, Star } from 'lucide-react';
 import { useStore, Book } from '../store/useStore';
 import toast from 'react-hot-toast';
+import GeneratedCover from './GeneratedCover';
 
 interface Props {
   book: Book;
@@ -66,20 +67,11 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
         <div style={{
           width: '60px',
           height: '80px',
-          background: book.coverColor || '#1a3a2a',
-          borderRadius: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '24px',
           flexShrink: 0,
           boxShadow: '4px 4px 12px rgba(0,0,0,0.4)',
+          overflow: 'hidden',
         }}>
-          {book.coverImage ? (
-            <img src={book.coverImage} alt={`Обложка книги ${book.title}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          ) : (
-            book.coverEmoji || '📖'
-          )}
+          <GeneratedCover book={book} height="100%" width="100%" radius="8px" fontSize={8} compact />
         </div>
 
         {/* Info */}
@@ -138,22 +130,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Pattern */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(212,175,55,0.08) 0%, transparent 60%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%)',
-        }} />
-        {book.coverImage ? (
-          <img
-            src={book.coverImage}
-            alt={`Обложка книги ${book.title}`}
-            loading="lazy"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
-          />
-        ) : (
-          <div style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</div>
-        )}
+        <GeneratedCover book={book} height="100%" width="100%" fontSize={size === 'sm' ? 11 : 13} compact={size === 'sm'} />
 
         {/* Badges */}
         {book.isNew && (

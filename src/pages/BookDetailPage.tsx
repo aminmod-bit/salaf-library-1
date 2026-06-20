@@ -3,6 +3,7 @@ import { Heart, Download, BookOpen, ArrowLeft, Star, Eye, Tag, Clock, Globe, Fil
 import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
 import toast from 'react-hot-toast';
+import GeneratedCover from '../components/GeneratedCover';
 
 export default function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -35,9 +36,9 @@ export default function BookDetailPage() {
       coverColor: book.coverColor, coverEmoji: book.coverEmoji, coverImage: book.coverImage,
     });
     if (book.fileUrl) {
-      window.open(book.fileUrl, '_blank');
+      navigate(`/read/${book.id}`);
     } else {
-      toast('PDF файл недоступен в демо-режиме', { icon: '📖' });
+      toast('PDF файл пока не добавлен', { icon: '📖' });
     }
   };
 
@@ -89,19 +90,7 @@ export default function BookDetailPage() {
             overflow: 'hidden',
             marginBottom: '16px',
           }}>
-            <div style={{
-              position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(212,175,55,0.1) 0%, transparent 60%)',
-            }} />
-            {book.coverImage ? (
-              <img
-                src={book.coverImage}
-                alt={`Обложка книги ${book.title}`}
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
-              />
-            ) : (
-              <span style={{ position: 'relative', zIndex: 1 }}>{book.coverEmoji || '📖'}</span>
-            )}
+            <GeneratedCover book={book} height="100%" width="100%" radius="16px" fontSize={20} />
           </div>
 
           {/* Action buttons */}

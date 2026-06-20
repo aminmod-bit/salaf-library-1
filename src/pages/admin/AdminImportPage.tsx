@@ -14,7 +14,17 @@ interface QueuedBook {
 }
 
 function cleanTitle(fileName: string) {
-  return fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return fileName.replace(/\.[^.]+$/, '').replace(/[_]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function splitTitleAuthor(value: string) {
+  const parts = value.split(/\s+—\s+|\s+-\s+/).map(part => part.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    return { title: parts.slice(0, -1).join(' — '), author: parts.at(-1) || 'Автор не указан' };
+  }
+  const match = value.match(/(.+?)[,\s]+(Усаймин|Ибн Баз|аль[-\s]Альбани|аль[-\s]Фаузан|аль[-\s]Мунаджид|Маджид ибн Сулейман|ан[-\s]Навави|аль[-\s]Аджуррии?й?)$/i);
+  if (match) return { title: match[1].trim(), author: match[2].trim() };
+  return { title: value, author: 'Автор не указан' };
 }
 
 function detectCategory(title: string) {
@@ -40,12 +50,13 @@ export default function AdminImportPage() {
   const appendFiles = (incoming: File[]) => {
     const pdfs = incoming.filter(f => f.name.toLowerCase().endsWith('.pdf'));
     const mapped = pdfs.map((file) => {
-      const title = cleanTitle(file.name);
-      const category = detectCategory(title);
+      const cleaned = cleanTitle(file.name);
+      const { title, author } = splitTitleAuthor(cleaned);
+      const category = detectCategory(cleaned);
       return {
         file,
         title,
-        author: 'Автор не указан',
+        author,
         category,
         description: `Книга «${title}» добавлена в Salaf Library.`,
         tags: category.toLowerCase(),
