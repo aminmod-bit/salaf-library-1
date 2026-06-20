@@ -28,6 +28,7 @@ import GoalsPage from './pages/GoalsPage';
 import ReadingPlansPage from './pages/ReadingPlansPage';
 import AboutPage from './pages/AboutPage';
 import ReportIssuePage from './pages/ReportIssuePage';
+import QuranPage from './pages/QuranPage';
 
 const BookReaderPage = lazy(() => import('./pages/BookReaderPage'));
 
@@ -99,6 +100,7 @@ export default function App() {
               <Route path="/reading-plans" element={<ReadingPlansPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/report" element={<ReportIssuePage />} />
+              <Route path="/quran" element={<QuranPage />} />
             </Routes>
             </Suspense>
           </div>

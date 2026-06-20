@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Menu, Bell, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const pageNames: Record<string, string> = {
   '/': 'Главная',
@@ -16,6 +17,7 @@ const pageNames: Record<string, string> = {
   '/admin': 'Админ-панель',
   '/about': 'О проекте',
   '/report': 'Сообщить об ошибке',
+  '/quran': 'Коран',
 };
 
 export default function Header() {
@@ -108,6 +110,8 @@ export default function Header() {
       </form>
 
       {/* Notification */}
+      <LanguageSwitcher />
+
       <style>{`@media (max-width: 720px) { .header-search { display: none !important; } }`}</style>
 
       <button style={{ 

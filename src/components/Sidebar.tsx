@@ -10,6 +10,7 @@ const navItems = [
   { path: '/', icon: Home, label: 'Главная' },
   { path: '/dashboard', icon: BookOpen, label: 'Панель' },
   { path: '/books', icon: BookOpen, label: 'Книги' },
+  { path: '/quran', icon: BookMarked, label: 'Коран' },
   { path: '/biographies', icon: Users, label: 'Биографии' },
   { path: '/audio', icon: Headphones, label: 'Аудиоуроки' },
   { path: '/fawaid', icon: Sparkles, label: 'Фаваиды' },

@@ -1,0 +1,5 @@
+{
+  "nav": {"home":"Асосӣ","books":"Китобҳо","biographies":"Тарҷумаи ҳол","audio":"Дарсҳои аудио","fawaid":"Фавоид","categories":"Бахшҳо","search":"Ҷустуҷӯ","favorites":"Мунтахаб","history":"Таърих","admin":"Идора","dashboard":"Панел","goals":"Ҳадафҳо","readingPlans":"Нақшаҳо","quran":"Қуръон"},
+  "common": {"loading":"Бор шуда истодааст...","search":"Ҷустуҷӯ","noResults":"Натиҷа нест","page":"Саҳифа","of":"аз","close":"Пӯшидан","save":"Нигоҳ доштан","cancel":"Бекор","delete":"Нест кардан","edit":"Таҳрир","add":"Илова","download":"Боргирӣ","read":"Хондан","listen":"Гӯш кардан","share":"Мубодила","favorite":"Ба мунтахаб","unfavorite":"Аз мунтахаб хориҷ","book":"Китоб","author":"Муаллиф","category":"Бахш","tags":"Тегҳо","description":"Тавсиф","pages":"Саҳифаҳо","language":"Забон","year":"Сол","rating":"Баҳо","downloads":"Боргириҳо","views":"Диданҳо"},
+  "home": {"title":"Salaf Library","subtitle":"Китобхонаи исломии рақамӣ","featuredBooks":"Китобҳои баргузида","popularBooks":"Китобҳои машҳур","newBooks":"Навгониҳо","featuredBiographies":"Тарҷумаҳои баргузида","featuredAudio":"Дарсҳои баргузида","featuredFawaid":"Фавоиди баргузида"}
+}

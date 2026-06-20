@@ -16,7 +16,8 @@
     "import:github-books": "node scripts/import-github-books.mjs https://github.com/aminmod-bit/salaf-library/tree/main/books --mode=link",
     "import:github-books:download": "node scripts/import-github-books.mjs https://github.com/aminmod-bit/salaf-library/tree/main/books --mode=download",
     "polish:data": "node scripts/polish-library-data.mjs",
-    "seo:generate": "node scripts/generate-seo.mjs"
+    "seo:generate": "node scripts/generate-seo.mjs",
+    "metadata:enrich": "node scripts/enrich-book-metadata.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",
