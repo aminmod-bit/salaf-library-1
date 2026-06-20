@@ -15,7 +15,8 @@
     "readingPlans": "Планы чтения",
     "quran": "Коран",
     "about": "О проекте",
-    "report": "Ошибка"
+    "report": "Ошибка",
+    "bookLanguages": "Языки книг"
   },
   "common": {
     "loading": "Загрузка...",
@@ -45,7 +46,18 @@
     "year": "Год",
     "rating": "Рейтинг",
     "downloads": "Загрузок",
-    "views": "Просмотров"
+    "views": "Просмотров",
+    "all": "Все",
+    "allLanguages": "Все языки",
+    "russian": "Русский",
+    "arabic": "Арабский",
+    "english": "Английский",
+    "tajik": "Таджикский",
+    "uzbek": "Узбекский",
+    "persian": "Персидский",
+    "open": "Открыть",
+    "online": "Онлайн",
+    "apply": "Применить"
   },
   "home": {
     "title": "Salaf Library",
@@ -55,7 +67,23 @@
     "newBooks": "Новые поступления",
     "featuredBiographies": "Избранные биографии",
     "featuredAudio": "Избранные уроки",
-    "featuredFawaid": "Избранные фаваиды"
+    "featuredFawaid": "Избранные фаваиды",
+    "heroAyah": "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
+    "description": "Исламская цифровая библиотека — книги, биографии, аудиоуроки, Коран и фаваиды учёных Ислама в одном месте.",
+    "readBooks": "Читать книги",
+    "listenLessons": "Слушать уроки",
+    "catalog": "Весь каталог",
+    "statsBooks": "Книг",
+    "statsBiographies": "Биографий",
+    "statsAudio": "Аудиоуроков",
+    "statsFawaid": "Фаваидов",
+    "categories": "Категории",
+    "seeAll": "Смотреть все",
+    "latestLessons": "Последние уроки",
+    "latestFawaid": "Последние фаваиды",
+    "scholars": "Биографии учёных",
+    "randomBook": "Случайная книга",
+    "anotherBook": "Другая книга"
   },
   "biographies": {
     "title": "Биографии",
@@ -103,5 +131,31 @@
     "completed": "Выполненные",
     "plan": "План",
     "stats": "Статистика"
+  },
+  "booksPage": {
+    "title": "Книги для онлайн-чтения",
+    "eyebrow": "Каталог Salaf Library",
+    "description": "Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.",
+    "books": "Книг",
+    "authors": "Авторов",
+    "categories": "Категорий",
+    "withPdf": "С PDF",
+    "searchPlaceholder": "Поиск книг...",
+    "allCategories": "Все категории",
+    "notFound": "Ничего не найдено",
+    "notFoundHint": "Попробуйте изменить фильтры",
+    "sortPopular": "По популярности",
+    "sortNew": "Новинки",
+    "sortTitle": "По названию",
+    "sortAuthor": "По автору",
+    "sortRating": "По рейтингу",
+    "languageSections": "Книги по языкам"
+  },
+  "about": {
+    "eyebrow": "О проекте",
+    "title": "Salaf Library — исламская цифровая библиотека для ежедневного чтения"
+  },
+  "report": {
+    "title": "Сообщить об ошибке"
   }
 }

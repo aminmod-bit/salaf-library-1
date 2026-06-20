@@ -15,7 +15,8 @@
     "readingPlans": "Нақшаҳо",
     "quran": "Қуръон",
     "about": "Дар бораи лоиҳа",
-    "report": "Хато"
+    "report": "Хато",
+    "bookLanguages": "Забонҳои китобҳо"
   },
   "common": {
     "loading": "Бор шуда истодааст...",
@@ -45,7 +46,18 @@
     "year": "Сол",
     "rating": "Баҳо",
     "downloads": "Боргириҳо",
-    "views": "Диданҳо"
+    "views": "Диданҳо",
+    "all": "Ҳама",
+    "allLanguages": "Ҳама забонҳо",
+    "russian": "Русӣ",
+    "arabic": "Арабӣ",
+    "english": "Англисӣ",
+    "tajik": "Тоҷикӣ",
+    "uzbek": "Ӯзбекӣ",
+    "persian": "Форсӣ",
+    "open": "Кушодан",
+    "online": "Онлайн",
+    "apply": "Татбиқ"
   },
   "home": {
     "title": "Salaf Library",
@@ -55,6 +67,48 @@
     "newBooks": "Навгониҳо",
     "featuredBiographies": "Тарҷумаҳои баргузида",
     "featuredAudio": "Дарсҳои баргузида",
-    "featuredFawaid": "Фавоиди баргузида"
+    "featuredFawaid": "Фавоиди баргузида",
+    "heroAyah": "Бихон ба номи Парвардигорат",
+    "description": "Китобхонаи рақамии исломӣ: китобҳо, тарҷумаи ҳол, аудио, Қуръон ва фавоид дар як ҷо.",
+    "readBooks": "Китоб хондан",
+    "listenLessons": "Гӯш кардан",
+    "catalog": "Каталог",
+    "statsBooks": "Китобҳо",
+    "statsBiographies": "Тарҷумаҳо",
+    "statsAudio": "Аудиодарсҳо",
+    "statsFawaid": "Фавоид",
+    "categories": "Бахшҳо",
+    "seeAll": "Ҳамаро дидан",
+    "latestLessons": "Дарсҳои охирин",
+    "latestFawaid": "Фавоиди охирин",
+    "scholars": "Тарҷумаи уламo",
+    "randomBook": "Китоби тасодуфӣ",
+    "anotherBook": "Китоби дигар"
+  },
+  "booksPage": {
+    "title": "Китобҳо барои хондани онлайн",
+    "eyebrow": "Каталоги Salaf Library",
+    "description": "Барои пайдо кардани маводи зарурӣ аз ҷустуҷӯ, бахшҳо ва тартиб истифода баред.",
+    "books": "Китобҳо",
+    "authors": "Муаллифон",
+    "categories": "Бахшҳо",
+    "withPdf": "Бо PDF",
+    "searchPlaceholder": "Ҷустуҷӯи китоб...",
+    "allCategories": "Ҳама бахшҳо",
+    "notFound": "Натиҷа нест",
+    "notFoundHint": "Филтрҳоро дигар кунед",
+    "sortPopular": "Машҳур",
+    "sortNew": "Нав",
+    "sortTitle": "Аз рӯи ном",
+    "sortAuthor": "Аз рӯи муаллиф",
+    "sortRating": "Аз рӯи баҳо",
+    "languageSections": "Китобҳо аз рӯи забон"
+  },
+  "about": {
+    "eyebrow": "Дар бораи лоиҳа",
+    "title": "Salaf Library — китобхонаи исломии рақамӣ барои хондани ҳаррӯза"
+  },
+  "report": {
+    "title": "Хабар додан аз хато"
   }
 }

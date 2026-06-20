@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
 import { BookOpen, Headphones, Play, ChevronRight, Shuffle, BookMarked, Star, Zap, Clock } from 'lucide-react';
 
 export default function HomePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     books, audioLessons, biographies, fawaid, categories,
@@ -89,30 +91,30 @@ export default function HomePage() {
             Salaf Library
           </h1>
           <p style={{ fontSize: '16px', color: '#9db8a3', marginBottom: '28px', maxWidth: '500px' }}>
-            Исламская цифровая библиотека — книги, биографии, аудиоуроки и фаваиды учёных Ислама в одном месте.
+            {t('home.description', 'Исламская цифровая библиотека — книги, биографии, аудиоуроки и фаваиды учёных Ислама в одном месте.')}
           </p>
 
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <button className="btn-primary" onClick={() => navigate('/books')}>
               <BookOpen size={16} />
-              Читать книги
+              {t('home.readBooks', 'Читать книги')}
             </button>
             <button className="btn-secondary" onClick={() => navigate('/audio')}>
               <Headphones size={16} />
-              Слушать уроки
+              {t('home.listenLessons', 'Слушать уроки')}
             </button>
             <button className="btn-ghost" onClick={() => navigate('/search')}>
-              Весь каталог
+              {t('home.catalog', 'Весь каталог')}
             </button>
           </div>
 
           {/* Quick stats */}
           <div style={{ display: 'flex', gap: '24px', marginTop: '28px', flexWrap: 'wrap' }}>
             {[
-              { label: 'Книг', value: books.length + '+', icon: '📚' },
-              { label: 'Биографий', value: biographies.length + '+', icon: '👤' },
-              { label: 'Аудиоуроков', value: audioLessons.length + '+', icon: '🎧' },
-              { label: 'Фаваидов', value: fawaid.length + '+', icon: '💎' },
+              { label: t('home.statsBooks', 'Книг'), value: books.length + '+', icon: '📚' },
+              { label: t('home.statsBiographies', 'Биографий'), value: biographies.length + '+', icon: '👤' },
+              { label: t('home.statsAudio', 'Аудиоуроков'), value: audioLessons.length + '+', icon: '🎧' },
+              { label: t('home.statsFawaid', 'Фаваидов'), value: fawaid.length + '+', icon: '💎' },
             ].map(({ label, value, icon }) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '18px' }}>{icon}</span>
@@ -241,7 +243,7 @@ export default function HomePage() {
       )}
 
       {/* Categories */}
-      <Section title="📂 Категории" onMore={() => navigate('/categories')}>
+      <Section title={`📂 ${t('home.categories', 'Категории')}`}  onMore={() => navigate('/categories')}>
         <div className="scroll-row">
           {categories.filter(cat => (cat.count || 0) > 0).map(cat => (
             <div
@@ -280,7 +282,7 @@ export default function HomePage() {
       </Section>
 
       {/* Featured Books */}
-      <Section title="⭐ Лучшие книги" onMore={() => navigate('/books')}>
+      <Section title={`⭐ ${t('home.featuredBooks', 'Лучшие книги')}`}  onMore={() => navigate('/books')}>
         <div className="scroll-row">
           {featuredBooks.map(book => (
             <div key={book.id} style={{ flexShrink: 0 }}>
@@ -292,7 +294,7 @@ export default function HomePage() {
 
       {/* New Books */}
       {newBooks.length > 0 && (
-        <Section title="🆕 Новинки" onMore={() => navigate('/books?filter=new')}>
+        <Section title={`🆕 ${t('home.newBooks', 'Новинки')}`}  onMore={() => navigate('/books?filter=new')}>
           <div className="scroll-row">
             {newBooks.map(book => (
               <div key={book.id} style={{ flexShrink: 0 }}>
@@ -304,7 +306,7 @@ export default function HomePage() {
       )}
 
       {/* Popular Books */}
-      <Section title="🔥 Популярные книги" onMore={() => navigate('/books?filter=popular')}>
+      <Section title={`🔥 ${t('home.popularBooks', 'Популярные книги')}`}  onMore={() => navigate('/books?filter=popular')}>
         <div className="scroll-row">
           {popularBooks.map(book => (
             <div key={book.id} style={{ flexShrink: 0 }}>
@@ -315,7 +317,7 @@ export default function HomePage() {
       </Section>
 
       {/* New Audio */}
-      <Section title="🎧 Последние уроки" onMore={() => navigate('/audio')}>
+      <Section title={`🎧 ${t('home.latestLessons', 'Последние уроки')}`}  onMore={() => navigate('/audio')}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
           {newAudio.slice(0, 4).concat(audioLessons.slice(0, Math.max(0, 4 - newAudio.length))).slice(0, 4).map(audio => (
             <div
@@ -360,7 +362,7 @@ export default function HomePage() {
       </Section>
 
       {/* Fawaid */}
-      <Section title="💎 Последние фаваиды" onMore={() => navigate('/fawaid')}>
+      <Section title={`💎 ${t('home.latestFawaid', 'Последние фаваиды')}`}  onMore={() => navigate('/fawaid')}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
           {featuredFawaid.map(f => (
             <div
@@ -404,7 +406,7 @@ export default function HomePage() {
       </Section>
 
       {/* Biographies */}
-      <Section title="👤 Биографии учёных" onMore={() => navigate('/biographies')}>
+      <Section title={`👤 ${t('home.scholars', 'Биографии учёных')}`}  onMore={() => navigate('/biographies')}>
         <div className="scroll-row">
           {featuredBios.map(bio => (
             <div
@@ -471,7 +473,7 @@ export default function HomePage() {
 
       {/* Random Book */}
       {randomBook && (
-        <Section title="🎲 Случайная книга">
+        <Section title={`🎲 ${t('home.randomBook', 'Случайная книга')}`}>
           <div style={{
             display: 'flex', gap: '24px',
             padding: '24px',
@@ -505,7 +507,7 @@ export default function HomePage() {
                 </button>
                 <button className="btn-ghost" onClick={() => window.location.reload()}>
                   <Shuffle size={14} />
-                  Другая книга
+                  {t('home.anotherBook', 'Другая книга')}
                 </button>
               </div>
             </div>
@@ -552,7 +554,7 @@ export default function HomePage() {
   );
 }
 
-function Section({ title, children, onMore }: { title: string; children: React.ReactNode; onMore?: () => void }) {
+function Section({ title, children, onMore, moreLabel = 'Смотреть все' }: { title: string; children: React.ReactNode; onMore?: () => void; moreLabel?: string }) {
   return (
     <div style={{ marginBottom: '36px' }}>
       <div style={{
@@ -570,7 +572,7 @@ function Section({ title, children, onMore }: { title: string; children: React.R
               cursor: 'pointer',
             }}
           >
-            Смотреть все <ChevronRight size={14} />
+            {moreLabel} <ChevronRight size={14} />
           </button>
         )}
       </div>

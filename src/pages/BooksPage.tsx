@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Filter, Grid3X3, List, SlidersHorizontal } from 'lucide-react';
 import { useStore } from '../store/useStore';
@@ -13,6 +14,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function BooksPage() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const { books, categories } = useStore();
   const [search, setSearch] = useState('');
@@ -70,20 +72,20 @@ export default function BooksPage() {
       {/* Header */}
       <div className="glass-card" style={{ marginBottom: '24px', padding: '28px', background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
         <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>
-          Каталог Salaf Library
+          {t('booksPage.eyebrow', 'Каталог Salaf Library')}
         </div>
         <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: '#f0f4f1', marginBottom: '10px', lineHeight: 1.08 }}>
-          📚 Книги для онлайн-чтения
+          📚 {t('booksPage.title', 'Книги для онлайн-чтения')}
         </h1>
         <p style={{ color: '#9db8a3', fontSize: '15px', lineHeight: 1.7, maxWidth: 760 }}>
-          {filtered.length} книг из {books.length} в каталоге. Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.
+          {filtered.length} / {books.length}. {t('booksPage.description', 'Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.')}
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 18 }}>
           {[
-            ['Книг', books.length],
-            ['Авторов', authorsCount],
-            ['Категорий', categoryStats.length],
-            ['С PDF', books.filter(b => b.fileUrl).length],
+            [t('booksPage.books', 'Книг'), books.length],
+            [t('booksPage.authors', 'Авторов'), authorsCount],
+            [t('booksPage.categories', 'Категорий'), categoryStats.length],
+            [t('booksPage.withPdf', 'С PDF'), books.filter(b => b.fileUrl).length],
           ].map(([label, value]) => (
             <div key={label} style={{ padding: '10px 14px', border: '1px solid rgba(212,175,55,.18)', borderRadius: 12, background: 'rgba(255,255,255,.035)' }}>
               <div style={{ color: '#d4af37', fontWeight: 900, fontSize: 18 }}>{value}</div>
@@ -118,7 +120,7 @@ export default function BooksPage() {
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Поиск книг..."
+            placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')}
             style={{
               background: 'none', border: 'none', outline: 'none',
               color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit', width: '100%',
@@ -138,7 +140,7 @@ export default function BooksPage() {
             outline: 'none', cursor: 'pointer',
           }}
         >
-          {SORT_OPTIONS.map(o => <option key={o.value} value={o.value} style={{ background: '#112a1a' }}>{o.label}</option>)}
+          {SORT_OPTIONS.map(o => <option key={o.value} value={o.value} style={{ background: '#112a1a' }}>{t(`booksPage.sort${o.value.charAt(0).toUpperCase() + o.value.slice(1)}`, o.label)}</option>)}
         </select>
 
         {/* Lang filter */}
@@ -153,9 +155,13 @@ export default function BooksPage() {
             outline: 'none', cursor: 'pointer',
           }}
         >
-          <option value="all" style={{ background: '#112a1a' }}>Все языки</option>
-          <option value="Русский" style={{ background: '#112a1a' }}>Русский</option>
-          <option value="Арабский" style={{ background: '#112a1a' }}>Арабский</option>
+          <option value="all" style={{ background: '#112a1a' }}>{t('common.allLanguages', 'Все языки')}</option>
+          <option value="Русский" style={{ background: '#112a1a' }}>{t('common.russian', 'Русский')}</option>
+          <option value="Арабский" style={{ background: '#112a1a' }}>{t('common.arabic', 'Арабский')}</option>
+          <option value="Английский" style={{ background: '#112a1a' }}>{t('common.english', 'Английский')}</option>
+          <option value="Таджикский" style={{ background: '#112a1a' }}>{t('common.tajik', 'Таджикский')}</option>
+          <option value="Узбекский" style={{ background: '#112a1a' }}>{t('common.uzbek', 'Узбекский')}</option>
+          <option value="Персидский" style={{ background: '#112a1a' }}>{t('common.persian', 'Персидский')}</option>
         </select>
 
         {/* View toggle */}
@@ -189,7 +195,7 @@ export default function BooksPage() {
           onClick={() => setSelectedCat('all')}
           className={`tag ${selectedCat === 'all' ? 'active' : ''}`}
         >
-          Все категории
+          {t('booksPage.allCategories', 'Все категории')}
         </button>
         {categoryStats.map(cat => (
           <button
@@ -206,8 +212,8 @@ export default function BooksPage() {
       {filtered.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px', color: '#5a7a63' }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>📭</div>
-          <div style={{ fontSize: '18px', fontWeight: 600, color: '#9db8a3', marginBottom: '8px' }}>Ничего не найдено</div>
-          <div style={{ fontSize: '14px' }}>Попробуйте изменить фильтры</div>
+          <div style={{ fontSize: '18px', fontWeight: 600, color: '#9db8a3', marginBottom: '8px' }}>{t('booksPage.notFound', 'Ничего не найдено')}</div>
+          <div style={{ fontSize: '14px' }}>{t('booksPage.notFoundHint', 'Попробуйте изменить фильтры')}</div>
         </div>
       ) : view === 'grid' ? (
         <div className="books-grid">

@@ -15,7 +15,8 @@
     "readingPlans": "برنامه‌ها",
     "quran": "قرآن",
     "about": "درباره پروژه",
-    "report": "گزارش"
+    "report": "گزارش",
+    "bookLanguages": "زبان کتاب‌ها"
   },
   "common": {
     "loading": "در حال بارگذاری...",
@@ -45,7 +46,18 @@
     "year": "سال",
     "rating": "امتیاز",
     "downloads": "دانلودها",
-    "views": "بازدیدها"
+    "views": "بازدیدها",
+    "all": "همه",
+    "allLanguages": "همه زبان‌ها",
+    "russian": "روسی",
+    "arabic": "عربی",
+    "english": "انگلیسی",
+    "tajik": "تاجیکی",
+    "uzbek": "ازبکی",
+    "persian": "فارسی",
+    "open": "باز کردن",
+    "online": "آنلاین",
+    "apply": "اعمال"
   },
   "home": {
     "title": "Salaf Library",
@@ -55,6 +67,48 @@
     "newBooks": "تازه‌ها",
     "featuredBiographies": "زندگی‌نامه‌های منتخب",
     "featuredAudio": "درس‌های منتخب",
-    "featuredFawaid": "فواید منتخب"
+    "featuredFawaid": "فواید منتخب",
+    "heroAyah": "بخوان به نام پروردگارت",
+    "description": "کتابخانه دیجیتال اسلامی برای کتاب‌ها، زندگی‌نامه‌ها، درس‌های صوتی، قرآن و فواید در یک مکان.",
+    "readBooks": "خواندن کتاب‌ها",
+    "listenLessons": "شنیدن",
+    "catalog": "فهرست",
+    "statsBooks": "کتاب‌ها",
+    "statsBiographies": "زندگی‌نامه‌ها",
+    "statsAudio": "درس‌های صوتی",
+    "statsFawaid": "فواید",
+    "categories": "دسته‌ها",
+    "seeAll": "مشاهده همه",
+    "latestLessons": "آخرین درس‌ها",
+    "latestFawaid": "آخرین فواید",
+    "scholars": "زندگی‌نامه علما",
+    "randomBook": "کتاب تصادفی",
+    "anotherBook": "کتاب دیگر"
+  },
+  "booksPage": {
+    "title": "کتاب‌ها برای خواندن آنلاین",
+    "eyebrow": "فهرست Salaf Library",
+    "description": "برای یافتن سریع مطالب از جستجو، دسته‌ها و مرتب‌سازی استفاده کنید.",
+    "books": "کتاب‌ها",
+    "authors": "نویسندگان",
+    "categories": "دسته‌ها",
+    "withPdf": "دارای PDF",
+    "searchPlaceholder": "جستجوی کتاب...",
+    "allCategories": "همه دسته‌ها",
+    "notFound": "نتیجه‌ای یافت نشد",
+    "notFoundHint": "فیلترها را تغییر دهید",
+    "sortPopular": "محبوب‌ترین",
+    "sortNew": "جدید",
+    "sortTitle": "بر اساس عنوان",
+    "sortAuthor": "بر اساس نویسنده",
+    "sortRating": "بر اساس امتیاز",
+    "languageSections": "کتاب‌ها بر اساس زبان"
+  },
+  "about": {
+    "eyebrow": "درباره پروژه",
+    "title": "Salaf Library — کتابخانه اسلامی دیجیتال برای مطالعه روزانه"
+  },
+  "report": {
+    "title": "گزارش خطا"
   }
 }

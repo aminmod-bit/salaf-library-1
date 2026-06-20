@@ -15,7 +15,8 @@
     "readingPlans": "Reading Plans",
     "quran": "Quran",
     "about": "About",
-    "report": "Report"
+    "report": "Report",
+    "bookLanguages": "Book Languages"
   },
   "common": {
     "loading": "Loading...",
@@ -45,7 +46,18 @@
     "year": "Year",
     "rating": "Rating",
     "downloads": "Downloads",
-    "views": "Views"
+    "views": "Views",
+    "all": "All",
+    "allLanguages": "All languages",
+    "russian": "Russian",
+    "arabic": "Arabic",
+    "english": "English",
+    "tajik": "Tajik",
+    "uzbek": "Uzbek",
+    "persian": "Persian",
+    "open": "Open",
+    "online": "Online",
+    "apply": "Apply"
   },
   "home": {
     "title": "Salaf Library",
@@ -55,7 +67,23 @@
     "newBooks": "New Arrivals",
     "featuredBiographies": "Featured Biographies",
     "featuredAudio": "Featured Lessons",
-    "featuredFawaid": "Featured Benefits"
+    "featuredFawaid": "Featured Benefits",
+    "heroAyah": "Read in the name of your Lord who created",
+    "description": "An Islamic digital library for books, biographies, audio lessons, Quran and scholarly benefits in one place.",
+    "readBooks": "Read books",
+    "listenLessons": "Listen",
+    "catalog": "Catalog",
+    "statsBooks": "Books",
+    "statsBiographies": "Biographies",
+    "statsAudio": "Audio lessons",
+    "statsFawaid": "Benefits",
+    "categories": "Categories",
+    "seeAll": "See all",
+    "latestLessons": "Latest lessons",
+    "latestFawaid": "Latest benefits",
+    "scholars": "Scholar biographies",
+    "randomBook": "Random book",
+    "anotherBook": "Another book"
   },
   "biographies": {
     "title": "Biographies",
@@ -103,5 +131,31 @@
     "completed": "Completed",
     "plan": "Plan",
     "stats": "Statistics"
+  },
+  "booksPage": {
+    "title": "Books for online reading",
+    "eyebrow": "Salaf Library Catalog",
+    "description": "Use search, categories and sorting to find the material you need quickly.",
+    "books": "Books",
+    "authors": "Authors",
+    "categories": "Categories",
+    "withPdf": "With PDF",
+    "searchPlaceholder": "Search books...",
+    "allCategories": "All categories",
+    "notFound": "No results found",
+    "notFoundHint": "Try changing filters",
+    "sortPopular": "Most popular",
+    "sortNew": "New",
+    "sortTitle": "By title",
+    "sortAuthor": "By author",
+    "sortRating": "By rating",
+    "languageSections": "Books by language"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "Salaf Library — an Islamic digital library for daily reading"
+  },
+  "report": {
+    "title": "Report an issue"
   }
 }

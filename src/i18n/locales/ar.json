@@ -15,7 +15,8 @@
     "readingPlans": "خطط القراءة",
     "quran": "القرآن",
     "about": "عن المشروع",
-    "report": "بلاغ"
+    "report": "بلاغ",
+    "bookLanguages": "لغات الكتب"
   },
   "common": {
     "loading": "جارٍ التحميل...",
@@ -45,7 +46,18 @@
     "year": "السنة",
     "rating": "التقييم",
     "downloads": "التحميلات",
-    "views": "المشاهدات"
+    "views": "المشاهدات",
+    "all": "الكل",
+    "allLanguages": "كل اللغات",
+    "russian": "الروسية",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
+    "tajik": "الطاجيكية",
+    "uzbek": "الأوزبكية",
+    "persian": "الفارسية",
+    "open": "فتح",
+    "online": "متصل",
+    "apply": "تطبيق"
   },
   "home": {
     "title": "مكتبة السلف",
@@ -55,7 +67,23 @@
     "newBooks": "الإضافات الجديدة",
     "featuredBiographies": "التراجم المميزة",
     "featuredAudio": "الدروس المميزة",
-    "featuredFawaid": "الفوائد المميزة"
+    "featuredFawaid": "الفوائد المميزة",
+    "heroAyah": "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
+    "description": "مكتبة إسلامية رقمية للكتب والتراجم والدروس الصوتية والقرآن والفوائد في مكان واحد.",
+    "readBooks": "قراءة الكتب",
+    "listenLessons": "استماع الدروس",
+    "catalog": "الفهرس",
+    "statsBooks": "كتب",
+    "statsBiographies": "تراجم",
+    "statsAudio": "دروس صوتية",
+    "statsFawaid": "فوائد",
+    "categories": "التصنيفات",
+    "seeAll": "عرض الكل",
+    "latestLessons": "آخر الدروس",
+    "latestFawaid": "آخر الفوائد",
+    "scholars": "تراجم العلماء",
+    "randomBook": "كتاب عشوائي",
+    "anotherBook": "كتاب آخر"
   },
   "biographies": {
     "title": "التراجم",
@@ -103,5 +131,31 @@
     "completed": "المكتملة",
     "plan": "الخطة",
     "stats": "الإحصائيات"
+  },
+  "booksPage": {
+    "title": "كتب للقراءة المباشرة",
+    "eyebrow": "فهرس مكتبة السلف",
+    "description": "استخدم البحث والتصنيفات والترتيب للوصول إلى المادة المطلوبة بسرعة.",
+    "books": "كتب",
+    "authors": "مؤلفون",
+    "categories": "تصنيفات",
+    "withPdf": "PDF",
+    "searchPlaceholder": "ابحث في الكتب...",
+    "allCategories": "كل التصنيفات",
+    "notFound": "لا توجد نتائج",
+    "notFoundHint": "جرّب تغيير المرشحات",
+    "sortPopular": "الأكثر شيوعًا",
+    "sortNew": "الجديد",
+    "sortTitle": "حسب العنوان",
+    "sortAuthor": "حسب المؤلف",
+    "sortRating": "حسب التقييم",
+    "languageSections": "الكتب حسب اللغة"
+  },
+  "about": {
+    "eyebrow": "عن المشروع",
+    "title": "مكتبة السلف — مكتبة إسلامية رقمية للقراءة اليومية"
+  },
+  "report": {
+    "title": "الإبلاغ عن خطأ"
   }
 }

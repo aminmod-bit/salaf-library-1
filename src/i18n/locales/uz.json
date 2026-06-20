@@ -15,7 +15,8 @@
     "readingPlans": "Rejalar",
     "quran": "Qur’on",
     "about": "Loyiha haqida",
-    "report": "Xato"
+    "report": "Xato",
+    "bookLanguages": "Kitob tillari"
   },
   "common": {
     "loading": "Yuklanmoqda...",
@@ -45,7 +46,18 @@
     "year": "Yil",
     "rating": "Reyting",
     "downloads": "Yuklab olishlar",
-    "views": "Ko‘rishlar"
+    "views": "Ko‘rishlar",
+    "all": "Hammasi",
+    "allLanguages": "Barcha tillar",
+    "russian": "Ruscha",
+    "arabic": "Arabcha",
+    "english": "Inglizcha",
+    "tajik": "Tojikcha",
+    "uzbek": "O‘zbekcha",
+    "persian": "Forscha",
+    "open": "Ochish",
+    "online": "Onlayn",
+    "apply": "Qo‘llash"
   },
   "home": {
     "title": "Salaf Library",
@@ -55,6 +67,48 @@
     "newBooks": "Yangi kitoblar",
     "featuredBiographies": "Tanlangan tarjimai hollar",
     "featuredAudio": "Tanlangan darslar",
-    "featuredFawaid": "Tanlangan favoid"
+    "featuredFawaid": "Tanlangan favoid",
+    "heroAyah": "Yaratgan Robbing nomi bilan o‘qi",
+    "description": "Kitoblar, tarjimai hollar, audio darslar, Qur’on va favoid uchun islomiy raqamli kutubxona.",
+    "readBooks": "Kitob o‘qish",
+    "listenLessons": "Tinglash",
+    "catalog": "Katalog",
+    "statsBooks": "Kitoblar",
+    "statsBiographies": "Tarjimai hollar",
+    "statsAudio": "Audio darslar",
+    "statsFawaid": "Favoid",
+    "categories": "Bo‘limlar",
+    "seeAll": "Hammasini ko‘rish",
+    "latestLessons": "So‘nggi darslar",
+    "latestFawaid": "So‘nggi favoid",
+    "scholars": "Ulamolar tarjimai holi",
+    "randomBook": "Tasodifiy kitob",
+    "anotherBook": "Boshqa kitob"
+  },
+  "booksPage": {
+    "title": "Onlayn o‘qish uchun kitoblar",
+    "eyebrow": "Salaf Library katalogi",
+    "description": "Kerakli materialni tez topish uchun qidiruv, bo‘limlar va saralashdan foydalaning.",
+    "books": "Kitoblar",
+    "authors": "Mualliflar",
+    "categories": "Bo‘limlar",
+    "withPdf": "PDF bor",
+    "searchPlaceholder": "Kitob qidirish...",
+    "allCategories": "Barcha bo‘limlar",
+    "notFound": "Natija topilmadi",
+    "notFoundHint": "Filtrlarni o‘zgartirib ko‘ring",
+    "sortPopular": "Mashhur",
+    "sortNew": "Yangi",
+    "sortTitle": "Nomi bo‘yicha",
+    "sortAuthor": "Muallif bo‘yicha",
+    "sortRating": "Reyting bo‘yicha",
+    "languageSections": "Kitoblar til bo‘yicha"
+  },
+  "about": {
+    "eyebrow": "Loyiha haqida",
+    "title": "Salaf Library — har kuni o‘qish uchun islomiy raqamli kutubxona"
+  },
+  "report": {
+    "title": "Xato haqida xabar berish"
   }
 }
