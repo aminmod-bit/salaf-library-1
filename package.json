@@ -12,7 +12,9 @@
     "import:audio": "node scripts/import-content.mjs audio",
     "import:biographies": "node scripts/import-content.mjs biographies",
     "import:fawaid": "node scripts/import-content.mjs fawaid",
-    "import:all": "node scripts/import-content.mjs all"
+    "import:all": "node scripts/import-content.mjs all",
+    "import:github-books": "node scripts/import-github-books.mjs https://github.com/aminmod-bit/salaf-library/tree/main/books --mode=link",
+    "import:github-books:download": "node scripts/import-github-books.mjs https://github.com/aminmod-bit/salaf-library/tree/main/books --mode=download"
   },
   "dependencies": {
     "clsx": "2.1.1",
