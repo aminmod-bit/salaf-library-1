@@ -53,21 +53,44 @@ export default function BooksPage() {
     return result;
   }, [books, search, selectedCat, sort, lang]);
 
-  const bookCategories = useMemo(() => {
-    const cats = new Set(books.map(b => b.category));
-    return Array.from(cats);
+  const categoryStats = useMemo(() => {
+    const counts = books.reduce<Record<string, number>>((acc, book) => {
+      acc[book.category] = (acc[book.category] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.entries(counts)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
   }, [books]);
+
+  const authorsCount = useMemo(() => new Set(books.map(b => b.author).filter(Boolean)).size, [books]);
 
   return (
     <div className="fade-in" style={{ maxWidth: '1400px', margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#f0f4f1', marginBottom: '6px' }}>
-          📚 Книги
+      <div className="glass-card" style={{ marginBottom: '24px', padding: '28px', background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
+        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>
+          Каталог Salaf Library
+        </div>
+        <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: '#f0f4f1', marginBottom: '10px', lineHeight: 1.08 }}>
+          📚 Книги для онлайн-чтения
         </h1>
-        <p style={{ color: '#9db8a3', fontSize: '14px' }}>
-          {filtered.length} книг из {books.length} в каталоге
+        <p style={{ color: '#9db8a3', fontSize: '15px', lineHeight: 1.7, maxWidth: 760 }}>
+          {filtered.length} книг из {books.length} в каталоге. Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.
         </p>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 18 }}>
+          {[
+            ['Книг', books.length],
+            ['Авторов', authorsCount],
+            ['Категорий', categoryStats.length],
+            ['С PDF', books.filter(b => b.fileUrl).length],
+          ].map(([label, value]) => (
+            <div key={label} style={{ padding: '10px 14px', border: '1px solid rgba(212,175,55,.18)', borderRadius: 12, background: 'rgba(255,255,255,.035)' }}>
+              <div style={{ color: '#d4af37', fontWeight: 900, fontSize: 18 }}>{value}</div>
+              <div style={{ color: '#5a7a63', fontSize: 11, fontWeight: 700 }}>{label}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Filters bar */}
@@ -168,13 +191,13 @@ export default function BooksPage() {
         >
           Все категории
         </button>
-        {bookCategories.map(cat => (
+        {categoryStats.map(cat => (
           <button
-            key={cat}
-            onClick={() => setSelectedCat(cat)}
-            className={`tag ${selectedCat === cat ? 'active' : ''}`}
+            key={cat.name}
+            onClick={() => setSelectedCat(cat.name)}
+            className={`tag ${selectedCat === cat.name ? 'active' : ''}`}
           >
-            {cat}
+            {cat.name} · {cat.count}
           </button>
         ))}
       </div>

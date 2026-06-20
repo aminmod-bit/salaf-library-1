@@ -243,7 +243,7 @@ export default function HomePage() {
       {/* Categories */}
       <Section title="📂 Категории" onMore={() => navigate('/categories')}>
         <div className="scroll-row">
-          {categories.map(cat => (
+          {categories.filter(cat => (cat.count || 0) > 0).map(cat => (
             <div
               key={cat.id}
               onClick={() => navigate(`/books?category=${cat.name}`)}

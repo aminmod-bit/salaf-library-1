@@ -14,6 +14,8 @@ const pageNames: Record<string, string> = {
   '/history': 'История',
   '/categories': 'Категории',
   '/admin': 'Админ-панель',
+  '/about': 'О проекте',
+  '/report': 'Сообщить об ошибке',
 };
 
 export default function Header() {

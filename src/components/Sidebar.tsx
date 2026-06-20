@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
-  X, BookMarked, Star
+  X, BookMarked, Star, Info, MessageSquare
 } from 'lucide-react';
 
 const navItems = [
@@ -22,6 +22,8 @@ const userItems = [
   { path: '/history', icon: Clock, label: 'История' },
   { path: '/goals', icon: Sparkles, label: 'Цели' },
   { path: '/reading-plans', icon: BookOpen, label: 'Планы' },
+  { path: '/about', icon: Info, label: 'О проекте' },
+  { path: '/report', icon: MessageSquare, label: 'Ошибка' },
 ];
 
 export default function Sidebar() {
