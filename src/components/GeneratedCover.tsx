@@ -1,13 +1,16 @@
+import { useEffect, useRef, useState } from 'react';
 import type { Book } from '../store/useStore';
 
 interface Props {
-  book: Pick<Book, 'title' | 'author' | 'category' | 'coverColor' | 'coverEmoji' | 'coverImage'>;
+  book: Pick<Book, 'title' | 'author' | 'category' | 'coverColor' | 'coverEmoji' | 'coverImage' | 'fileUrl'>;
   height?: string | number;
   width?: string | number;
   radius?: string | number;
   fontSize?: number;
   compact?: boolean;
 }
+
+let pdfWorkerReady = false;
 
 function darken(hex = '#1a3a2a', amount = 28) {
   try {
@@ -21,7 +24,91 @@ function darken(hex = '#1a3a2a', amount = 28) {
   }
 }
 
+function toAbsoluteUrl(url: string) {
+  try {
+    return new URL(url, document.baseURI).toString();
+  } catch {
+    return url;
+  }
+}
+
 export default function GeneratedCover({ book, height = '100%', width = '100%', radius = 0, fontSize = 14, compact = false }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [pdfRendered, setPdfRendered] = useState(false);
+  const [pdfFailed, setPdfFailed] = useState(false);
+
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node || book.coverImage || !book.fileUrl || pdfFailed) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '420px' }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [book.coverImage, book.fileUrl, pdfFailed]);
+
+  useEffect(() => {
+    if (!visible || book.coverImage || !book.fileUrl || !canvasRef.current || pdfRendered || pdfFailed) return;
+    let cancelled = false;
+
+    async function renderFirstPage() {
+      try {
+        const [{ GlobalWorkerOptions, getDocument }, worker] = await Promise.all([
+          import('pdfjs-dist'),
+          import('pdfjs-dist/build/pdf.worker.mjs?url'),
+        ]);
+
+        if (!pdfWorkerReady) {
+          GlobalWorkerOptions.workerSrc = worker.default;
+          pdfWorkerReady = true;
+        }
+
+        const pdf = await getDocument({ url: toAbsoluteUrl(book.fileUrl!), withCredentials: false }).promise;
+        if (cancelled) return;
+
+        const page = await pdf.getPage(1);
+        if (cancelled) return;
+
+        const canvas = canvasRef.current;
+        const host = rootRef.current;
+        if (!canvas || !host) return;
+
+        const rect = host.getBoundingClientRect();
+        const targetWidth = Math.min(420, Math.max(180, rect.width || (compact ? 180 : 280)));
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = targetWidth / baseViewport.width;
+        const viewport = page.getViewport({ scale });
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(viewport.width * dpr);
+        canvas.height = Math.floor(viewport.height * dpr);
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+        if (!cancelled) setPdfRendered(true);
+      } catch {
+        if (!cancelled) setPdfFailed(true);
+      }
+    }
+
+    renderFirstPage();
+    return () => { cancelled = true; };
+  }, [book.coverImage, book.fileUrl, compact, pdfFailed, pdfRendered, visible]);
+
   if (book.coverImage) {
     return (
       <img
@@ -38,6 +125,7 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
 
   return (
     <div
+      ref={rootRef}
       aria-label={`Обложка книги ${book.title}`}
       style={{
         width,
@@ -53,6 +141,22 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
         boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)',
       }}
     >
+      {book.fileUrl && !pdfFailed && (
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: pdfRendered ? 1 : 0,
+            transition: 'opacity .35s ease',
+            background: '#fff',
+            zIndex: 4,
+          }}
+        />
+      )}
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 25% 15%, rgba(212,175,55,.24), transparent 34%), radial-gradient(circle at 80% 85%, rgba(255,255,255,.08), transparent 35%)' }} />
       <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: compact ? 5 : 8, background: 'linear-gradient(180deg, rgba(212,175,55,.85), rgba(146,117,28,.55))' }} />
       <div style={{ position: 'relative', zIndex: 1, color: '#d4af37', fontSize: compact ? 9 : 10, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', marginLeft: compact ? 4 : 8 }}>
