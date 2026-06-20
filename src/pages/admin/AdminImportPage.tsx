@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Database } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { getGitHubFile, hasGitHubSettings, loadGitHubSettings, nextContentId, slugifyFileName, upsertBinaryFile, upsertTextFile } from '../../utils/githubApi';
+import { extractMetadataFromPdfFile } from '../../utils/pdfMetadata';
 import type { Book } from '../../store/useStore';
 
 interface QueuedBook {
+  uid: string;
   file: File;
   title: string;
   author: string;
@@ -46,6 +48,7 @@ export default function AdminImportPage() {
   const [books, setBooks] = useState<QueuedBook[]>([]);
   const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
   const [logs, setLogs] = useState<string[]>([]);
+  const [analyzing, setAnalyzing] = useState(false);
 
   const appendFiles = (incoming: File[]) => {
     const pdfs = incoming.filter(f => f.name.toLowerCase().endsWith('.pdf'));
@@ -54,6 +57,7 @@ export default function AdminImportPage() {
       const { title, author } = splitTitleAuthor(cleaned);
       const category = detectCategory(cleaned);
       return {
+        uid: `${file.name}-${file.lastModified}-${file.size}`,
         file,
         title,
         author,
@@ -62,7 +66,36 @@ export default function AdminImportPage() {
         tags: category.toLowerCase(),
       };
     });
+
     setBooks(prev => [...prev, ...mapped]);
+
+    // Асинхронно читаем первые страницы PDF и улучшаем название / автора / категорию.
+    setAnalyzing(true);
+    mapped.forEach(async (item, index) => {
+      try {
+        setLogs(prev => [...prev, `🔎 Анализ PDF: ${item.file.name}`]);
+        const meta = await extractMetadataFromPdfFile(item.file, item.title);
+        setBooks(prev => prev.map(book => {
+          if (book.uid !== item.uid) return book;
+          const title = meta.title || book.title;
+          const author = meta.author || book.author;
+          const category = meta.category || book.category;
+          return {
+            ...book,
+            title,
+            author,
+            category,
+            tags: meta.tags?.join(', ') || book.tags,
+            description: `Книга «${title}» добавлена в Salaf Library.${author && author !== 'Автор не указан' ? ` Автор: ${author}.` : ''} Раздел: ${category}.`,
+          };
+        }));
+        setLogs(prev => [...prev, `✅ Метаданные найдены: ${meta.title || item.title}${meta.author ? ` — ${meta.author}` : ''}`]);
+      } catch {
+        setLogs(prev => [...prev, `ℹ️ Не удалось прочитать метаданные PDF: ${item.file.name}. Используется имя файла.`]);
+      } finally {
+        if (index === mapped.length - 1) setAnalyzing(false);
+      }
+    });
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -183,7 +216,9 @@ export default function AdminImportPage() {
       {books.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
-            <p className="text-slate-400 text-sm">{books.length} файлов выбрано</p>
+            <p className="text-slate-400 text-sm">
+              {books.length} файлов выбрано{analyzing ? ' · идёт авто-анализ первых страниц PDF...' : ''}
+            </p>
             <button
               onClick={processImport}
               disabled={status === 'processing'}
@@ -196,7 +231,7 @@ export default function AdminImportPage() {
 
           <div className="space-y-3">
             {books.map((book, i) => (
-              <div key={`${book.file.name}-${i}`} className="p-4 bg-[#0c2240]/60 rounded-xl border border-slate-700/30 space-y-3">
+              <div key={book.uid} className="p-4 bg-[#0c2240]/60 rounded-xl border border-slate-700/30 space-y-3">
                 <div className="flex items-center gap-3">
                   <FileText size={16} className="text-amber-400" />
                   <span className="text-slate-300 text-sm flex-1 truncate">{book.file.name}</span>

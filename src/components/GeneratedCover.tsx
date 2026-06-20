@@ -11,6 +11,38 @@ interface Props {
 }
 
 let pdfWorkerReady = false;
+let coverDbPromise: Promise<IDBDatabase> | null = null;
+
+function openCoverDb() {
+  if (coverDbPromise) return coverDbPromise;
+  coverDbPromise = new Promise((resolve, reject) => {
+    const request = indexedDB.open('salaf-library-covers', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('covers');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  return coverDbPromise;
+}
+
+async function getCachedCover(key: string) {
+  const db = await openCoverDb();
+  return new Promise<Blob | undefined>((resolve) => {
+    const tx = db.transaction('covers', 'readonly');
+    const request = tx.objectStore('covers').get(key);
+    request.onsuccess = () => resolve(request.result as Blob | undefined);
+    request.onerror = () => resolve(undefined);
+  });
+}
+
+async function setCachedCover(key: string, blob: Blob) {
+  const db = await openCoverDb();
+  return new Promise<void>((resolve) => {
+    const tx = db.transaction('covers', 'readwrite');
+    tx.objectStore('covers').put(blob, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => resolve();
+  });
+}
 
 function darken(hex = '#1a3a2a', amount = 28) {
   try {
@@ -38,10 +70,11 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
   const [visible, setVisible] = useState(false);
   const [pdfRendered, setPdfRendered] = useState(false);
   const [pdfFailed, setPdfFailed] = useState(false);
+  const [cachedCoverUrl, setCachedCoverUrl] = useState<string>('');
 
   useEffect(() => {
     const node = rootRef.current;
-    if (!node || book.coverImage || !book.fileUrl || pdfFailed) return;
+    if (!node || book.coverImage || !book.fileUrl || pdfFailed || cachedCoverUrl) return;
 
     const observer = new IntersectionObserver(
       entries => {
@@ -55,14 +88,21 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [book.coverImage, book.fileUrl, pdfFailed]);
+  }, [book.coverImage, book.fileUrl, pdfFailed, cachedCoverUrl]);
 
   useEffect(() => {
-    if (!visible || book.coverImage || !book.fileUrl || !canvasRef.current || pdfRendered || pdfFailed) return;
+    if (!visible || book.coverImage || !book.fileUrl || !canvasRef.current || pdfRendered || pdfFailed || cachedCoverUrl) return;
     let cancelled = false;
 
     async function renderFirstPage() {
       try {
+        const cacheKey = toAbsoluteUrl(book.fileUrl!);
+        const cached = await getCachedCover(cacheKey);
+        if (cached && !cancelled) {
+          setCachedCoverUrl(URL.createObjectURL(cached));
+          setPdfRendered(true);
+          return;
+        }
         const [{ GlobalWorkerOptions, getDocument }, worker] = await Promise.all([
           import('pdfjs-dist'),
           import('pdfjs-dist/build/pdf.worker.mjs?url'),
@@ -99,7 +139,12 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         await page.render({ canvas, canvasContext: ctx, viewport }).promise;
-        if (!cancelled) setPdfRendered(true);
+        if (!cancelled) {
+          setPdfRendered(true);
+          canvas.toBlob(blob => {
+            if (blob) setCachedCover(toAbsoluteUrl(book.fileUrl!), blob);
+          }, 'image/webp', 0.82);
+        }
       } catch {
         if (!cancelled) setPdfFailed(true);
       }
@@ -107,7 +152,7 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
 
     renderFirstPage();
     return () => { cancelled = true; };
-  }, [book.coverImage, book.fileUrl, compact, pdfFailed, pdfRendered, visible]);
+  }, [book.coverImage, book.fileUrl, cachedCoverUrl, compact, pdfFailed, pdfRendered, visible]);
 
   if (book.coverImage) {
     return (
@@ -141,7 +186,14 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
         boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12)',
       }}
     >
-      {book.fileUrl && !pdfFailed && (
+      {cachedCoverUrl && (
+        <img
+          src={cachedCoverUrl}
+          alt={`Авто-обложка книги ${book.title}`}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 5 }}
+        />
+      )}
+      {book.fileUrl && !pdfFailed && !cachedCoverUrl && (
         <canvas
           ref={canvasRef}
           style={{
