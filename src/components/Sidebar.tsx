@@ -1,5 +1,6 @@
 import { useStore } from '../store/useStore';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
@@ -7,27 +8,28 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { path: '/', icon: Home, label: 'Главная' },
-  { path: '/dashboard', icon: BookOpen, label: 'Панель' },
-  { path: '/books', icon: BookOpen, label: 'Книги' },
-  { path: '/quran', icon: BookMarked, label: 'Коран' },
-  { path: '/biographies', icon: Users, label: 'Биографии' },
-  { path: '/audio', icon: Headphones, label: 'Аудиоуроки' },
-  { path: '/fawaid', icon: Sparkles, label: 'Фаваиды' },
-  { path: '/categories', icon: Grid3X3, label: 'Категории' },
+  { path: '/', icon: Home, label: 'Главная', key: 'home' },
+  { path: '/dashboard', icon: BookOpen, label: 'Панель', key: 'dashboard' },
+  { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
+  { path: '/quran', icon: BookMarked, label: 'Коран', key: 'quran' },
+  { path: '/biographies', icon: Users, label: 'Биографии', key: 'biographies' },
+  { path: '/audio', icon: Headphones, label: 'Аудиоуроки', key: 'audio' },
+  { path: '/fawaid', icon: Sparkles, label: 'Фаваиды', key: 'fawaid' },
+  { path: '/categories', icon: Grid3X3, label: 'Категории', key: 'categories' },
 ];
 
 const userItems = [
-  { path: '/search', icon: Search, label: 'Поиск' },
-  { path: '/favorites', icon: Heart, label: 'Избранное' },
-  { path: '/history', icon: Clock, label: 'История' },
-  { path: '/goals', icon: Sparkles, label: 'Цели' },
-  { path: '/reading-plans', icon: BookOpen, label: 'Планы' },
-  { path: '/about', icon: Info, label: 'О проекте' },
-  { path: '/report', icon: MessageSquare, label: 'Ошибка' },
+  { path: '/search', icon: Search, label: 'Поиск', key: 'search' },
+  { path: '/favorites', icon: Heart, label: 'Избранное', key: 'favorites' },
+  { path: '/history', icon: Clock, label: 'История', key: 'history' },
+  { path: '/goals', icon: Sparkles, label: 'Цели', key: 'goals' },
+  { path: '/reading-plans', icon: BookOpen, label: 'Планы', key: 'readingPlans' },
+  { path: '/about', icon: Info, label: 'О проекте', key: 'about' },
+  { path: '/report', icon: MessageSquare, label: 'Ошибка', key: 'report' },
 ];
 
 export default function Sidebar() {
+  const { t } = useTranslation();
   const { sidebarOpen, setSidebarOpen, favorites, books } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -177,14 +179,14 @@ export default function Sidebar() {
             }}>
               Библиотека
             </div>
-            {navItems.map(({ path, icon: Icon, label }) => (
+            {navItems.map(({ path, icon: Icon, label, key }) => (
               <button
                 key={path}
                 onClick={() => handleNav(path)}
                 className={`nav-link ${isActive(path) ? 'active' : ''}`}
               >
                 <Icon size={16} />
-                <span>{label}</span>
+                <span>{t(`nav.${key}`, label)}</span>
               </button>
             ))}
           </div>
@@ -200,14 +202,14 @@ export default function Sidebar() {
             }}>
               Личное
             </div>
-            {userItems.map(({ path, icon: Icon, label }) => (
+            {userItems.map(({ path, icon: Icon, label, key }) => (
               <button
                 key={path}
                 onClick={() => handleNav(path)}
                 className={`nav-link ${isActive(path) ? 'active' : ''}`}
               >
                 <Icon size={16} />
-                <span>{label}</span>
+                <span>{t(`nav.${key}`, label)}</span>
                 {path === '/favorites' && favorites.length > 0 && (
                   <span style={{
                     marginLeft: 'auto',
@@ -236,7 +238,7 @@ export default function Sidebar() {
             className={`nav-link ${isActive('/admin') ? 'active' : ''}`}
           >
             <Settings size={16} />
-            <span>Админ-панель</span>
+            <span>{t('nav.admin', 'Админ-панель')}</span>
           </button>
 
           <div style={{

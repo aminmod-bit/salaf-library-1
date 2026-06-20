@@ -12,7 +12,10 @@
     "admin": "Admin",
     "dashboard": "Dashboard",
     "goals": "Goals",
-    "readingPlans": "Reading Plans"
+    "readingPlans": "Reading Plans",
+    "quran": "Quran",
+    "about": "About",
+    "report": "Report"
   },
   "common": {
     "loading": "Loading...",

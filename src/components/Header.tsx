@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Menu, Bell, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const pageNames: Record<string, string> = {
@@ -21,14 +22,27 @@ const pageNames: Record<string, string> = {
 };
 
 export default function Header() {
+  const { t } = useTranslation();
   const { setSidebarOpen } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchVal, setSearchVal] = useState('');
 
-  const pageName = pageNames[location.pathname] ||
+  const pageNameRaw = pageNames[location.pathname] ||
     (location.pathname.startsWith('/books/') ? 'Книга' :
       location.pathname.startsWith('/biographies/') ? 'Биография' : 'Страница');
+  const pageName = location.pathname === '/' ? t('nav.home', pageNameRaw)
+    : location.pathname === '/books' ? t('nav.books', pageNameRaw)
+    : location.pathname === '/quran' ? t('nav.quran', pageNameRaw)
+    : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
+    : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
+    : location.pathname === '/fawaid' ? t('nav.fawaid', pageNameRaw)
+    : location.pathname === '/search' ? t('nav.search', pageNameRaw)
+    : location.pathname === '/favorites' ? t('nav.favorites', pageNameRaw)
+    : location.pathname === '/history' ? t('nav.history', pageNameRaw)
+    : location.pathname === '/about' ? t('nav.about', pageNameRaw)
+    : location.pathname === '/report' ? t('nav.report', pageNameRaw)
+    : pageNameRaw;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

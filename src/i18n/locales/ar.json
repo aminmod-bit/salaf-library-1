@@ -12,7 +12,10 @@
     "admin": "لوحة التحكم",
     "dashboard": "لوحة التحكم",
     "goals": "الأهداف",
-    "readingPlans": "خطط القراءة"
+    "readingPlans": "خطط القراءة",
+    "quran": "القرآن",
+    "about": "عن المشروع",
+    "report": "بلاغ"
   },
   "common": {
     "loading": "جارٍ التحميل...",

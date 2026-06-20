@@ -12,7 +12,10 @@
     "admin": "Админ-панель",
     "dashboard": "Панель",
     "goals": "Цели",
-    "readingPlans": "Планы чтения"
+    "readingPlans": "Планы чтения",
+    "quran": "Коран",
+    "about": "О проекте",
+    "report": "Ошибка"
   },
   "common": {
     "loading": "Загрузка...",

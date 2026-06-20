@@ -1,0 +1,914 @@
+[
+  {
+    "number": 1,
+    "name": "Аль-Фатиха",
+    "nameAr": "الفاتحة",
+    "meaning": "Открывающая",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 2,
+    "name": "Аль-Бакара",
+    "nameAr": "البقرة",
+    "meaning": "Корова",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 3,
+    "name": "Али Имран",
+    "nameAr": "آل عمران",
+    "meaning": "Семейство Имрана",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 4,
+    "name": "Ан-Ниса",
+    "nameAr": "النساء",
+    "meaning": "Женщины",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 5,
+    "name": "Аль-Маида",
+    "nameAr": "المائدة",
+    "meaning": "Трапеза",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 6,
+    "name": "Аль-Анам",
+    "nameAr": "الأنعام",
+    "meaning": "Скот",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 7,
+    "name": "Аль-Араф",
+    "nameAr": "الأعراف",
+    "meaning": "Ограды",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 8,
+    "name": "Аль-Анфаль",
+    "nameAr": "الأنفال",
+    "meaning": "Трофеи",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 9,
+    "name": "Ат-Тауба",
+    "nameAr": "التوبة",
+    "meaning": "Покаяние",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 10,
+    "name": "Юнус",
+    "nameAr": "يونس",
+    "meaning": "Юнус",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 11,
+    "name": "Худ",
+    "nameAr": "هود",
+    "meaning": "Худ",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 12,
+    "name": "Юсуф",
+    "nameAr": "يوسف",
+    "meaning": "Юсуф",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 13,
+    "name": "Ар-Раад",
+    "nameAr": "الرعد",
+    "meaning": "Гром",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 14,
+    "name": "Ибрахим",
+    "nameAr": "إبراهيم",
+    "meaning": "Ибрахим",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 15,
+    "name": "Аль-Хиджр",
+    "nameAr": "الحجر",
+    "meaning": "Хиджр",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 16,
+    "name": "Ан-Нахль",
+    "nameAr": "النحل",
+    "meaning": "Пчёлы",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 17,
+    "name": "Аль-Исра",
+    "nameAr": "الإسراء",
+    "meaning": "Ночной перенос",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 18,
+    "name": "Аль-Кахф",
+    "nameAr": "الكهف",
+    "meaning": "Пещера",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 19,
+    "name": "Марьям",
+    "nameAr": "مريم",
+    "meaning": "Марьям",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 20,
+    "name": "Та Ха",
+    "nameAr": "طه",
+    "meaning": "Та Ха",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 21,
+    "name": "Аль-Анбия",
+    "nameAr": "الأنبياء",
+    "meaning": "Пророки",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 22,
+    "name": "Аль-Хадж",
+    "nameAr": "الحج",
+    "meaning": "Паломничество",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 23,
+    "name": "Аль-Муминун",
+    "nameAr": "المؤمنون",
+    "meaning": "Верующие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 24,
+    "name": "Ан-Нур",
+    "nameAr": "النور",
+    "meaning": "Свет",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 25,
+    "name": "Аль-Фуркан",
+    "nameAr": "الفرقان",
+    "meaning": "Различение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 26,
+    "name": "Аш-Шуара",
+    "nameAr": "الشعراء",
+    "meaning": "Поэты",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 27,
+    "name": "Ан-Намль",
+    "nameAr": "النمل",
+    "meaning": "Муравьи",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 28,
+    "name": "Аль-Касас",
+    "nameAr": "القصص",
+    "meaning": "Рассказ",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 29,
+    "name": "Аль-Анкабут",
+    "nameAr": "العنكبوت",
+    "meaning": "Паук",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 30,
+    "name": "Ар-Рум",
+    "nameAr": "الروم",
+    "meaning": "Римляне",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 31,
+    "name": "Лукман",
+    "nameAr": "لقمان",
+    "meaning": "Лукман",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 32,
+    "name": "Ас-Саджда",
+    "nameAr": "السجدة",
+    "meaning": "Земной поклон",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 33,
+    "name": "Аль-Ахзаб",
+    "nameAr": "الأحزاب",
+    "meaning": "Союзники",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 34,
+    "name": "Саба",
+    "nameAr": "سبأ",
+    "meaning": "Саба",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 35,
+    "name": "Фатыр",
+    "nameAr": "فاطر",
+    "meaning": "Творец",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 36,
+    "name": "Йа Син",
+    "nameAr": "يس",
+    "meaning": "Йа Син",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 37,
+    "name": "Ас-Саффат",
+    "nameAr": "الصافات",
+    "meaning": "Выстроившиеся",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 38,
+    "name": "Сад",
+    "nameAr": "ص",
+    "meaning": "Сад",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 39,
+    "name": "Аз-Зумар",
+    "nameAr": "الزمر",
+    "meaning": "Толпы",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 40,
+    "name": "Гафир",
+    "nameAr": "غافر",
+    "meaning": "Прощающий",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 41,
+    "name": "Фуссилят",
+    "nameAr": "فصلت",
+    "meaning": "Разъяснены",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 42,
+    "name": "Аш-Шура",
+    "nameAr": "الشورى",
+    "meaning": "Совет",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 43,
+    "name": "Аз-Зухруф",
+    "nameAr": "الزخرف",
+    "meaning": "Украшения",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 44,
+    "name": "Ад-Духан",
+    "nameAr": "الدخان",
+    "meaning": "Дым",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 45,
+    "name": "Аль-Джасия",
+    "nameAr": "الجاثية",
+    "meaning": "Коленопреклонённые",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 46,
+    "name": "Аль-Ахкаф",
+    "nameAr": "الأحقاف",
+    "meaning": "Пески",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 47,
+    "name": "Мухаммад",
+    "nameAr": "محمد",
+    "meaning": "Мухаммад",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 48,
+    "name": "Аль-Фатх",
+    "nameAr": "الفتح",
+    "meaning": "Победа",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 49,
+    "name": "Аль-Худжурат",
+    "nameAr": "الحجرات",
+    "meaning": "Комнаты",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 50,
+    "name": "Каф",
+    "nameAr": "ق",
+    "meaning": "Каф",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 51,
+    "name": "Аз-Зарият",
+    "nameAr": "الذاريات",
+    "meaning": "Рассеивающие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 52,
+    "name": "Ат-Тур",
+    "nameAr": "الطور",
+    "meaning": "Гора",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 53,
+    "name": "Ан-Наджм",
+    "nameAr": "النجم",
+    "meaning": "Звезда",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 54,
+    "name": "Аль-Камар",
+    "nameAr": "القمر",
+    "meaning": "Луна",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 55,
+    "name": "Ар-Рахман",
+    "nameAr": "الرحمن",
+    "meaning": "Милостивый",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 56,
+    "name": "Аль-Вакиа",
+    "nameAr": "الواقعة",
+    "meaning": "Событие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 57,
+    "name": "Аль-Хадид",
+    "nameAr": "الحديد",
+    "meaning": "Железо",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 58,
+    "name": "Аль-Муджадиля",
+    "nameAr": "المجادلة",
+    "meaning": "Препирающаяся",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 59,
+    "name": "Аль-Хашр",
+    "nameAr": "الحشر",
+    "meaning": "Сбор",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 60,
+    "name": "Аль-Мумтахана",
+    "nameAr": "الممتحنة",
+    "meaning": "Испытуемая",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 61,
+    "name": "Ас-Сафф",
+    "nameAr": "الصف",
+    "meaning": "Ряд",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 62,
+    "name": "Аль-Джумуа",
+    "nameAr": "الجمعة",
+    "meaning": "Собрание",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 63,
+    "name": "Аль-Мунафикун",
+    "nameAr": "المنافقون",
+    "meaning": "Лицемеры",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 64,
+    "name": "Ат-Тагабун",
+    "nameAr": "التغابن",
+    "meaning": "Взаимное обманывание",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 65,
+    "name": "Ат-Талак",
+    "nameAr": "الطلاق",
+    "meaning": "Развод",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 66,
+    "name": "Ат-Тахрим",
+    "nameAr": "التحريم",
+    "meaning": "Запрещение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 67,
+    "name": "Аль-Мульк",
+    "nameAr": "الملك",
+    "meaning": "Власть",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 68,
+    "name": "Аль-Калам",
+    "nameAr": "القلم",
+    "meaning": "Письменная трость",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 69,
+    "name": "Аль-Хакка",
+    "nameAr": "الحاقة",
+    "meaning": "Неизбежное",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 70,
+    "name": "Аль-Мааридж",
+    "nameAr": "المعارج",
+    "meaning": "Ступени",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 71,
+    "name": "Нух",
+    "nameAr": "نوح",
+    "meaning": "Нух",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 72,
+    "name": "Аль-Джинн",
+    "nameAr": "الجن",
+    "meaning": "Джинны",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 73,
+    "name": "Аль-Муззаммиль",
+    "nameAr": "المزمل",
+    "meaning": "Закутавшийся",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 74,
+    "name": "Аль-Муддассир",
+    "nameAr": "المدثر",
+    "meaning": "Завернувшийся",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 75,
+    "name": "Аль-Кияма",
+    "nameAr": "القيامة",
+    "meaning": "Воскресение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 76,
+    "name": "Аль-Инсан",
+    "nameAr": "الإنسان",
+    "meaning": "Человек",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 77,
+    "name": "Аль-Мурсалят",
+    "nameAr": "المرسلات",
+    "meaning": "Посылаемые",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 78,
+    "name": "Ан-Наба",
+    "nameAr": "النبأ",
+    "meaning": "Весть",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 79,
+    "name": "Ан-Назиат",
+    "nameAr": "النازعات",
+    "meaning": "Вырывающие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 80,
+    "name": "Абаса",
+    "nameAr": "عبس",
+    "meaning": "Нахмурился",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 81,
+    "name": "Ат-Таквир",
+    "nameAr": "التكوير",
+    "meaning": "Скручивание",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 82,
+    "name": "Аль-Инфитар",
+    "nameAr": "الإنفطار",
+    "meaning": "Раскалывание",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 83,
+    "name": "Аль-Мутаффифин",
+    "nameAr": "المطففين",
+    "meaning": "Обвешивающие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 84,
+    "name": "Аль-Иншикак",
+    "nameAr": "الإنشقاق",
+    "meaning": "Разверзнется",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 85,
+    "name": "Аль-Бурудж",
+    "nameAr": "البروج",
+    "meaning": "Созвездия",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 86,
+    "name": "Ат-Тарик",
+    "nameAr": "الطارق",
+    "meaning": "Ночной путник",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 87,
+    "name": "Аль-Аля",
+    "nameAr": "الأعلى",
+    "meaning": "Всевышний",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 88,
+    "name": "Аль-Гашия",
+    "nameAr": "الغاشية",
+    "meaning": "Покрывающее",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 89,
+    "name": "Аль-Фаджр",
+    "nameAr": "الفجر",
+    "meaning": "Заря",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 90,
+    "name": "Аль-Балад",
+    "nameAr": "البلد",
+    "meaning": "Город",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 91,
+    "name": "Аш-Шамс",
+    "nameAr": "الشمس",
+    "meaning": "Солнце",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 92,
+    "name": "Аль-Ляйль",
+    "nameAr": "الليل",
+    "meaning": "Ночь",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 93,
+    "name": "Ад-Духа",
+    "nameAr": "الضحى",
+    "meaning": "Утро",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 94,
+    "name": "Аш-Шарх",
+    "nameAr": "الشرح",
+    "meaning": "Раскрытие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 95,
+    "name": "Ат-Тин",
+    "nameAr": "التين",
+    "meaning": "Смоковница",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 96,
+    "name": "Аль-Аляк",
+    "nameAr": "العلق",
+    "meaning": "Сгусток",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 97,
+    "name": "Аль-Кадр",
+    "nameAr": "القدر",
+    "meaning": "Предопределение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 98,
+    "name": "Аль-Баййина",
+    "nameAr": "البينة",
+    "meaning": "Ясное знамение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 99,
+    "name": "Аз-Зальзаля",
+    "nameAr": "الزلزلة",
+    "meaning": "Сотрясение",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 100,
+    "name": "Аль-Адият",
+    "nameAr": "العاديات",
+    "meaning": "Скачущие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 101,
+    "name": "Аль-Кариа",
+    "nameAr": "القارعة",
+    "meaning": "Поражающее",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 102,
+    "name": "Ат-Такасур",
+    "nameAr": "التكاثر",
+    "meaning": "Страсть к приумножению",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 103,
+    "name": "Аль-Аср",
+    "nameAr": "العصر",
+    "meaning": "Время",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 104,
+    "name": "Аль-Хумаза",
+    "nameAr": "الهمزة",
+    "meaning": "Хулитель",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 105,
+    "name": "Аль-Филь",
+    "nameAr": "الفيل",
+    "meaning": "Слон",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 106,
+    "name": "Курайш",
+    "nameAr": "قريش",
+    "meaning": "Курайш",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 107,
+    "name": "Аль-Маун",
+    "nameAr": "الماعون",
+    "meaning": "Мелочь",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 108,
+    "name": "Аль-Каусар",
+    "nameAr": "الكوثر",
+    "meaning": "Изобилие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 109,
+    "name": "Аль-Кафирун",
+    "nameAr": "الكافرون",
+    "meaning": "Неверующие",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 110,
+    "name": "Ан-Наср",
+    "nameAr": "النصر",
+    "meaning": "Помощь",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 111,
+    "name": "Аль-Масад",
+    "nameAr": "المسد",
+    "meaning": "Пальмовые волокна",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 112,
+    "name": "Аль-Ихляс",
+    "nameAr": "الإخلاص",
+    "meaning": "Искренность",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 113,
+    "name": "Аль-Фаляк",
+    "nameAr": "الفلق",
+    "meaning": "Рассвет",
+    "revelation": "",
+    "ayahCount": 0
+  },
+  {
+    "number": 114,
+    "name": "Ан-Нас",
+    "nameAr": "الناس",
+    "meaning": "Люди",
+    "revelation": "",
+    "ayahCount": 0
+  }
+]
