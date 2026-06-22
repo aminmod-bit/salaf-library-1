@@ -12,7 +12,7 @@ const navItems = [
   { path: '/dashboard', icon: BookOpen, label: 'Панель', key: 'dashboard' },
   { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
   { path: '/azkar', icon: Sparkles, label: 'Азкары', key: 'azkar' },
-  { path: '/book-languages', icon: Languages, label: 'Книги на разных языках', key: 'bookLanguages' },
+  { path: '/book-languages', icon: Languages, label: 'Языки книг', key: 'bookLanguages' },
   { path: '/articles', icon: BookOpenText, label: 'Статьи', key: 'articles' },
   { path: '/biographies', icon: Users, label: 'Биографии', key: 'biographies' },
   { path: '/categories', icon: Grid3X3, label: 'Категории', key: 'categories' },

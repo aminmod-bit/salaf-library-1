@@ -20,7 +20,7 @@ const pageNames: Record<string, string> = {
   '/about': 'О проекте',
   '/report': 'Сообщить об ошибке',
   '/quran': 'Коран',
-  '/book-languages': 'Книги на разных языках',
+  '/book-languages': 'Языки книг',
   '/articles': 'Статьи',
   '/hadith': 'Хадисы',
   '/azkar': 'Азкары',

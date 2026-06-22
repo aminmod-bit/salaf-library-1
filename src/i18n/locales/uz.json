@@ -16,7 +16,7 @@
     "quran": "Qur’on",
     "about": "Loyiha haqida",
     "report": "Xato",
-    "bookLanguages": "Turli tillardagi kitoblar",
+    "bookLanguages": "Kitob tillari",
     "articles": "Maqolalar",
     "hadith": "Hadislar",
     "azkar": "Azkorlar"
@@ -117,7 +117,7 @@
   },
   "bookLanguages": {
     "eyebrow": "Ko‘p tilli kutubxona",
-    "title": "Turli tillardagi kitoblar",
+    "title": "Kitoblar va materiallar til bo‘yicha",
     "description": "Kitoblar, maqolalar va favoid til bo‘yicha tartiblanadi. Biz sun’iy tarjimalarni ko‘rsatmaymiz: agar material bir tilda bo‘lmasa, bu aniq ko‘rsatiladi.",
     "books": "Kitoblar",
     "articles": "Maqolalar",
