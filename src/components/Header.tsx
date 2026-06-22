@@ -20,6 +20,7 @@ const pageNames: Record<string, string> = {
   '/report': 'Сообщить об ошибке',
   '/quran': 'Коран',
   '/book-languages': 'Языки книг',
+  '/articles': 'Статьи',
 };
 
 export default function Header() {

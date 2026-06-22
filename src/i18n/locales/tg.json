@@ -16,7 +16,8 @@
     "quran": "Қуръон",
     "about": "Дар бораи лоиҳа",
     "report": "Хато",
-    "bookLanguages": "Забонҳои китобҳо"
+    "bookLanguages": "Забонҳои китобҳо",
+    "articles": "Мақолаҳо"
   },
   "common": {
     "loading": "Бор шуда истодааст...",
@@ -57,7 +58,8 @@
     "persian": "Форсӣ",
     "open": "Кушодан",
     "online": "Онлайн",
-    "apply": "Татбиқ"
+    "apply": "Татбиқ",
+    "featured": "Баргузида"
   },
   "home": {
     "title": "Salaf Library",
@@ -119,5 +121,6 @@
     "articles": "Мақолаҳо",
     "openBooks": "Китобҳоро кушодан",
     "comingSoon": "Мавод илова мешавад"
-  }
+  },
+  "articles": {}
 }

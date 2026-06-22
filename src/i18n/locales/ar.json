@@ -16,7 +16,8 @@
     "quran": "القرآن",
     "about": "عن المشروع",
     "report": "بلاغ",
-    "bookLanguages": "لغات الكتب"
+    "bookLanguages": "لغات الكتب",
+    "articles": "المقالات"
   },
   "common": {
     "loading": "جارٍ التحميل...",
@@ -57,7 +58,8 @@
     "persian": "الفارسية",
     "open": "فتح",
     "online": "متصل",
-    "apply": "تطبيق"
+    "apply": "تطبيق",
+    "featured": "مميز"
   },
   "home": {
     "title": "مكتبة السلف",
@@ -166,5 +168,6 @@
     "articles": "المقالات",
     "openBooks": "فتح الكتب",
     "comingSoon": "سيتم إضافة المواد"
-  }
+  },
+  "articles": {}
 }

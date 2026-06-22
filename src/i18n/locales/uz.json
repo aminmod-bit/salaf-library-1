@@ -16,7 +16,8 @@
     "quran": "Qur’on",
     "about": "Loyiha haqida",
     "report": "Xato",
-    "bookLanguages": "Kitob tillari"
+    "bookLanguages": "Kitob tillari",
+    "articles": "Maqolalar"
   },
   "common": {
     "loading": "Yuklanmoqda...",
@@ -57,7 +58,8 @@
     "persian": "Forscha",
     "open": "Ochish",
     "online": "Onlayn",
-    "apply": "Qo‘llash"
+    "apply": "Qo‘llash",
+    "featured": "Tanlangan"
   },
   "home": {
     "title": "Salaf Library",
@@ -119,5 +121,6 @@
     "articles": "Maqolalar",
     "openBooks": "Kitoblarni ochish",
     "comingSoon": "Materiallar qo‘shiladi"
-  }
+  },
+  "articles": {}
 }

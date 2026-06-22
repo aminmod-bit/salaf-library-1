@@ -16,7 +16,8 @@
     "quran": "قرآن",
     "about": "درباره پروژه",
     "report": "گزارش",
-    "bookLanguages": "زبان کتاب‌ها"
+    "bookLanguages": "زبان کتاب‌ها",
+    "articles": "مقالات"
   },
   "common": {
     "loading": "در حال بارگذاری...",
@@ -57,7 +58,8 @@
     "persian": "فارسی",
     "open": "باز کردن",
     "online": "آنلاین",
-    "apply": "اعمال"
+    "apply": "اعمال",
+    "featured": "منتخب"
   },
   "home": {
     "title": "Salaf Library",
@@ -119,5 +121,6 @@
     "articles": "مقالات",
     "openBooks": "باز کردن کتاب‌ها",
     "comingSoon": "مطالب اضافه خواهد شد"
-  }
+  },
+  "articles": {}
 }

@@ -16,7 +16,8 @@
     "quran": "Quran",
     "about": "About",
     "report": "Report",
-    "bookLanguages": "Book Languages"
+    "bookLanguages": "Book Languages",
+    "articles": "Articles"
   },
   "common": {
     "loading": "Loading...",
@@ -57,7 +58,8 @@
     "persian": "Persian",
     "open": "Open",
     "online": "Online",
-    "apply": "Apply"
+    "apply": "Apply",
+    "featured": "Featured"
   },
   "home": {
     "title": "Salaf Library",
@@ -166,5 +168,6 @@
     "articles": "Articles",
     "openBooks": "Open books",
     "comingSoon": "Content will be added"
-  }
+  },
+  "articles": {}
 }
