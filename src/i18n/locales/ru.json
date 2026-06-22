@@ -18,7 +18,8 @@
     "report": "Ошибка",
     "bookLanguages": "Языки книг",
     "articles": "Статьи",
-    "hadith": "Хадисы"
+    "hadith": "Хадисы",
+    "azkar": "Азкары"
   },
   "common": {
     "loading": "Загрузка...",

@@ -4,6 +4,7 @@ import { Search, Menu, Bell, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import LiveStatsBadge from './LiveStatsBadge';
 
 const pageNames: Record<string, string> = {
   '/': 'Главная',
@@ -22,6 +23,7 @@ const pageNames: Record<string, string> = {
   '/book-languages': 'Языки книг',
   '/articles': 'Статьи',
   '/hadith': 'Хадисы',
+  '/azkar': 'Азкары',
 };
 
 export default function Header() {
@@ -38,6 +40,7 @@ export default function Header() {
     : location.pathname === '/books' ? t('nav.books', pageNameRaw)
     : location.pathname === '/quran' ? t('nav.quran', pageNameRaw)
     : location.pathname === '/hadith' ? t('nav.hadith', pageNameRaw)
+    : location.pathname === '/azkar' ? t('nav.azkar', pageNameRaw)
     : location.pathname === '/book-languages' ? t('nav.bookLanguages', pageNameRaw)
     : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
     : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
@@ -129,6 +132,7 @@ export default function Header() {
       </form>
 
       {/* Notification */}
+      <LiveStatsBadge />
       <LanguageSwitcher />
 
       <style>{`@media (max-width: 720px) { .header-search { display: none !important; } }`}</style>

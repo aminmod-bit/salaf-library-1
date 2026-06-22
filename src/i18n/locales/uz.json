@@ -18,7 +18,8 @@
     "report": "Xato",
     "bookLanguages": "Kitob tillari",
     "articles": "Maqolalar",
-    "hadith": "Hadislar"
+    "hadith": "Hadislar",
+    "azkar": "Azkorlar"
   },
   "common": {
     "loading": "Yuklanmoqda...",

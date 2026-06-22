@@ -18,7 +18,8 @@
     "report": "Report",
     "bookLanguages": "Book Languages",
     "articles": "Articles",
-    "hadith": "Hadith"
+    "hadith": "Hadith",
+    "azkar": "Azkar"
   },
   "common": {
     "loading": "Loading...",
