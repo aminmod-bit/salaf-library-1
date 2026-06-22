@@ -6,16 +6,12 @@ import { loadLibraryData } from './utils/loadLibraryData';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
-import AudioPlayer from './components/AudioPlayer';
-import GlobalTextTranslator from './components/GlobalTextTranslator';
 import HomePage from './pages/HomePage';
 import BooksPage from './pages/BooksPage';
 import BookDetailPage from './pages/BookDetailPage';
 
 import BiographiesPage from './pages/BiographiesPage';
 import BiographyDetailPage from './pages/BiographyDetailPage';
-import AudioPage from './pages/AudioPage';
-import FawaidPage from './pages/FawaidPage';
 import SearchPage from './pages/SearchPage';
 import FavoritesPage from './pages/FavoritesPage';
 import HistoryPage from './pages/HistoryPage';
@@ -29,10 +25,8 @@ import GoalsPage from './pages/GoalsPage';
 import ReadingPlansPage from './pages/ReadingPlansPage';
 import AboutPage from './pages/AboutPage';
 import ReportIssuePage from './pages/ReportIssuePage';
-import QuranPage from './pages/QuranPage';
 import BookLanguagesPage from './pages/BookLanguagesPage';
 import ArticlesPage from './pages/ArticlesPage';
-import HadithPage from './pages/HadithPage';
 import AzkarPage from './pages/AzkarPage';
 import AdminBookEditorPage from './pages/AdminBookEditorPage';
 
@@ -44,12 +38,6 @@ function PageLoader() {
       Загрузка страницы...
     </div>
   );
-}
-
-function AudioPlayerWrapper() {
-  const { currentAudio } = useStore();
-  if (!currentAudio) return null;
-  return <AudioPlayer />;
 }
 
 export default function App() {
@@ -78,7 +66,6 @@ export default function App() {
 
   return (
     <HashRouter>
-      <GlobalTextTranslator />
       <div className="app-layout">
         <Sidebar />
         <div className="main-content">
@@ -92,8 +79,6 @@ export default function App() {
               <Route path="/read/:id" element={<BookReaderPage />} />
               <Route path="/biographies" element={<BiographiesPage />} />
               <Route path="/biographies/:id" element={<BiographyDetailPage />} />
-              <Route path="/audio" element={<AudioPage />} />
-              <Route path="/fawaid" element={<FawaidPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/history" element={<HistoryPage />} />
@@ -107,17 +92,14 @@ export default function App() {
               <Route path="/reading-plans" element={<ReadingPlansPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/report" element={<ReportIssuePage />} />
-              <Route path="/quran" element={<QuranPage />} />
               <Route path="/book-languages" element={<BookLanguagesPage />} />
               <Route path="/articles" element={<ArticlesPage />} />
-              <Route path="/hadith" element={<HadithPage />} />
               <Route path="/azkar" element={<AzkarPage />} />
               <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
             </Routes>
             </Suspense>
           </div>
         </div>
-        <AudioPlayerWrapper />
         <Toaster
           position="bottom-right"
           toastOptions={{

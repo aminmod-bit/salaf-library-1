@@ -45,12 +45,24 @@ export default function GlobalTextTranslator() {
 
   useEffect(() => {
     const dict = uiTextMap[lang] || {};
-    const apply = () => walk(document.body, dict);
+    if (lang === 'ru' || Object.keys(dict).length === 0) return;
+
+    let frame = 0;
+    const apply = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        walk(document.body, dict);
+      });
+    };
 
     apply();
-    const observer = new MutationObserver(() => requestAnimationFrame(apply));
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-    return () => observer.disconnect();
+    const observer = new MutationObserver(apply);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [lang]);
 
   return null;

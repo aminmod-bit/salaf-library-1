@@ -7,6 +7,7 @@ import {
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { useStore } from '../store/useStore';
+import { incrementBookDownload, incrementBookView, sendStatsEvent } from '../utils/siteStats';
 import toast from 'react-hot-toast';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
@@ -67,6 +68,8 @@ export default function BookReaderPage() {
       visitedAt: new Date().toISOString(), coverColor: book.coverColor,
       coverEmoji: book.coverEmoji, coverImage: book.coverImage,
     });
+    incrementBookView(book.id);
+    sendStatsEvent('book_view', { bookId: book.id, title: book.title });
   }, [addToHistory, book?.author, book?.coverColor, book?.coverEmoji, book?.coverImage, book?.fileUrl, book?.id, book?.title]);
 
   useEffect(() => {
@@ -230,6 +233,13 @@ export default function BookReaderPage() {
     } finally { setSearching(false); }
   };
 
+  const downloadPdf = () => {
+    if (!book) return;
+    incrementBookDownload(book.id);
+    sendStatsEvent('book_download', { bookId: book.id, title: book.title });
+    window.open(toAbsoluteUrl(book.downloadUrl || book.fileUrl || ''), '_blank', 'noopener,noreferrer');
+  };
+
   const toggleFullscreen = () => {
     const el = shellRef.current;
     if (!el) return;
@@ -251,7 +261,7 @@ export default function BookReaderPage() {
         <div className="reader-header-actions">
           <button className="reader-soft-btn" onClick={() => { setPanelOpen(true); setPanelTab('bookmarks'); }}><Bookmark size={15}/> Закладки</button>
           <button className="reader-soft-btn hide-sm" onClick={() => window.open(pdfUrl, '_blank', 'noopener,noreferrer')}><ExternalLink size={15}/> Открыть</button>
-          <button className="reader-gold-btn" onClick={() => window.open(toAbsoluteUrl(book.downloadUrl || book.fileUrl || ''), '_blank', 'noopener,noreferrer')}><Download size={15}/> PDF</button>
+          <button className="reader-gold-btn" onClick={downloadPdf}><Download size={15}/> PDF</button>
         </div>
       </header>
 

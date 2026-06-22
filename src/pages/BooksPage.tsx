@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Filter, Grid3X3, List, SlidersHorizontal } from 'lucide-react';
@@ -22,6 +22,7 @@ export default function BooksPage() {
   const [sort, setSort] = useState(searchParams.get('filter') === 'new' ? 'new' : 'popular');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [lang, setLang] = useState(searchParams.get('language') || 'all');
+  const [visibleCount, setVisibleCount] = useState(24);
 
   const filtered = useMemo(() => {
     let result = [...books];
@@ -55,12 +56,20 @@ export default function BooksPage() {
     return result;
   }, [books, search, selectedCat, sort, lang]);
 
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [search, selectedCat, sort, lang, view]);
+
+  const visibleBooks = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
+
   const categoryStats = useMemo(() => {
     const counts = books.reduce<Record<string, number>>((acc, book) => {
       acc[book.category] = (acc[book.category] || 0) + 1;
       return acc;
     }, {});
+    const hiddenCategories = new Set(['Тафсир', 'Таfsир', 'Фикх', 'Общее', 'Фаваиды']);
     return Object.entries(counts)
+      .filter(([name]) => !hiddenCategories.has(name))
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
   }, [books]);
@@ -217,11 +226,19 @@ export default function BooksPage() {
         </div>
       ) : view === 'grid' ? (
         <div className="books-grid">
-          {filtered.map(book => <BookCard key={book.id} book={book} />)}
+          {visibleBooks.map(book => <BookCard key={book.id} book={book} />)}
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {filtered.map(book => <BookCard key={book.id} book={book} horizontal />)}
+          {visibleBooks.map(book => <BookCard key={book.id} book={book} horizontal />)}
+        </div>
+      )}
+
+      {filtered.length > visibleCount && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
+          <button className="btn-secondary" onClick={() => setVisibleCount(count => count + 24)}>
+            Показать ещё {Math.min(24, filtered.length - visibleCount)}
+          </button>
         </div>
       )}
     </div>

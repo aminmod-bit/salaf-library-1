@@ -20,26 +20,6 @@
     "type": "books"
   },
   {
-    "id": "cat003",
-    "name": "Тафсир",
-    "nameAr": "التفسير",
-    "icon": "🌙",
-    "color": "#3a2a1a",
-    "description": "Толкование Корана",
-    "count": 0,
-    "type": "books"
-  },
-  {
-    "id": "cat004",
-    "name": "Фикх",
-    "nameAr": "الفقه",
-    "icon": "⚖️",
-    "color": "#1a2a3a",
-    "description": "Исламское право",
-    "count": 14,
-    "type": "books"
-  },
-  {
     "id": "cat005",
     "name": "Сира",
     "nameAr": "السيرة",
@@ -126,24 +106,6 @@
     "color": "#1a3a2a",
     "description": "Раздел «Дуа и зикр»",
     "count": 4,
-    "type": "books"
-  },
-  {
-    "id": "общее",
-    "name": "Общее",
-    "icon": "📘",
-    "color": "#1a3a2a",
-    "description": "Раздел «Общее»",
-    "count": 56,
-    "type": "books"
-  },
-  {
-    "id": "фаваиды",
-    "name": "Фаваиды",
-    "icon": "📖",
-    "color": "#1a3a2a",
-    "description": "Раздел «Фаваиды»",
-    "count": 11,
     "type": "books"
   }
 ]

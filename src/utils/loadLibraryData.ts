@@ -1,15 +1,13 @@
-import type { AudioLesson, Biography, Book, Category, Faidah } from '../store/useStore';
-import { audioData } from '../data/audio';
+import type { Biography, Book, Category } from '../store/useStore';
 import { biographiesData } from '../data/biographies';
 import { booksData } from '../data/books';
 import { categoriesData } from '../data/categories';
-import { fawaidData } from '../data/fawaid';
 
 export interface LibraryDataBundle {
   books: Book[];
   biographies: Biography[];
-  audioLessons: AudioLesson[];
-  fawaid: Faidah[];
+  audioLessons: [];
+  fawaid: [];
   categories: Category[];
 }
 
@@ -23,7 +21,6 @@ async function loadJsonArray<T>(path: string, fallback: T[]): Promise<T[]> {
   try {
     const response = await fetch(publicUrl(path), { cache: 'no-cache' });
     if (!response.ok) return fallback;
-
     const data = await response.json();
     return Array.isArray(data) ? (data as T[]) : fallback;
   } catch {
@@ -32,19 +29,17 @@ async function loadJsonArray<T>(path: string, fallback: T[]): Promise<T[]> {
 }
 
 export async function loadLibraryData(): Promise<LibraryDataBundle> {
-  const [books, biographies, audioLessons, fawaid, categories] = await Promise.all([
+  const [books, biographies, categories] = await Promise.all([
     loadJsonArray<Book>('data/books.json', booksData),
     loadJsonArray<Biography>('data/biographies.json', biographiesData),
-    loadJsonArray<AudioLesson>('data/audio.json', audioData),
-    loadJsonArray<Faidah>('data/fawaid.json', fawaidData),
     loadJsonArray<Category>('data/categories.json', categoriesData),
   ]);
 
   return {
     books,
     biographies,
-    audioLessons,
-    fawaid,
+    audioLessons: [],
+    fawaid: [],
     categories,
   };
 }

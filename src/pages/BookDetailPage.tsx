@@ -4,6 +4,7 @@ import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
 import toast from 'react-hot-toast';
 import GeneratedCover from '../components/GeneratedCover';
+import { incrementBookDownload, sendStatsEvent } from '../utils/siteStats';
 
 export default function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -102,6 +103,8 @@ export default function BookDetailPage() {
               className="btn-secondary"
               onClick={() => {
                 if (book.downloadUrl || book.fileUrl) {
+                  incrementBookDownload(book.id);
+                  sendStatsEvent('book_download', { bookId: book.id, title: book.title });
                   window.open(book.downloadUrl || book.fileUrl, '_blank');
                 } else {
                   toast('PDF файл пока не добавлен', { icon: '📥' });
