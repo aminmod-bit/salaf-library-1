@@ -29,6 +29,7 @@ import BookLanguagesPage from './pages/BookLanguagesPage';
 import ArticlesPage from './pages/ArticlesPage';
 import AzkarPage from './pages/AzkarPage';
 import AdminBookEditorPage from './pages/AdminBookEditorPage';
+import AdminBrandingPage from './pages/admin/AdminBrandingPage';
 
 const BookReaderPage = lazy(() => import('./pages/BookReaderPage'));
 
@@ -96,6 +97,7 @@ export default function App() {
               <Route path="/articles" element={<ArticlesPage />} />
               <Route path="/azkar" element={<AzkarPage />} />
               <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
+              <Route path="/admin/branding" element={<AdminBrandingPage />} />
             </Routes>
             </Suspense>
           </div>

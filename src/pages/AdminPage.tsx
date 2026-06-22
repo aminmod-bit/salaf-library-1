@@ -119,6 +119,7 @@ export default function AdminPage() {
                 {[
                   { icon: '📚', title: 'Добавить книги', desc: 'Массовая публикация PDF через GitHub API', action: () => navigate('/admin/import') },
                   { icon: '🐙', title: 'GitHub API', desc: 'Токен, репозиторий и проверка подключения', action: () => navigate('/admin/settings') },
+                  { icon: '🎨', title: 'Брендинг', desc: 'Сменить название сайта во всём проекте', action: () => navigate('/admin/branding') },
                   { icon: '🔎', title: 'Проверить каталог', desc: 'Открыть публичный каталог книг', action: () => navigate('/books') },
                   { icon: '📖', title: 'Онлайн-читалка', desc: 'Проверить чтение первой книги с PDF', action: () => { const first = books.find(b => b.fileUrl); first ? navigate(`/read/${first.id}`) : toast('Сначала добавьте PDF книгу', { icon: '📖' }); } },
                 ].map(({ icon, title, desc, action }) => (

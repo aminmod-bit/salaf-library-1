@@ -34,7 +34,7 @@ export function hasGitHubSettings() {
   return Boolean(settings.repo && settings.token);
 }
 
-function parseRepo(repo: string) {
+export function parseRepo(repo: string) {
   const clean = repo.trim().replace(/^https:\/\/github\.com\//, '').replace(/\.git$/, '').replace(/^\/+|\/+$/g, '');
   const [owner, name] = clean.split('/');
   if (!owner || !name) throw new Error('Репозиторий должен быть в формате owner/repo, например aminmod-bit/salaf-library-1');
@@ -70,6 +70,19 @@ async function githubFetch(settings: GitHubSettings, endpoint: string, init: Req
 export async function testGitHubConnection(settings: GitHubSettings) {
   const { owner, name } = parseRepo(settings.repo);
   return githubFetch(settings, `/repos/${owner}/${name}`);
+}
+
+export interface GitHubTreeFile {
+  path: string;
+  type: 'blob' | 'tree';
+  size?: number;
+  sha: string;
+}
+
+export async function listGitHubFiles(settings: GitHubSettings): Promise<GitHubTreeFile[]> {
+  const { owner, name } = parseRepo(settings.repo);
+  const data = await githubFetch(settings, `/repos/${owner}/${name}/git/trees/${encodeURIComponent(settings.branch || 'main')}?recursive=1`);
+  return Array.isArray(data?.tree) ? data.tree.filter((item: GitHubTreeFile) => item.type === 'blob') : [];
 }
 
 export async function getGitHubFile(settings: GitHubSettings, filePath: string): Promise<GitHubContentFile | null> {
