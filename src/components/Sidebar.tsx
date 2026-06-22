@@ -12,6 +12,7 @@ const navItems = [
   { path: '/dashboard', icon: BookOpen, label: 'Панель', key: 'dashboard' },
   { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
   { path: '/quran', icon: BookMarked, label: 'Коран', key: 'quran' },
+  { path: '/hadith', icon: BookOpenText, label: 'Хадисы', key: 'hadith' },
   { path: '/book-languages', icon: Languages, label: 'Языки книг', key: 'bookLanguages' },
   { path: '/articles', icon: BookOpenText, label: 'Статьи', key: 'articles' },
   { path: '/biographies', icon: Users, label: 'Биографии', key: 'biographies' },

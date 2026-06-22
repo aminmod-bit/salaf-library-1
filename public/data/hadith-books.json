@@ -1,0 +1,10 @@
+[
+  { "id": "nawawi40", "title": "Аль-Арба‘уна ан-Нававиййа", "titleAr": "الأربعون النووية", "slug": "al-arbauna-an-nawawiyya", "sourceUrl": "https://isnad.link/book/al-arbauna-an-nawawiyya", "description": "Сорок хадисов имама ан-Навави с арабским текстом и русским переводом на Isnād.", "count": 42 },
+  { "id": "riyad", "title": "Рийад ас-салихин", "titleAr": "رياض الصالحين", "slug": "riyadh-as-salikhin", "sourceUrl": "https://isnad.link/book/riyadh-as-salikhin", "description": "Классический сборник хадисов о нравственности, поклонении и адабе.", "count": 0 },
+  { "id": "bukhari", "title": "Сахих аль-Бухари", "titleAr": "صحيح البخاري", "slug": "sahih-al-buhari", "sourceUrl": "https://isnad.link/book/sahih-al-buhari", "description": "Один из наиболее известных сборников достоверных хадисов.", "count": 0 },
+  { "id": "muslim", "title": "Сахих Муслим", "titleAr": "صحيح مسلم", "slug": "sahih-muslim", "sourceUrl": "https://isnad.link/book/sahih-muslim", "description": "Сборник достоверных хадисов имама Муслима.", "count": 0 },
+  { "id": "abudawud", "title": "Сунан Аби Дауд", "titleAr": "سنن أبي داود", "slug": "sunan-abu-dauda", "sourceUrl": "https://isnad.link/book/sunan-abu-dauda", "description": "Сборник хадисов по разделам фикха.", "count": 0 },
+  { "id": "tirmidhi", "title": "Сунан ат-Тирмизи", "titleAr": "سنن الترمذي", "slug": "sunan-at-tirmizi", "sourceUrl": "https://isnad.link/book/sunan-at-tirmizi", "description": "Сборник хадисов имама ат-Тирмизи.", "count": 0 },
+  { "id": "nasai", "title": "Сунан ан-Насаи", "titleAr": "سنن النسائي", "slug": "sunan-an-nasai", "sourceUrl": "https://isnad.link/book/sunan-an-nasai", "description": "Сборник хадисов имама ан-Насаи.", "count": 0 },
+  { "id": "ibnmajah", "title": "Сунан Ибн Маджах", "titleAr": "سنن ابن ماجه", "slug": "sunan-ibn-madzhah", "sourceUrl": "https://isnad.link/book/sunan-ibn-madzhah", "description": "Сборник хадисов имама Ибн Маджаха.", "count": 0 }
+]

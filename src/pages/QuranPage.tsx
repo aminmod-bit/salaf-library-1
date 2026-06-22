@@ -1,123 +1,151 @@
-import { useEffect, useMemo, useState } from 'react';
-import { BookOpen, Search, Settings, Bookmark, PlayCircle } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { BookOpen, ChevronLeft, ChevronRight, Headphones, List, Play, Search, Settings, Square } from 'lucide-react';
+import {
+  defaultTranslationId, getChapterAudio, getChapters, getRecitations, getTafsirs,
+  getTranslations, getVersesByChapter, getVersesByJuz,
+  type QuranChapter, type QuranRecitation, type QuranResource, type QuranVerse
+} from '../utils/quranComApi';
 
-interface Ayah { number: number; arabic: string; translationRu: string; translationEn?: string; translationTg?: string; translationUz?: string; translationFa?: string; tafsirRu?: string; }
-interface Surah { number: number; name: string; nameAr: string; meaning: string; revelation: string; ayahCount?: number; ayahs: Ayah[]; }
-
-const ui = {
-  ru: { section: 'Раздел Корана', title: 'Коран', lead: 'Современный раздел для чтения Корана: список сур, арабский текст, перевод, тафсир и удобные настройки.', search: 'Поиск суры', translation: 'Перевод', tafsir: 'Тафсир', coming: 'Текст этой суры будет добавлен в следующих обновлениях. Структура раздела уже готова для полного Корана.' },
-  en: { section: 'Quran section', title: 'Quran', lead: 'A modern Quran reading section: surah list, Arabic text, translation, tafsir and reading settings.', search: 'Search surah', translation: 'Translation', tafsir: 'Tafsir', coming: 'This surah text will be added in upcoming updates. The section is already prepared for the full Quran.' },
-  ar: { section: 'قسم القرآن', title: 'القرآن', lead: 'قسم حديث لقراءة القرآن: السور، النص العربي، الترجمة، التفسير والإعدادات.', search: 'البحث عن سورة', translation: 'الترجمة', tafsir: 'التفسير', coming: 'سيتم إضافة نص هذه السورة في التحديثات القادمة.' },
-  tg: { section: 'Бахши Қуръон', title: 'Қуръон', lead: 'Бахши муосир барои хондани Қуръон: сураҳо, матни арабӣ, тарҷума, тафсир ва танзимот.', search: 'Ҷустуҷӯи сура', translation: 'Тарҷума', tafsir: 'Тафсир', coming: 'Матни ин сура дар навсозиҳои оянда илова мешавад.' },
-  uz: { section: 'Qur’on bo‘limi', title: 'Qur’on', lead: 'Qur’on o‘qish uchun zamonaviy bo‘lim: suralar, arabcha matn, tarjima, tafsir va sozlamalar.', search: 'Sura qidirish', translation: 'Tarjima', tafsir: 'Tafsir', coming: 'Bu sura matni keyingi yangilanishlarda qo‘shiladi.' },
-  fa: { section: 'بخش قرآن', title: 'قرآن', lead: 'بخش مدرن برای خواندن قرآن: فهرست سوره‌ها، متن عربی، ترجمه، تفسیر و تنظیمات.', search: 'جستجوی سوره', translation: 'ترجمه', tafsir: 'تفسیر', coming: 'متن این سوره در به‌روزرسانی‌های بعدی اضافه می‌شود.' }
-};
+type Mode = 'surah' | 'juz';
 
 export default function QuranPage() {
+  const params = useParams<{ surahNumber?: string; ayahNumber?: string; juzNumber?: string }>();
+  const navigate = useNavigate();
   const { i18n } = useTranslation();
-  const lang = (i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0] as keyof typeof ui;
-  const t = ui[lang] || ui.ru;
-  const [surahs, setSurahs] = useState<Surah[]>([]);
-  const [selected, setSelected] = useState(1);
+  const lang = (i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0];
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const [chapters, setChapters] = useState<QuranChapter[]>([]);
+  const [translations, setTranslations] = useState<QuranResource[]>([]);
+  const [tafsirs, setTafsirs] = useState<QuranResource[]>([]);
+  const [recitations, setRecitations] = useState<QuranRecitation[]>([]);
+  const [translationId, setTranslationId] = useState(defaultTranslationId(lang));
+  const [tafsirId, setTafsirId] = useState<number | ''>('');
+  const [recitationId, setRecitationId] = useState(7);
+  const [selected, setSelected] = useState(Number(params.surahNumber) || 1);
+  const [juz, setJuz] = useState(Number(params.juzNumber) || 1);
+  const [mode, setMode] = useState<Mode>(params.juzNumber ? 'juz' : 'surah');
+  const [verses, setVerses] = useState<QuranVerse[]>([]);
+  const [audioUrl, setAudioUrl] = useState('');
   const [query, setQuery] = useState('');
-  const [fontSize, setFontSize] = useState(30);
-  const [showTranslation, setShowTranslation] = useState(true);
+  const [fontSize, setFontSize] = useState(32);
+  const [showTafsir, setShowTafsir] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => { setTranslationId(defaultTranslationId(lang)); }, [lang]);
 
   useEffect(() => {
-    Promise.all([
-      fetch('./data/quran-surahs.json').then(r => r.json()).catch(() => []),
-      fetch('./data/quran.json').then(r => r.json()).catch(() => []),
-    ]).then(([meta, ayahData]) => {
-      const byNumber = new Map<number, Surah>(ayahData.map((s: Surah) => [s.number, s]));
-      setSurahs(meta.map((item: Surah) => ({ ...item, ayahs: byNumber.get(item.number)?.ayahs || [], revelation: byNumber.get(item.number)?.revelation || item.revelation || '', ayahCount: byNumber.get(item.number)?.ayahs.length || item.ayahCount || 0 })));
-    }).catch(() => setSurahs([]));
-  }, []);
+    Promise.all([getChapters(lang), getTranslations(), getTafsirs(), getRecitations()])
+      .then(([c, tr, tf, rec]) => { setChapters(c); setTranslations(tr); setTafsirs(tf); setRecitations(rec); })
+      .catch(() => undefined);
+  }, [lang]);
 
-  const current = surahs.find(s => s.number === selected) || surahs[0];
-  const filtered = useMemo(() => {
+  useEffect(() => {
+    if (params.juzNumber) { setMode('juz'); setJuz(Number(params.juzNumber) || 1); }
+    else { setMode('surah'); setSelected(Number(params.surahNumber) || 1); }
+  }, [params.juzNumber, params.surahNumber]);
+
+  useEffect(() => {
+    setLoading(true);
+    const load = mode === 'juz'
+      ? getVersesByJuz(juz, translationId)
+      : getVersesByChapter(selected, translationId, tafsirId || undefined);
+    load.then(setVerses).catch(() => setVerses([])).finally(() => setLoading(false));
+  }, [mode, selected, juz, translationId, tafsirId]);
+
+  const current = chapters.find(c => c.id === selected);
+  const filteredChapters = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return surahs;
-    return surahs.filter(s => `${s.number} ${s.name} ${s.nameAr} ${s.meaning}`.toLowerCase().includes(q));
-  }, [surahs, query]);
+    if (!q) return chapters;
+    return chapters.filter(c => `${c.id} ${c.name_simple} ${c.name_arabic} ${c.translated_name?.name}`.toLowerCase().includes(q));
+  }, [chapters, query]);
+
+  const playChapter = async () => {
+    if (mode !== 'surah') return;
+    try {
+      const files = await getChapterAudio(selected, recitationId);
+      const first = files[0]?.audio_url || files[0]?.url || '';
+      if (first) {
+        setAudioUrl(first);
+        setTimeout(() => audioRef.current?.play(), 50);
+      }
+    } catch { /* ignore */ }
+  };
+
+  const goSurah = (id: number) => navigate(`/quran/${id}`);
+  const goJuz = (id: number) => navigate(`/quran/juz/${id}`);
+  const next = () => mode === 'juz' ? goJuz(Math.min(30, juz + 1)) : goSurah(Math.min(114, selected + 1));
+  const prev = () => mode === 'juz' ? goJuz(Math.max(1, juz - 1)) : goSurah(Math.max(1, selected - 1));
 
   return (
-    <div className="fade-in quran-page" style={{ maxWidth: 1500, margin: '0 auto' }}>
+    <div className="fade-in quran-com-page" style={{ maxWidth: 1600, margin: '0 auto' }}>
       <style>{css}</style>
       <section className="quran-hero glass-card">
         <div>
-          <div className="eyebrow"><BookOpen size={16}/> {t.section}</div>
-          <h1>{t.title}</h1>
-          <p>{t.lead}</p>
+          <div className="eyebrow"><BookOpen size={16}/> Quran Navigator</div>
+          <h1>{mode === 'juz' ? `Juz ${juz}` : `${current?.name_simple || 'Quran'} ${current?.name_arabic || ''}`}</h1>
+          <p>Surah · Verse · Juz navigation with translations, tafsir resources and reciters powered by Quran.com public API.</p>
         </div>
         <div className="quran-calligraphy">القرآن الكريم</div>
       </section>
 
       <div className="quran-layout">
         <aside className="quran-sidebar glass-card">
-          <div className="quran-search"><Search size={15}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder={t.search} /></div>
+          <div className="quran-search"><Search size={15}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Surah" /></div>
+          <div className="juz-row"><button onClick={() => setMode('surah')} className={mode==='surah'?'active':''}>Surah</button><button onClick={() => goJuz(juz)} className={mode==='juz'?'active':''}>Juz</button></div>
+          {mode === 'juz' && <div className="juz-grid">{Array.from({length:30},(_,i)=>i+1).map(n=><button key={n} className={juz===n?'active':''} onClick={()=>goJuz(n)}>{n}</button>)}</div>}
           <div className="surah-list">
-            {filtered.map(surah => (
-              <button key={surah.number} onClick={() => setSelected(surah.number)} className={selected === surah.number ? 'active' : ''}>
-                <span className="num">{surah.number}</span>
-                <span><b>{surah.name}</b><small>{surah.meaning} · {surah.ayahs.length || surah.ayahCount || '—'} аятов</small></span>
-                <strong dir="rtl">{surah.nameAr}</strong>
+            {filteredChapters.map(c => (
+              <button key={c.id} onClick={() => goSurah(c.id)} className={mode==='surah' && selected === c.id ? 'active' : ''}>
+                <span className="num">{c.id}</span>
+                <span><b>{c.name_simple}</b><small>{c.translated_name?.name || ''} · {c.verses_count}</small></span>
+                <strong dir="rtl">{c.name_arabic}</strong>
               </button>
             ))}
           </div>
         </aside>
 
         <main className="quran-reader glass-card">
-          {current ? (
-            <>
-              <div className="reader-head">
-                <div>
-                  <h2>{current.name} <span dir="rtl">{current.nameAr}</span></h2>
-                  <p>{current.meaning} · {current.revelation} · {current.ayahs.length} аятов</p>
-                </div>
-                <div className="quran-tools">
-                  <button onClick={() => setFontSize(v => Math.max(24, v - 2))}>A-</button>
-                  <button onClick={() => setFontSize(v => Math.min(46, v + 2))}>A+</button>
-                  <button onClick={() => setShowTranslation(v => !v)}><Settings size={14}/> {t.translation}</button>
-                </div>
-              </div>
+          <div className="reader-head">
+            <div>
+              <h2>{mode === 'juz' ? `Juz ${juz}` : `${current?.name_simple || ''} `}<span dir="rtl">{mode==='surah' ? current?.name_arabic : ''}</span></h2>
+              <p>{mode === 'surah' ? `${current?.revelation_place || ''} · ${current?.verses_count || 0} ayahs` : `${verses.length} ayahs`}</p>
+            </div>
+            <div className="quran-tools">
+              <button onClick={prev}><ChevronLeft size={16}/> Prev</button>
+              <button onClick={next}>Next <ChevronRight size={16}/></button>
+              <button onClick={() => setFontSize(v => Math.max(24, v - 2))}>A-</button>
+              <button onClick={() => setFontSize(v => Math.min(50, v + 2))}>A+</button>
+              <button onClick={playChapter}><Play size={15}/> Play</button>
+            </div>
+          </div>
 
-              <div className="bismillah" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-              <div className="ayahs">
-                {current.ayahs.length ? current.ayahs.map(ayah => (
-                  <article key={ayah.number} className="ayah-card">
-                    <div className="ayah-actions"><span>{current.number}:{ayah.number}</span><button title="Аудио будет добавлено позже"><PlayCircle size={15}/></button><button title="Закладка"><Bookmark size={15}/></button></div>
-                    <p className="arabic-ayah" dir="rtl" style={{ fontSize }}>{ayah.arabic} <span className="ayah-mark">﴿{ayah.number}﴾</span></p>
-                    {showTranslation && <p className="translation">{getAyahTranslation(ayah, lang)}</p>}
-                    {ayah.tafsirRu && <details className="tafsir"><summary>{t.tafsir}</summary><p>{ayah.tafsirRu}</p></details>}
-                  </article>
-                )) : <div className="coming-soon">{t.coming}</div>}
-              </div>
-            </>
-          ) : <div style={{ padding: 40, color: '#9db8a3' }}>Загрузка раздела Корана...</div>}
+          <div className="resource-bar">
+            <label><Settings size={14}/> Translation<select value={translationId} onChange={e=>setTranslationId(Number(e.target.value))}>{translations.map(r=><option key={r.id} value={r.id}>{r.language_name} · {r.name}</option>)}</select></label>
+            <label><List size={14}/> Tafsir<select value={tafsirId} onChange={e=>setTafsirId(e.target.value ? Number(e.target.value) : '')}><option value="">No tafsir</option>{tafsirs.map(r=><option key={r.id} value={r.id}>{r.language_name} · {r.name}</option>)}</select></label>
+            <label><Headphones size={14}/> Reciter<select value={recitationId} onChange={e=>setRecitationId(Number(e.target.value))}>{recitations.map(r=><option key={r.id} value={r.id}>{r.translated_name?.name || r.name}</option>)}</select></label>
+          </div>
+
+          <audio ref={audioRef} src={audioUrl} controls style={{ width: '100%', display: audioUrl ? 'block' : 'none' }} />
+
+          <div className="ayahs">
+            {loading ? <div className="loading-box">Loading Quran...</div> : verses.map(v => (
+              <article key={v.id} className="ayah-card" id={`ayah-${v.verse_key.replace(':','-')}`}>
+                <div className="ayah-actions"><span>{v.verse_key}</span><button onClick={() => navigate(`/quran/${v.verse_key.replace(':','/')}`)}>Open</button><button><Square size={14}/> Bookmark</button></div>
+                <p className="arabic-ayah" dir="rtl" style={{ fontSize }}>{v.text_uthmani}</p>
+                {v.translations?.map(tr => <div key={tr.id} className="translation" dangerouslySetInnerHTML={{ __html: tr.text }} />)}
+                {showTafsir && v.tafsirs?.map(tf => <details key={tf.id} className="tafsir"><summary>Tafsir</summary><div dangerouslySetInnerHTML={{ __html: tf.text }} /></details>)}
+              </article>
+            ))}
+          </div>
         </main>
       </div>
     </div>
   );
 }
 
-
-function getAyahTranslation(ayah: Ayah, lang: string) {
-  const unavailable: Record<string, string> = {
-    en: 'Translation for this language will be added soon.',
-    tg: 'Тарҷума ба ин забон дертар илова мешавад.',
-    uz: 'Bu til uchun tarjima keyinroq qo‘shiladi.',
-    fa: 'ترجمه این زبان به‌زودی اضافه خواهد شد.',
-    ar: 'الترجمة لهذه اللغة ستضاف قريبًا.'
-  };
-  if (lang === 'en') return ayah.translationEn || unavailable.en;
-  if (lang === 'tg') return ayah.translationTg || unavailable.tg;
-  if (lang === 'uz') return ayah.translationUz || unavailable.uz;
-  if (lang === 'fa') return ayah.translationFa || unavailable.fa;
-  if (lang === 'ar') return unavailable.ar;
-  return ayah.translationRu;
-}
-
 const css = `
-.quran-hero{padding:32px;margin-bottom:20px;display:flex;justify-content:space-between;gap:24px;overflow:hidden;background:linear-gradient(135deg,rgba(13,42,24,.96),rgba(7,19,11,.94))}.quran-hero h1{font-size:clamp(34px,6vw,64px);font-weight:950;color:#f0f4f1;line-height:1;margin:8px 0}.quran-hero p{color:#9db8a3;line-height:1.7;max-width:720px}.eyebrow{display:flex;align-items:center;gap:8px;color:#d4af37;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.quran-calligraphy{font-family:Amiri,serif;font-size:54px;color:rgba(212,175,55,.22);align-self:center;white-space:nowrap}.quran-layout{display:grid;grid-template-columns:340px 1fr;gap:18px}.quran-sidebar{padding:14px;height:calc(100vh - 210px);min-height:560px;overflow:hidden;display:flex;flex-direction:column}.quran-search{display:flex;gap:8px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.14);margin-bottom:12px}.quran-search input{background:transparent;border:0;outline:0;color:#f0f4f1;width:100%}.surah-list{overflow:auto;display:flex;flex-direction:column;gap:8px}.surah-list button{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;text-align:left;padding:12px;border-radius:14px;border:1px solid rgba(212,175,55,.12);background:rgba(255,255,255,.03);color:#f0f4f1;cursor:pointer}.surah-list button.active,.surah-list button:hover{border-color:rgba(212,175,55,.42);background:rgba(212,175,55,.08)}.num{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,.13);color:#d4af37;font-weight:900}.surah-list small{display:block;color:#9db8a3}.surah-list strong{font-family:Amiri,serif;color:#d4af37;font-size:18px}.quran-reader{min-height:560px;overflow:hidden}.reader-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:22px;border-bottom:1px solid rgba(212,175,55,.12)}.reader-head h2{color:#f0f4f1;font-size:26px;font-weight:900}.reader-head h2 span{font-family:Amiri,serif;color:#d4af37;margin-left:10px}.reader-head p{color:#9db8a3}.quran-tools{display:flex;gap:8px;flex-wrap:wrap}.quran-tools button,.ayah-actions button{border:1px solid rgba(212,175,55,.16);background:rgba(255,255,255,.04);color:#d4af37;border-radius:10px;padding:8px 10px;cursor:pointer;display:inline-flex;gap:5px;align-items:center}.bismillah{text-align:center;font-family:Amiri,serif;color:#d4af37;font-size:34px;padding:24px 18px}.ayahs{padding:0 22px 24px;display:flex;flex-direction:column;gap:14px}.ayah-card{padding:22px;border-radius:18px;border:1px solid rgba(212,175,55,.12);background:rgba(255,255,255,.025)}.ayah-actions{display:flex;justify-content:space-between;color:#5a7a63;font-size:12px;margin-bottom:12px}.arabic-ayah{font-family:Amiri,serif;line-height:2.15;color:#f8efd1;text-align:right}.ayah-mark{color:#d4af37;font-size:.75em}.translation{color:#9db8a3;line-height:1.75;margin-top:12px}.tafsir{margin-top:12px;border-top:1px solid rgba(212,175,55,.12);padding-top:10px}.tafsir summary{cursor:pointer;color:#d4af37;font-weight:800;font-size:13px}.tafsir p{color:#9db8a3;line-height:1.7}.coming-soon{padding:28px;text-align:center;color:#9db8a3;border:1px dashed rgba(212,175,55,.22);border-radius:16px;background:rgba(255,255,255,.025)}@media(max-width:950px){.quran-layout{grid-template-columns:1fr}.quran-sidebar{height:auto;min-height:auto;max-height:360px}.quran-calligraphy{display:none}.reader-head{align-items:flex-start;flex-direction:column}.ayahs{padding:0 12px 18px}.quran-hero{padding:24px}.bismillah{font-size:28px}.arabic-ayah{font-size:30px!important}}
+.quran-hero{padding:32px;margin-bottom:20px;display:flex;justify-content:space-between;gap:24px;overflow:hidden;background:linear-gradient(135deg,rgba(13,42,24,.96),rgba(7,19,11,.94))}.quran-hero h1{font-size:clamp(34px,6vw,62px);font-weight:950;color:#f0f4f1;line-height:1;margin:8px 0}.quran-hero p{color:#9db8a3;line-height:1.7;max-width:760px}.eyebrow{display:flex;align-items:center;gap:8px;color:#d4af37;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.quran-calligraphy{font-family:Amiri,serif;font-size:54px;color:rgba(212,175,55,.22);align-self:center}.quran-layout{display:grid;grid-template-columns:350px 1fr;gap:18px}.quran-sidebar{padding:14px;height:calc(100vh - 210px);min-height:620px;overflow:hidden;display:flex;flex-direction:column}.quran-search{display:flex;gap:8px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.14);margin-bottom:12px}.quran-search input{background:transparent;border:0;outline:0;color:#f0f4f1;width:100%}.juz-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.juz-row button,.juz-grid button{border:1px solid rgba(212,175,55,.14);background:rgba(255,255,255,.035);color:#d4af37;border-radius:10px;padding:8px;cursor:pointer}.juz-row button.active,.juz-grid button.active{background:rgba(212,175,55,.15)}.juz-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}.surah-list{overflow:auto;display:flex;flex-direction:column;gap:8px}.surah-list button{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;text-align:left;padding:12px;border-radius:14px;border:1px solid rgba(212,175,55,.12);background:rgba(255,255,255,.03);color:#f0f4f1;cursor:pointer}.surah-list button.active,.surah-list button:hover{border-color:rgba(212,175,55,.42);background:rgba(212,175,55,.08)}.num{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,.13);color:#d4af37;font-weight:900}.surah-list small{display:block;color:#9db8a3}.surah-list strong{font-family:Amiri,serif;color:#d4af37;font-size:18px}.quran-reader{min-height:620px;overflow:hidden}.reader-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:22px;border-bottom:1px solid rgba(212,175,55,.12)}.reader-head h2{color:#f0f4f1;font-size:26px;font-weight:900}.reader-head h2 span{font-family:Amiri,serif;color:#d4af37;margin-left:10px}.reader-head p{color:#9db8a3}.quran-tools,.resource-bar{display:flex;gap:8px;flex-wrap:wrap}.quran-tools button,.ayah-actions button{border:1px solid rgba(212,175,55,.16);background:rgba(255,255,255,.04);color:#d4af37;border-radius:10px;padding:8px 10px;cursor:pointer;display:inline-flex;gap:5px;align-items:center}.resource-bar{padding:12px 18px;border-bottom:1px solid rgba(212,175,55,.1)}.resource-bar label{display:flex;gap:6px;align-items:center;color:#9db8a3;font-size:12px}.resource-bar select{max-width:220px;background:#112a1a;color:#f0f4f1;border:1px solid rgba(212,175,55,.16);border-radius:8px;padding:7px}.ayahs{padding:22px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 330px);overflow:auto}.ayah-card{padding:22px;border-radius:18px;border:1px solid rgba(212,175,55,.12);background:rgba(255,255,255,.025)}.ayah-actions{display:flex;justify-content:space-between;color:#5a7a63;font-size:12px;margin-bottom:12px;gap:8px}.arabic-ayah{font-family:Amiri,serif;line-height:2.15;color:#f8efd1;text-align:right}.translation{color:#9db8a3;line-height:1.75;margin-top:12px}.tafsir{margin-top:12px;border-top:1px solid rgba(212,175,55,.12);padding-top:10px}.tafsir summary{cursor:pointer;color:#d4af37;font-weight:800;font-size:13px}.tafsir div{color:#9db8a3;line-height:1.7}.loading-box{padding:40px;text-align:center;color:#d4af37}@media(max-width:980px){.quran-layout{grid-template-columns:1fr}.quran-sidebar{height:auto;min-height:auto;max-height:420px}.quran-calligraphy{display:none}.reader-head{align-items:flex-start;flex-direction:column}.ayahs{max-height:none;padding:12px}.quran-hero{padding:24px}.arabic-ayah{font-size:30px!important}.resource-bar select{max-width:160px}}
 `;
