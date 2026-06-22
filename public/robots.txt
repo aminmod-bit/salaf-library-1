@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maktabah.org/sitemap.xml
+Sitemap: https://salaflibrary.org/sitemap.xml
