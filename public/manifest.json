@@ -1,12 +1,12 @@
 {
-  "name": "Salaf Library",
-  "short_name": "Salaf Library",
+  "name": "Maktabah",
+  "short_name": "Maktabah",
   "description": "Профессиональная исламская цифровая библиотека: книги, биографии, аудио и фаваиды.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1a0f",
-  "theme_color": "#0d3320",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
   "icons": [
     {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'salaf-library-v1.0.1-production';
+const CACHE_NAME = 'maktabah-v1.0.0';
 const CORE_ASSETS = [
   './',
   './index.html',

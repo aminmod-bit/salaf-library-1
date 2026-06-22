@@ -1,270 +1,93 @@
-import { useNavigate } from 'react-router-dom';
-import { Heart, BookOpen, Download, Star } from 'lucide-react';
-import { useStore, Book } from '../store/useStore';
-import toast from 'react-hot-toast';
-import GeneratedCover from './GeneratedCover';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Heart, BookOpen } from 'lucide-react';
+import { useAppStore } from '../store';
+import { cn } from '../utils/cn';
+import type { Book } from '../types';
 
-interface Props {
+interface BookCardProps {
   book: Book;
-  size?: 'sm' | 'md' | 'lg';
-  horizontal?: boolean;
+  compact?: boolean;
 }
 
-export default function BookCard({ book, size = 'md', horizontal = false }: Props) {
-  const navigate = useNavigate();
-  const { toggleFavorite, isFavorite, addToHistory } = useStore();
-  const fav = isFavorite(book.id);
-
-  const handleOpen = () => {
-    addToHistory({
-      id: book.id,
-      type: 'book',
-      title: book.title,
-      subtitle: book.author,
-      visitedAt: new Date().toISOString(),
-      coverColor: book.coverColor,
-      coverEmoji: book.coverEmoji,
-      coverImage: book.coverImage,
-    });
-    navigate(`/books/${book.id}`);
-  };
-
-  const handleFav = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    toggleFavorite(book.id);
-    toast(fav ? 'Удалено из избранного' : 'Добавлено в избранное', {
-      icon: fav ? '💔' : '❤️',
-    });
-  };
-
-  const coverH = size === 'sm' ? 160 : size === 'lg' ? 280 : 220;
-
-  if (horizontal) {
-    return (
-      <div
-        onClick={handleOpen}
-        style={{
-          display: 'flex',
-          gap: '16px',
-          padding: '16px',
-          background: 'var(--color-bg-card)',
-          border: '1px solid var(--color-border)',
-          borderRadius: '12px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          alignItems: 'flex-start',
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'rgba(212,175,55,0.4)';
-          (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border)';
-          (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-        }}
-      >
-        {/* Cover */}
-        <div style={{
-          width: '60px',
-          height: '80px',
-          flexShrink: 0,
-          boxShadow: '4px 4px 12px rgba(0,0,0,0.4)',
-          overflow: 'hidden',
-        }}>
-          <GeneratedCover book={book} height="100%" width="100%" radius="8px" fontSize={8} compact />
-        </div>
-
-        {/* Info */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            fontSize: '14px',
-            fontWeight: 600,
-            color: '#f0f4f1',
-            marginBottom: '4px',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}>
-            {book.title}
-          </div>
-          <div style={{ fontSize: '12px', color: '#9db8a3', marginBottom: '6px' }}>{book.author}</div>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            <span className="badge badge-gold" style={{ fontSize: '10px' }}>{book.category}</span>
-            {book.pages && (
-              <span style={{ fontSize: '10px', color: '#5a7a63' }}>{book.pages} стр.</span>
-            )}
-          </div>
-        </div>
-
-        {/* Fav */}
-        <button
-          onClick={handleFav}
-          style={{
-            background: 'none', border: 'none',
-            color: fav ? '#ef4444' : '#5a7a63',
-            cursor: 'pointer', padding: '4px',
-          }}
-        >
-          <Heart size={16} fill={fav ? '#ef4444' : 'none'} />
-        </button>
-      </div>
-    );
-  }
+export default function BookCard({ book, compact = false }: BookCardProps) {
+  const { t } = useTranslation();
+  const { toggleFavorite, isFavorite } = useAppStore();
+  const favorite = isFavorite(book.id);
 
   return (
-    <div
-      className="book-card fade-in"
-      onClick={handleOpen}
-      style={{ position: 'relative', width: size === 'sm' ? '130px' : size === 'lg' ? '200px' : '165px' }}
+    <Link
+      to={`/books/${book.id}`}
+      className="group relative bg-slate-900 border border-slate-800/50 rounded-xl overflow-hidden hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-900/10 transition-all duration-200 flex flex-col"
     >
       {/* Cover */}
-      <div style={{
-        width: '100%',
-        height: coverH,
-        background: `linear-gradient(160deg, ${book.coverColor || '#1a3a2a'} 0%, ${adjustColor(book.coverColor || '#1a3a2a')} 100%)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: size === 'sm' ? '40px' : '56px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <GeneratedCover book={book} height="100%" width="100%" fontSize={size === 'sm' ? 11 : 13} compact={size === 'sm'} />
+      <div
+        className="relative flex items-center justify-center h-40 flex-shrink-0"
+        style={{ backgroundColor: book.coverColor }}
+      >
+        {book.coverImage ? (
+          <img
+            src={book.coverImage}
+            alt={book.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <span className="text-5xl select-none opacity-80 group-hover:scale-110 transition-transform duration-300">
+            {book.coverEmoji}
+          </span>
+        )}
 
         {/* Badges */}
-        {book.isNew && (
-          <span style={{
-            position: 'absolute', top: '8px', left: '8px',
-            background: '#22c55e', color: '#fff',
-            fontSize: '9px', fontWeight: 700,
-            padding: '2px 6px', borderRadius: '4px',
-          }}>
-            НОВИНКА
-          </span>
-        )}
-        {book.featured && !book.isNew && (
-          <span style={{
-            position: 'absolute', top: '8px', left: '8px',
-            background: 'rgba(212,175,55,0.9)', color: '#0a1a0f',
-            fontSize: '9px', fontWeight: 700,
-            padding: '2px 6px', borderRadius: '4px',
-          }}>
-            ⭐ ТОП
-          </span>
-        )}
+        <div className="absolute top-2 left-2 flex gap-1">
+          {book.isNew && (
+            <span className="text-[10px] font-semibold px-1.5 py-0.5 bg-emerald-500 text-white rounded-md">
+              {t('new')}
+            </span>
+          )}
+          {book.featured && (
+            <span className="text-[10px] font-semibold px-1.5 py-0.5 bg-amber-500 text-slate-900 rounded-md">
+              ★
+            </span>
+          )}
+        </div>
 
-        {/* Fav button */}
+        {/* Favorite button */}
         <button
-          onClick={handleFav}
-          style={{
-            position: 'absolute', top: '8px', right: '8px',
-            width: '28px', height: '28px',
-            background: 'rgba(0,0,0,0.5)',
-            backdropFilter: 'blur(8px)',
-            border: 'none', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer',
-            color: fav ? '#ef4444' : '#9db8a3',
-            transition: 'all 0.2s ease',
+          className={cn(
+            'absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-150',
+            favorite
+              ? 'bg-red-500/20 text-red-400'
+              : 'bg-black/30 text-white/50 opacity-0 group-hover:opacity-100'
+          )}
+          onClick={(e) => {
+            e.preventDefault();
+            toggleFavorite(book.id);
           }}
         >
-          <Heart size={12} fill={fav ? '#ef4444' : 'none'} />
+          <Heart size={13} fill={favorite ? 'currentColor' : 'none'} />
         </button>
 
-        {/* Rating */}
-        {book.rating && (
-          <div style={{
-            position: 'absolute', bottom: '8px', right: '8px',
-            background: 'rgba(0,0,0,0.6)',
-            backdropFilter: 'blur(8px)',
-            borderRadius: '6px', padding: '2px 6px',
-            display: 'flex', alignItems: 'center', gap: '3px',
-          }}>
-            <Star size={10} color="#d4af37" fill="#d4af37" />
-            <span style={{ fontSize: '10px', color: '#d4af37', fontWeight: 600 }}>{book.rating}</span>
-          </div>
-        )}
+        {/* Gradient overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
 
       {/* Info */}
-      <div style={{ padding: '10px 10px 12px' }}>
-        <div style={{
-          fontSize: size === 'sm' ? '12px' : '13px',
-          fontWeight: 600,
-          color: '#f0f4f1',
-          marginBottom: '4px',
-          display: '-webkit-box',
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
-          lineHeight: 1.3,
-        }}>
+      <div className="p-3.5 flex-1 flex flex-col gap-1.5">
+        <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2 group-hover:text-amber-100 transition-colors">
           {book.title}
-        </div>
-        <div style={{
-          fontSize: '11px',
-          color: '#9db8a3',
-          marginBottom: '8px',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        }}>
-          {book.author}
-        </div>
+        </h3>
+        <p className="text-xs text-slate-400 truncate">{book.author}</p>
 
-        {/* Actions */}
-        <div style={{ display: 'flex', gap: '6px' }}>
-          <button
-            onClick={e => { e.stopPropagation(); handleOpen(); }}
-            style={{
-              flex: 1,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px',
-              padding: '5px 8px',
-              background: 'linear-gradient(135deg, #d4af37, #f0c84a)',
-              border: 'none', borderRadius: '7px',
-              color: '#0a1a0f', fontSize: '11px', fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            <BookOpen size={11} />
-            Читать
-          </button>
-          <button
-            onClick={e => {
-              e.stopPropagation();
-              if (book.downloadUrl || book.fileUrl) {
-                window.open(book.downloadUrl || book.fileUrl, '_blank');
-              } else {
-                toast('PDF файл пока не добавлен', { icon: '📥' });
-              }
-            }}
-            style={{
-              width: '28px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '7px', cursor: 'pointer',
-              color: '#9db8a3',
-            }}
-          >
-            <Download size={11} />
-          </button>
-        </div>
+        {!compact && (
+          <div className="flex items-center gap-2 mt-auto pt-2 text-xs text-slate-500">
+            <span className="flex items-center gap-1">
+              <BookOpen size={11} />
+              {book.pages} {t('pages')}
+            </span>
+            <span className="ml-auto">{book.category}</span>
+          </div>
+        )}
       </div>
-    </div>
+    </Link>
   );
-}
-
-function adjustColor(hex: string): string {
-  // Slightly darken the color
-  try {
-    const n = parseInt(hex.replace('#', ''), 16);
-    const r = Math.max(0, (n >> 16) - 20);
-    const g = Math.max(0, ((n >> 8) & 0xff) - 20);
-    const b = Math.max(0, (n & 0xff) - 20);
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-  } catch {
-    return hex;
-  }
 }
