@@ -16,7 +16,7 @@
     "quran": "Quran",
     "about": "About",
     "report": "Report",
-    "bookLanguages": "Book Languages",
+    "bookLanguages": "Books in different languages",
     "articles": "Articles",
     "hadith": "Hadith",
     "azkar": "Azkar"
@@ -164,7 +164,7 @@
   },
   "bookLanguages": {
     "eyebrow": "Multilingual library",
-    "title": "Books and materials by language",
+    "title": "Books in different languages",
     "description": "Books, articles, benefits and materials will be organized by language. We do not show artificial translations: if content is not available in a language, the section clearly shows that it is awaiting content.",
     "books": "Books",
     "articles": "Articles",
