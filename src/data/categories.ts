@@ -14,3 +14,5 @@ export const categoriesData: Category[] = [
   { id: 'cat011', name: 'Этика', nameAr: 'الأخلاق', icon: '⭐', color: '#1a2a2a', description: 'Нравственность и характер', count: 189, type: 'books' },
   { id: 'cat012', name: 'Коран', nameAr: 'القرآن', icon: '📖', color: '#3a1a1a', description: 'Науки о Коране', count: 201, type: 'books' },
 ];
+
+export const fallbackCategories = categoriesData;

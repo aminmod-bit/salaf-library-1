@@ -429,3 +429,5 @@ export const booksData: Book[] = [
     rating: 4.8,
   },
 ];
+
+export const fallbackBooks = booksData;

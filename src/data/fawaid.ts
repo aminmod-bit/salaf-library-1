@@ -174,3 +174,5 @@ export const fawaidData: Faidah[] = [
     likes: 1678,
   },
 ];
+
+export const fallbackFawaid = fawaidData;

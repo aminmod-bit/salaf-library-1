@@ -1,44 +1,61 @@
 import { useEffect } from 'react';
-import { useAppStore } from '../store';
-import { fallbackBooks } from '../data/books';
-import { fallbackBiographies } from '../data/biographies';
-import { fallbackAudio } from '../data/audio';
-import { fallbackFawaid } from '../data/fawaid';
-import { fallbackCategories } from '../data/categories';
+import { useStore } from '../store/useStore';
+import { booksData, fallbackBooks } from '../data/books';
+import { biographiesData, fallbackBiographies } from '../data/biographies';
+import { audioData, fallbackAudio } from '../data/audio';
+import { fawaidData, fallbackFawaid } from '../data/fawaid';
+import { categoriesData, fallbackCategories } from '../data/categories';
+import type { AudioLesson, Biography, Book, Category, Faidah } from '../store/useStore';
 
-async function fetchJson<T>(url: string): Promise<T | null> {
+async function fetchJson<T>(url: string): Promise<T[] | null> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
-    return await res.json() as T;
+    const data = await res.json();
+    return Array.isArray(data) ? (data as T[]) : null;
   } catch {
     return null;
   }
 }
 
 export function useLoadData() {
-  const { setBooks, setAudio, setBiographies, setFawaid, setCategories, setDataLoaded, dataLoaded } = useAppStore();
+  const {
+    books,
+    setBooks,
+    setAudioLessons,
+    setBiographies,
+    setFawaid,
+    setCategories,
+    setLoading,
+  } = useStore();
 
   useEffect(() => {
-    if (dataLoaded) return;
+    if (books.length > 0) return;
+    let mounted = true;
 
     async function loadData() {
-      const [books, audio, biographies, fawaid, categories] = await Promise.all([
-        fetchJson<typeof fallbackBooks>('./data/books.json'),
-        fetchJson<typeof fallbackAudio>('./data/audio.json'),
-        fetchJson<typeof fallbackBiographies>('./data/biographies.json'),
-        fetchJson<typeof fallbackFawaid>('./data/fawaid.json'),
-        fetchJson<typeof fallbackCategories>('./data/categories.json'),
+      const [loadedBooks, loadedAudio, loadedBiographies, loadedFawaid, loadedCategories] = await Promise.all([
+        fetchJson<Book>('./data/books.json'),
+        fetchJson<AudioLesson>('./data/audio.json'),
+        fetchJson<Biography>('./data/biographies.json'),
+        fetchJson<Faidah>('./data/fawaid.json'),
+        fetchJson<Category>('./data/categories.json'),
       ]);
 
-      setBooks(books && books.length > 0 ? books : fallbackBooks);
-      setAudio(audio && audio.length > 0 ? audio : fallbackAudio);
-      setBiographies(biographies && biographies.length > 0 ? biographies : fallbackBiographies);
-      setFawaid(fawaid && fawaid.length > 0 ? fawaid : fallbackFawaid);
-      setCategories(categories && categories.length > 0 ? categories : fallbackCategories);
-      setDataLoaded(true);
+      if (!mounted) return;
+      setBooks(loadedBooks && loadedBooks.length > 0 ? loadedBooks : fallbackBooks || booksData);
+      setAudioLessons(loadedAudio && loadedAudio.length > 0 ? loadedAudio : fallbackAudio || audioData);
+      setBiographies(loadedBiographies && loadedBiographies.length > 0 ? loadedBiographies : fallbackBiographies || biographiesData);
+      setFawaid(loadedFawaid && loadedFawaid.length > 0 ? loadedFawaid : fallbackFawaid || fawaidData);
+      setCategories(loadedCategories && loadedCategories.length > 0 ? loadedCategories : fallbackCategories || categoriesData);
+      setLoading(false);
     }
 
     loadData();
-  }, [dataLoaded, setBooks, setAudio, setBiographies, setFawaid, setCategories, setDataLoaded]);
+    return () => {
+      mounted = false;
+    };
+  }, [books.length, setAudioLessons, setBiographies, setBooks, setCategories, setFawaid, setLoading]);
 }
+
+export default useLoadData;

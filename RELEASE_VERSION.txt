@@ -1,34 +1,21 @@
-Maktabah / Salaf Library — Branding Admin Release 2.7
+Maktabah / Salaf Library — Build Fix Release 2.7.1
 
 Дата сборки: 2026-06-22
 
-Добавлено:
-- новая страница админки /#/admin/branding;
-- инструмент полной смены имени сайта через GitHub API;
-- можно указать старые названия, например Salaf Library / Muslim Library;
-- можно указать новое название, например Maktabah;
-- режим проверки без записи показывает, какие файлы будут изменены;
-- режим применения обновляет текстовые файлы проекта в GitHub;
-- создаётся/обновляется public/data/branding.json;
-- инструмент проходит по source/config/meta/README/manifest/svg/html/xml/yaml/css файлам;
-- пропускает dist, node_modules, .git, public/catalog и package-lock, чтобы не делать лишнюю тяжёлую запись;
-- GitHub Actions после применения пересобирает sitemap и SEO-страницы из обновлённых исходников;
-- добавлена кнопка «Брендинг» в админ-панель.
-
-Как использовать:
-1. Открыть /#/admin/settings и подключить GitHub API.
-2. Открыть /#/admin/branding.
-3. В старые названия вписать:
-   Salaf Library
-   Muslim Library
-4. В новое название вписать:
-   Maktabah
-5. Сначала нажать «Проверить».
-6. Если всё хорошо, снять галочку «Проверка без записи».
-7. Нажать «Применить ребрендинг».
-8. Дождаться GitHub Actions.
+Исправлено:
+- GitHub Actions падал из-за старого файла src/hooks/useData.ts, который импортировал fallbackBooks/fallbackAudio/fallbackBiographies/fallbackFawaid/fallbackCategories;
+- добавлен совместимый src/hooks/useData.ts под текущий Zustand store;
+- добавлены alias-экспорты fallbackBooks, fallbackAudio, fallbackBiographies, fallbackFawaid, fallbackCategories в src/data/*;
+- это сохраняет совместимость со старыми файлами, если они остались в репозитории после ручной загрузки;
+- сборка снова проходит успешно.
 
 Проверка:
 - npm run build: OK
 - npm run check: OK
 - npm audit moderate+: 0 vulnerabilities
+
+Рекомендация:
+- загрузить этот архив поверх текущего репозитория через GitHub Desktop;
+- commit: Build fix 2.7.1;
+- push;
+- дождаться GitHub Actions.

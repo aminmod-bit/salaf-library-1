@@ -283,3 +283,5 @@ export const biographiesData: Biography[] = [
     featured: true,
   },
 ];
+
+export const fallbackBiographies = biographiesData;
