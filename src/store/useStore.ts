@@ -5,6 +5,8 @@ import { goalsData, readingPlanData } from '../data/goals';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
+export type ThemeMode = 'dark' | 'light' | 'system';
+
 export interface Book {
   id: string;
   title: string;
@@ -151,6 +153,7 @@ interface LibraryStore {
   currentPage: string;
   searchQuery: string;
   isLoading: boolean;
+  theme: ThemeMode;
 
   // Audio Player
   currentAudio: AudioLesson | null;
@@ -180,6 +183,7 @@ interface LibraryStore {
   setSidebarOpen: (open: boolean) => void;
   setCurrentPage: (page: string) => void;
   setSearchQuery: (q: string) => void;
+  setTheme: (theme: ThemeMode) => void;
 
   // Actions - Audio
   setCurrentAudio: (audio: AudioLesson | null) => void;
@@ -216,6 +220,7 @@ export const useStore = create<LibraryStore>()(
       currentPage: 'home',
       searchQuery: '',
       isLoading: true,
+      theme: 'dark',
       currentAudio: null,
       isPlaying: false,
       audioVolume: 0.8,
@@ -239,6 +244,7 @@ export const useStore = create<LibraryStore>()(
       setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),
       setCurrentPage: (currentPage) => set({ currentPage }),
       setSearchQuery: (searchQuery) => set({ searchQuery }),
+      setTheme: (theme) => set({ theme }),
 
       // Audio
       setCurrentAudio: (currentAudio) => set({ currentAudio }),
@@ -303,6 +309,7 @@ export const useStore = create<LibraryStore>()(
         readingProgress: state.readingProgress,
         audioProgress: state.audioProgress,
         audioVolume: state.audioVolume,
+        theme: state.theme,
         goals: state.goals,
         readingPlan: state.readingPlan,
       }),
