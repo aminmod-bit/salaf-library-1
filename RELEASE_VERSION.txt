@@ -1,21 +1,28 @@
-Maktabah / Salaf Library — Build Fix Release 2.7.1
+Maktabah — Auto PDF Covers Restore 2.8
 
 Дата сборки: 2026-06-22
 
-Исправлено:
-- GitHub Actions падал из-за старого файла src/hooks/useData.ts, который импортировал fallbackBooks/fallbackAudio/fallbackBiographies/fallbackFawaid/fallbackCategories;
-- добавлен совместимый src/hooks/useData.ts под текущий Zustand store;
-- добавлены alias-экспорты fallbackBooks, fallbackAudio, fallbackBiographies, fallbackFawaid, fallbackCategories в src/data/*;
-- это сохраняет совместимость со старыми файлами, если они остались в репозитории после ручной загрузки;
-- сборка снова проходит успешно.
+Выполнено:
+- возвращена автоматизация обложек книг из первой страницы PDF;
+- если у книги есть coverImage, используется обычная картинка;
+- если coverImage нет, но есть fileUrl, сайт пытается отрендерить первую страницу PDF как обложку;
+- обложки кэшируются в IndexedDB: maktabah-pdf-covers;
+- если PDF недоступен или рендер не удался, остаётся лёгкая премиальная авто-обложка;
+- для защиты телефона от перегрева рендер PDF-обложек отключён на экранах меньше 820px;
+- одновременно рендерится только 1 PDF-обложка;
+- за сессию рендерится максимум 18 PDF-обложек;
+- PDF.js для обложек загружается динамически, не на старте сайта.
+
+Сохранено:
+- облегчённый сайт без публичных разделов Коран / Аудио / Хадисы / Фаваиды;
+- Азкары и Дуа;
+- Статьи;
+- Книги на разных языках;
+- PDF Reader;
+- Админка;
+- SEO и PWA.
 
 Проверка:
 - npm run build: OK
 - npm run check: OK
 - npm audit moderate+: 0 vulnerabilities
-
-Рекомендация:
-- загрузить этот архив поверх текущего репозитория через GitHub Desktop;
-- commit: Build fix 2.7.1;
-- push;
-- дождаться GitHub Actions.
