@@ -9,17 +9,15 @@ import {
 
 const navItems = [
   { path: '/', icon: Home, label: 'Главная', key: 'home' },
-  { path: '/dashboard', icon: BookOpen, label: 'Панель', key: 'dashboard' },
   { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
   { path: '/azkar', icon: Sparkles, label: 'Азкары', key: 'azkar' },
+  { path: '/hadith', icon: BookOpenText, label: 'Хадисы', key: 'hadith' },
   { path: '/book-languages', icon: Languages, label: 'Книги на разных языках', key: 'bookLanguages' },
   { path: '/articles', icon: BookOpenText, label: 'Статьи', key: 'articles' },
   { path: '/biographies', icon: Users, label: 'Биографии', key: 'biographies' },
-  { path: '/categories', icon: Grid3X3, label: 'Категории', key: 'categories' },
 ];
 
 const userItems = [
-  { path: '/search', icon: Search, label: 'Поиск', key: 'search' },
   { path: '/favorites', icon: Heart, label: 'Избранное', key: 'favorites' },
   { path: '/history', icon: Clock, label: 'История', key: 'history' },
   { path: '/goals', icon: Sparkles, label: 'Цели', key: 'goals' },

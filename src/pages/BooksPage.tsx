@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Search, Filter, Grid3X3, List, SlidersHorizontal } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { BookOpen, Folder, Grid3X3, List, Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
 
@@ -13,37 +13,71 @@ const SORT_OPTIONS = [
   { value: 'rating', label: 'По рейтингу' },
 ];
 
+const SECTION_ORDER = [
+  'Акыда', 'Таухид', 'Манхадж', 'Хадисы', 'Сира', 'Фикх', 'Тафсир', 'Азкары', 'Дуа',
+  'Арабский язык', 'Воспитание', 'История', 'Биографии', 'Детские книги', 'Даава', 'Другие разделы'
+];
+
+function normalizeSection(category: string) {
+  if (/дуа|зикр/i.test(category)) return 'Дуа';
+  if (/хадис/i.test(category)) return 'Хадисы';
+  if (/сира/i.test(category)) return 'Сира';
+  if (/араб/i.test(category)) return 'Арабский язык';
+  if (/акыд/i.test(category)) return 'Акыда';
+  if (/фаваид|общее/i.test(category)) return 'Другие разделы';
+  return category || 'Другие разделы';
+}
+
 export default function BooksPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
-  const { books, categories } = useStore();
-  const [search, setSearch] = useState('');
-  const [selectedCat, setSelectedCat] = useState(searchParams.get('category') || 'all');
+  const { books } = useStore();
+  const [search, setSearch] = useState(searchParams.get('q') || '');
+  const [selectedCat, setSelectedCat] = useState(searchParams.get('category') || '');
   const [sort, setSort] = useState(searchParams.get('filter') === 'new' ? 'new' : 'popular');
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [lang, setLang] = useState(searchParams.get('language') || 'all');
   const [visibleCount, setVisibleCount] = useState(24);
 
+  useEffect(() => {
+    setSearch(searchParams.get('q') || '');
+    setSelectedCat(searchParams.get('category') || '');
+    setLang(searchParams.get('language') || 'all');
+  }, [searchParams]);
+
+  const sectionStats = useMemo(() => {
+    const counts = books.reduce<Record<string, number>>((acc, book) => {
+      const section = normalizeSection(book.category);
+      acc[section] = (acc[section] || 0) + 1;
+      return acc;
+    }, {});
+    for (const section of SECTION_ORDER) counts[section] ||= 0;
+    return Object.entries(counts)
+      .map(([name, count]) => ({ name, count }))
+      .filter(item => item.count > 0 || SECTION_ORDER.includes(item.name))
+      .sort((a, b) => {
+        const ai = SECTION_ORDER.indexOf(a.name);
+        const bi = SECTION_ORDER.indexOf(b.name);
+        return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi) || b.count - a.count;
+      });
+  }, [books]);
+
+  const authorsCount = useMemo(() => new Set(books.map(b => b.author).filter(Boolean)).size, [books]);
+
   const filtered = useMemo(() => {
     let result = [...books];
-
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(b =>
         b.title.toLowerCase().includes(q) ||
         b.author.toLowerCase().includes(q) ||
         b.description.toLowerCase().includes(q) ||
-        b.tags.some(t => t.toLowerCase().includes(q))
+        b.category.toLowerCase().includes(q) ||
+        b.tags.some(tag => tag.toLowerCase().includes(q))
       );
     }
-
-    if (selectedCat !== 'all') {
-      result = result.filter(b => b.category === selectedCat);
-    }
-
-    if (lang !== 'all') {
-      result = result.filter(b => b.language === lang);
-    }
+    if (selectedCat) result = result.filter(b => normalizeSection(b.category) === selectedCat);
+    if (lang !== 'all') result = result.filter(b => b.language === lang);
 
     switch (sort) {
       case 'popular': result.sort((a, b) => (b.views || 0) - (a.views || 0)); break;
@@ -52,51 +86,30 @@ export default function BooksPage() {
       case 'author': result.sort((a, b) => a.author.localeCompare(b.author)); break;
       case 'rating': result.sort((a, b) => (b.rating || 0) - (a.rating || 0)); break;
     }
-
     return result;
   }, [books, search, selectedCat, sort, lang]);
 
-  useEffect(() => {
-    setVisibleCount(24);
-  }, [search, selectedCat, sort, lang, view]);
-
-  const visibleBooks = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
-
-  const categoryStats = useMemo(() => {
-    const counts = books.reduce<Record<string, number>>((acc, book) => {
-      acc[book.category] = (acc[book.category] || 0) + 1;
-      return acc;
-    }, {});
-    const hiddenCategories = new Set(['Тафсир', 'Таfsир', 'Фикх', 'Общее', 'Фаваиды']);
-    return Object.entries(counts)
-      .filter(([name]) => !hiddenCategories.has(name))
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-  }, [books]);
-
-  const authorsCount = useMemo(() => new Set(books.map(b => b.author).filter(Boolean)).size, [books]);
+  useEffect(() => setVisibleCount(24), [search, selectedCat, sort, lang, view]);
+  const visibleBooks = filtered.slice(0, visibleCount);
+  const showFolders = !selectedCat && !search.trim();
 
   return (
     <div className="fade-in" style={{ maxWidth: '1400px', margin: '0 auto' }}>
-      {/* Header */}
-      <div className="glass-card" style={{ marginBottom: '24px', padding: '28px', background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
+      <div className="glass-card" style={{ marginBottom: 24, padding: 28, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
         <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>
           {t('booksPage.eyebrow', 'Каталог Salaf Library')}
         </div>
-        <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: '#f0f4f1', marginBottom: '10px', lineHeight: 1.08 }}>
-          📚 {t('booksPage.title', 'Книги для онлайн-чтения')}
+        <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: '#f0f4f1', marginBottom: 10, lineHeight: 1.08 }}>
+          {showFolders ? 'Разделы библиотеки' : selectedCat || t('booksPage.title', 'Книги для онлайн-чтения')}
         </h1>
-        <p style={{ color: '#9db8a3', fontSize: '15px', lineHeight: 1.7, maxWidth: 760 }}>
-          {filtered.length} / {books.length}. {t('booksPage.description', 'Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.')}
+        <p style={{ color: '#9db8a3', fontSize: 15, lineHeight: 1.7, maxWidth: 760 }}>
+          {showFolders
+            ? 'Сначала выберите тематический раздел. Такая структура удобна для тысяч книг и не перегружает экран.'
+            : `${filtered.length} / ${books.length}. ${t('booksPage.description', 'Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.')}`}
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 18 }}>
-          {[
-            [t('booksPage.books', 'Книг'), books.length],
-            [t('booksPage.authors', 'Авторов'), authorsCount],
-            [t('booksPage.categories', 'Категорий'), categoryStats.length],
-            [t('booksPage.withPdf', 'С PDF'), books.filter(b => b.fileUrl).length],
-          ].map(([label, value]) => (
-            <div key={label} style={{ padding: '10px 14px', border: '1px solid rgba(212,175,55,.18)', borderRadius: 12, background: 'rgba(255,255,255,.035)' }}>
+          {[[t('booksPage.books', 'Книг'), books.length], [t('booksPage.authors', 'Авторов'), authorsCount], [t('booksPage.categories', 'Категорий'), sectionStats.filter(s => s.count > 0).length], [t('booksPage.withPdf', 'С PDF'), books.filter(b => b.fileUrl).length]].map(([label, value]) => (
+            <div key={String(label)} style={{ padding: '10px 14px', border: '1px solid rgba(212,175,55,.18)', borderRadius: 12, background: 'rgba(255,255,255,.035)' }}>
               <div style={{ color: '#d4af37', fontWeight: 900, fontSize: 18 }}>{value}</div>
               <div style={{ color: '#5a7a63', fontSize: 11, fontWeight: 700 }}>{label}</div>
             </div>
@@ -104,143 +117,58 @@ export default function BooksPage() {
         </div>
       </div>
 
-      {/* Filters bar */}
-      <div style={{
-        background: 'var(--color-bg-card)',
-        border: '1px solid var(--color-border)',
-        borderRadius: '16px',
-        padding: '16px 20px',
-        marginBottom: '24px',
-        display: 'flex',
-        gap: '12px',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-      }}>
-        {/* Search */}
-        <div style={{
-          flex: 1, minWidth: '200px',
-          display: 'flex', alignItems: 'center', gap: '8px',
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: '10px', padding: '8px 14px',
-        }}>
+      <div className="glass-card" style={{ borderRadius: 16, padding: '16px 20px', marginBottom: 24, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ flex: 1, minWidth: 220, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 14px' }}>
           <Search size={15} color="#5a7a63" />
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')}
-            style={{
-              background: 'none', border: 'none', outline: 'none',
-              color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit', width: '100%',
-            }}
-          />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')} style={{ background: 'none', border: 'none', outline: 'none', color: '#f0f4f1', fontSize: 14, fontFamily: 'inherit', width: '100%' }} />
         </div>
-
-        {/* Sort */}
-        <select
-          value={sort}
-          onChange={e => setSort(e.target.value)}
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '10px', padding: '8px 14px',
-            color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit',
-            outline: 'none', cursor: 'pointer',
-          }}
-        >
-          {SORT_OPTIONS.map(o => <option key={o.value} value={o.value} style={{ background: '#112a1a' }}>{t(`booksPage.sort${o.value.charAt(0).toUpperCase() + o.value.slice(1)}`, o.label)}</option>)}
+        {!showFolders && <button className="btn-ghost" onClick={() => setSelectedCat('')}>Все разделы</button>}
+        <select value={sort} onChange={e => setSort(e.target.value)} className="input-field" style={{ width: 'auto' }}>
+          {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{t(`booksPage.sort${o.value.charAt(0).toUpperCase() + o.value.slice(1)}`, o.label)}</option>)}
         </select>
-
-        {/* Lang filter */}
-        <select
-          value={lang}
-          onChange={e => setLang(e.target.value)}
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '10px', padding: '8px 14px',
-            color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit',
-            outline: 'none', cursor: 'pointer',
-          }}
-        >
-          <option value="all" style={{ background: '#112a1a' }}>{t('common.allLanguages', 'Все языки')}</option>
-          <option value="Русский" style={{ background: '#112a1a' }}>{t('common.russian', 'Русский')}</option>
-          <option value="Арабский" style={{ background: '#112a1a' }}>{t('common.arabic', 'Арабский')}</option>
-          <option value="Английский" style={{ background: '#112a1a' }}>{t('common.english', 'Английский')}</option>
-          <option value="Таджикский" style={{ background: '#112a1a' }}>{t('common.tajik', 'Таджикский')}</option>
-          <option value="Узбекский" style={{ background: '#112a1a' }}>{t('common.uzbek', 'Узбекский')}</option>
-          <option value="Персидский" style={{ background: '#112a1a' }}>{t('common.persian', 'Персидский')}</option>
+        <select value={lang} onChange={e => setLang(e.target.value)} className="input-field" style={{ width: 'auto' }}>
+          <option value="all">{t('common.allLanguages', 'Все языки')}</option>
+          {['Русский', 'Арабский', 'Английский', 'Таджикский', 'Узбекский', 'Персидский'].map(value => <option key={value} value={value}>{value}</option>)}
         </select>
-
-        {/* View toggle */}
-        <div style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '4px' }}>
-          <button
-            onClick={() => setView('grid')}
-            style={{
-              background: view === 'grid' ? 'rgba(212,175,55,0.2)' : 'none',
-              border: 'none', borderRadius: '7px', padding: '6px 10px',
-              color: view === 'grid' ? '#d4af37' : '#5a7a63', cursor: 'pointer',
-            }}
-          >
-            <Grid3X3 size={16} />
-          </button>
-          <button
-            onClick={() => setView('list')}
-            style={{
-              background: view === 'list' ? 'rgba(212,175,55,0.2)' : 'none',
-              border: 'none', borderRadius: '7px', padding: '6px 10px',
-              color: view === 'list' ? '#d4af37' : '#5a7a63', cursor: 'pointer',
-            }}
-          >
-            <List size={16} />
-          </button>
+        <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: 4 }}>
+          <button onClick={() => setView('grid')} style={toggleStyle(view === 'grid')}><Grid3X3 size={16}/></button>
+          <button onClick={() => setView('list')} style={toggleStyle(view === 'list')}><List size={16}/></button>
         </div>
       </div>
 
-      {/* Category tabs */}
-      <div className="scroll-row" style={{ marginBottom: '24px', gap: '8px' }}>
-        <button
-          onClick={() => setSelectedCat('all')}
-          className={`tag ${selectedCat === 'all' ? 'active' : ''}`}
-        >
-          {t('booksPage.allCategories', 'Все категории')}
-        </button>
-        {categoryStats.map(cat => (
-          <button
-            key={cat.name}
-            onClick={() => setSelectedCat(cat.name)}
-            className={`tag ${selectedCat === cat.name ? 'active' : ''}`}
-          >
-            {cat.name} · {cat.count}
-          </button>
-        ))}
-      </div>
-
-      {/* Results */}
-      {filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '60px', color: '#5a7a63' }}>
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>📭</div>
-          <div style={{ fontSize: '18px', fontWeight: 600, color: '#9db8a3', marginBottom: '8px' }}>{t('booksPage.notFound', 'Ничего не найдено')}</div>
-          <div style={{ fontSize: '14px' }}>{t('booksPage.notFoundHint', 'Попробуйте изменить фильтры')}</div>
+      {showFolders ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
+          {sectionStats.map(section => (
+            <button key={section.name} onClick={() => section.count > 0 && setSelectedCat(section.name)} className="glass-card" style={{ padding: 22, textAlign: 'left', cursor: section.count > 0 ? 'pointer' : 'not-allowed', opacity: section.count > 0 ? 1 : .45 }}>
+              <div style={{ width: 46, height: 46, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(212,175,55,.12)', color: '#d4af37', marginBottom: 14 }}>
+                <Folder size={23}/>
+              </div>
+              <div style={{ color: '#f0f4f1', fontWeight: 850, fontSize: 18 }}>{section.name}</div>
+              <div style={{ color: '#9db8a3', fontSize: 13, marginTop: 6 }}>{section.count > 0 ? `${section.count} книг` : 'Будет добавлено'}</div>
+            </button>
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: 60, color: '#5a7a63' }}>
+          <BookOpen size={44} style={{ margin: '0 auto 16px' }} />
+          <div style={{ fontSize: 18, fontWeight: 600, color: '#9db8a3', marginBottom: 8 }}>{t('booksPage.notFound', 'Ничего не найдено')}</div>
+          <div style={{ fontSize: 14 }}>{t('booksPage.notFoundHint', 'Попробуйте изменить фильтры')}</div>
         </div>
       ) : view === 'grid' ? (
-        <div className="books-grid">
-          {visibleBooks.map(book => <BookCard key={book.id} book={book} />)}
-        </div>
+        <div className="books-grid">{visibleBooks.map(book => <BookCard key={book.id} book={book} />)}</div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {visibleBooks.map(book => <BookCard key={book.id} book={book} horizontal />)}
-        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>{visibleBooks.map(book => <BookCard key={book.id} book={book} horizontal />)}</div>
       )}
 
-      {filtered.length > visibleCount && (
+      {!showFolders && filtered.length > visibleCount && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
-          <button className="btn-secondary" onClick={() => setVisibleCount(count => count + 24)}>
-            Показать ещё {Math.min(24, filtered.length - visibleCount)}
-          </button>
+          <button className="btn-secondary" onClick={() => setVisibleCount(count => count + 24)}>Показать ещё {Math.min(24, filtered.length - visibleCount)}</button>
         </div>
       )}
     </div>
   );
+}
+
+function toggleStyle(active: boolean): CSSProperties {
+  return { background: active ? 'rgba(212,175,55,0.2)' : 'none', border: 'none', borderRadius: 7, padding: '6px 10px', color: active ? '#d4af37' : '#5a7a63', cursor: 'pointer' };
 }

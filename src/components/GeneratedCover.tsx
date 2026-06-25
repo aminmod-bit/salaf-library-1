@@ -261,7 +261,11 @@ export default function GeneratedCover({ book, height = '100%', width = '100%', 
         {book.category || 'Maktabah'}
       </div>
       <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: compact ? '4px 2px' : '8px 4px' }}>
-        <div style={{ fontSize: compact ? 22 : 32, marginBottom: compact ? 4 : 8 }}>{book.coverEmoji || '📖'}</div>
+        <svg width={compact ? 24 : 34} height={compact ? 24 : 34} viewBox="0 0 24 24" fill="none" style={{ marginBottom: compact ? 4 : 8 }} aria-hidden="true">
+          <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H20v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Z" stroke="#f4e4b1" strokeWidth="1.8" strokeLinejoin="round" />
+          <path d="M5 5.5A2.5 2.5 0 0 0 2.5 3H4v16h-.5A2.5 2.5 0 0 1 1 16.5v-13" stroke="#d4af37" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M8 7h8M8 10h7M8 13h5" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
         <div
           style={{
             color: '#fff8dc',

@@ -519,7 +519,7 @@ export default function HomePage() {
       {/* Favorites */}
       {favoriteBooks.length > 0 && (
         <Section
-          title="❤️ Ваше избранное"
+          title="Ваше избранное"
           onMore={() => navigate("/favorites")}
         >
           <div className="scroll-row">
@@ -617,7 +617,7 @@ export default function HomePage() {
       {/* Recent History */}
       {history.length > 0 && (
         <Section
-          title="🕐 Недавно просмотренные"
+          title="Недавно просмотренные"
           onMore={() => navigate("/history")}
         >
           <div className="scroll-row">

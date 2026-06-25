@@ -12,10 +12,8 @@ const pageNames: Record<string, string> = {
   '/biographies': 'Биографии',
   '/audio': 'Аудиоуроки',
   '/fawaid': 'Фаваиды',
-  '/search': 'Поиск',
   '/favorites': 'Избранное',
   '/history': 'История',
-  '/categories': 'Категории',
   '/admin': 'Админ-панель',
   '/about': 'О проекте',
   '/report': 'Сообщить об ошибке',
@@ -45,7 +43,6 @@ export default function Header() {
     : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
     : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
     : location.pathname === '/fawaid' ? t('nav.fawaid', pageNameRaw)
-    : location.pathname === '/search' ? t('nav.search', pageNameRaw)
     : location.pathname === '/favorites' ? t('nav.favorites', pageNameRaw)
     : location.pathname === '/history' ? t('nav.history', pageNameRaw)
     : location.pathname === '/about' ? t('nav.about', pageNameRaw)
@@ -55,7 +52,7 @@ export default function Header() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchVal.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchVal.trim())}`);
+      navigate(`/books?q=${encodeURIComponent(searchVal.trim())}`);
       setSearchVal('');
     }
   };
