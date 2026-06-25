@@ -19,10 +19,7 @@ const navItems = [
 
 const userItems = [
   { path: '/favorites', icon: Heart, label: 'Избранное', key: 'favorites' },
-  { path: '/history', icon: Clock, label: 'История', key: 'history' },
-  { path: '/goals', icon: Sparkles, label: 'Цели', key: 'goals' },
-  { path: '/reading-plans', icon: BookOpen, label: 'Планы', key: 'readingPlans' },
-  { path: '/about', icon: Info, label: 'О проекте', key: 'about' },
+  { path: '/about', icon: Info, label: 'О нас', key: 'about' },
   { path: '/report', icon: MessageSquare, label: 'Ошибка', key: 'report' },
 ];
 

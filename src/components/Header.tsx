@@ -10,12 +10,10 @@ const pageNames: Record<string, string> = {
   '/': 'Главная',
   '/books': 'Книги',
   '/biographies': 'Биографии',
-  '/audio': 'Аудиоуроки',
   '/fawaid': 'Фаваиды',
   '/favorites': 'Избранное',
-  '/history': 'История',
   '/admin': 'Админ-панель',
-  '/about': 'О проекте',
+  '/about': 'О нас',
   '/report': 'Сообщить об ошибке',
   '/quran': 'Коран',
   '/book-languages': 'Книги на разных языках',
@@ -41,10 +39,8 @@ export default function Header() {
     : location.pathname === '/azkar' ? t('nav.azkar', pageNameRaw)
     : location.pathname === '/book-languages' ? t('nav.bookLanguages', pageNameRaw)
     : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
-    : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
     : location.pathname === '/fawaid' ? t('nav.fawaid', pageNameRaw)
     : location.pathname === '/favorites' ? t('nav.favorites', pageNameRaw)
-    : location.pathname === '/history' ? t('nav.history', pageNameRaw)
     : location.pathname === '/about' ? t('nav.about', pageNameRaw)
     : location.pathname === '/report' ? t('nav.report', pageNameRaw)
     : pageNameRaw;

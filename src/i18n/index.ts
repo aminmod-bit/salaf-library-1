@@ -22,7 +22,6 @@ i18n
       fa: { translation: fa },
     },
     fallbackLng: 'ru',
-    supportedLngs: ['ru', 'en', 'ar', 'tg', 'uz', 'fa'],
     nonExplicitSupportedLngs: true,
     interpolation: {
       escapeValue: false,

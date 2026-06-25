@@ -4,7 +4,6 @@ import { useStore } from "../store/useStore";
 import BookCard from "../components/BookCard";
 import {
   BookOpen,
-  Headphones,
   Play,
   ChevronRight,
   Shuffle,
@@ -22,7 +21,6 @@ export default function HomePage() {
     biographies,
     categories,
     readingProgress,
-    history,
     favorites,
     isLoading,
   } = useStore();
@@ -156,13 +154,6 @@ export default function HomePage() {
               <BookOpen size={16} />
               {t("home.readBooks", "Читать книги")}
             </button>
-            <button
-              className="btn-secondary"
-              onClick={() => navigate("/audio")}
-            >
-              <Headphones size={16} />
-              {t("home.listenLessons", "Слушать уроки")}
-            </button>
             <button className="btn-ghost" onClick={() => navigate("/search")}>
               {t("home.catalog", "Весь каталог")}
             </button>
@@ -224,7 +215,6 @@ export default function HomePage() {
       {continueReading.length > 0 && (
         <Section
           title="📖 Продолжить чтение"
-          onMore={() => navigate("/history")}
         >
           <div
             style={{
@@ -331,7 +321,6 @@ export default function HomePage() {
       {/* Categories */}
       <Section
         title={`📂 ${t("home.categories", "Категории")}`}
-        onMore={() => navigate("/categories")}
       >
         <div className="scroll-row">
           {categories
@@ -614,67 +603,6 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Recent History */}
-      {history.length > 0 && (
-        <Section
-          title="Недавно просмотренные"
-          onMore={() => navigate("/history")}
-        >
-          <div className="scroll-row">
-            {history.slice(0, 8).map((item) => (
-              <div
-                key={item.id + item.visitedAt}
-                style={{
-                  flexShrink: 0,
-                  width: "120px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "6px",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  navigate(
-                    `/${item.type === "book" ? "books" : item.type === "bio" ? "biographies" : item.type}/${item.id}`,
-                  )
-                }
-              >
-                <div
-                  style={{
-                    width: "120px",
-                    height: "80px",
-                    background: item.coverColor || "#1a3a2a",
-                    borderRadius: "10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "28px",
-                  }}
-                >
-                  {item.coverEmoji ||
-                    (item.type === "book"
-                      ? "📖"
-                      : item.type === "audio"
-                        ? "🎧"
-                        : "👤")}
-                </div>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    color: "#f0f4f1",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {item.title}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
     </div>
   );
 }

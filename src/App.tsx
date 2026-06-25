@@ -6,6 +6,7 @@ import { loadLibraryData } from "./utils/loadLibraryData";
 
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import PwaInstallPrompt from "./components/PwaInstallPrompt";
 import GlobalTextTranslator from "./components/GlobalTextTranslator";
 import HomePage from "./pages/HomePage";
 import BooksPage from "./pages/BooksPage";
@@ -14,13 +15,10 @@ import BookDetailPage from "./pages/BookDetailPage";
 import BiographiesPage from "./pages/BiographiesPage";
 import BiographyDetailPage from "./pages/BiographyDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import HistoryPage from "./pages/HistoryPage";
 import AdminPage from "./pages/AdminPage";
 import AdminImportPage from "./pages/admin/AdminImportPage";
 import AdminStatsPage from "./pages/admin/AdminStatsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
-import GoalsPage from "./pages/GoalsPage";
-import ReadingPlansPage from "./pages/ReadingPlansPage";
 import AboutPage from "./pages/AboutPage";
 import ReportIssuePage from "./pages/ReportIssuePage";
 import BookLanguagesPage from "./pages/BookLanguagesPage";
@@ -106,13 +104,10 @@ export default function App() {
                   element={<BiographyDetailPage />}
                 />
                 <Route path="/favorites" element={<FavoritesPage />} />
-                <Route path="/history" element={<HistoryPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/import" element={<AdminImportPage />} />
                 <Route path="/admin/stats" element={<AdminStatsPage />} />
                 <Route path="/admin/settings" element={<AdminSettingsPage />} />
-                <Route path="/goals" element={<GoalsPage />} />
-                <Route path="/reading-plans" element={<ReadingPlansPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/report" element={<ReportIssuePage />} />
                 <Route path="/book-languages" element={<BookLanguagesPage />} />
@@ -127,6 +122,7 @@ export default function App() {
             </Suspense>
           </div>
         </div>
+        <PwaInstallPrompt />
         <Toaster
           position="bottom-right"
           toastOptions={{
