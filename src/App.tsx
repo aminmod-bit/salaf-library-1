@@ -6,7 +6,6 @@ import { loadLibraryData } from "./utils/loadLibraryData";
 
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import PwaInstallPrompt from "./components/PwaInstallPrompt";
 import GlobalTextTranslator from "./components/GlobalTextTranslator";
 import HomePage from "./pages/HomePage";
 import BooksPage from "./pages/BooksPage";
@@ -128,7 +127,6 @@ export default function App() {
             </Suspense>
           </div>
         </div>
-        <PwaInstallPrompt />
         <Toaster
           position="bottom-right"
           toastOptions={{
