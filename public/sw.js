@@ -1,7 +1,8 @@
-const CACHE_NAME = 'salaf-library-v1.0.1-production';
+const CACHE_NAME = 'salaf-library-v1.0.2-production';
 const CORE_ASSETS = [
   './',
   './index.html',
+  './offline.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
@@ -40,6 +41,13 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)).catch(() => undefined);
         return response;
       })
-      .catch(() => caches.match(request).then((cached) => cached || caches.match('./index.html')))
+      .catch(() => caches.match(request).then((cached) => {
+        if (cached) return cached;
+        // Return offline page for navigation requests
+        if (request.mode === 'navigate') {
+          return caches.match('./offline.html');
+        }
+        return caches.match('./index.html');
+      }))
   );
 });

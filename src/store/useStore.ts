@@ -3,6 +3,17 @@ import { persist } from 'zustand/middleware';
 import type { Goal, ReadingPlan } from '../data/goals';
 import { goalsData, readingPlanData } from '../data/goals';
 
+// ─── Generic Helpers ────────────────────────────────────────────────────────
+
+function findByKey<T, K extends keyof T>(arr: T[], key: K, value: string): T | undefined {
+  return arr.find((item) => item[key] === value);
+}
+
+function replaceByKey<T, K extends keyof T>(arr: T[], key: K, value: string, newItem: T): T[] {
+  const filtered = arr.filter((item) => item[key] !== value);
+  return [newItem, ...filtered];
+}
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface Book {
@@ -136,6 +147,8 @@ export interface HistoryItem {
   coverImage?: string;
 }
 
+export type ThemeMode = 'dark' | 'light' | 'system';
+
 // ─── Store ────────────────────────────────────────────────────────────────────
 
 interface LibraryStore {
@@ -151,6 +164,7 @@ interface LibraryStore {
   currentPage: string;
   searchQuery: string;
   isLoading: boolean;
+  theme: ThemeMode;
 
   // Audio Player
   currentAudio: AudioLesson | null;
@@ -180,6 +194,7 @@ interface LibraryStore {
   setSidebarOpen: (open: boolean) => void;
   setCurrentPage: (page: string) => void;
   setSearchQuery: (q: string) => void;
+  setTheme: (theme: ThemeMode) => void;
 
   // Actions - Audio
   setCurrentAudio: (audio: AudioLesson | null) => void;
@@ -216,6 +231,7 @@ export const useStore = create<LibraryStore>()(
       currentPage: 'home',
       searchQuery: '',
       isLoading: true,
+      theme: 'dark',
       currentAudio: null,
       isPlaying: false,
       audioVolume: 0.8,
@@ -239,6 +255,7 @@ export const useStore = create<LibraryStore>()(
       setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),
       setCurrentPage: (currentPage) => set({ currentPage }),
       setSearchQuery: (searchQuery) => set({ searchQuery }),
+      setTheme: (theme) => set({ theme }),
 
       // Audio
       setCurrentAudio: (currentAudio) => set({ currentAudio }),
@@ -261,25 +278,15 @@ export const useStore = create<LibraryStore>()(
         set({ history: [item, ...filtered].slice(0, 100) });
       },
 
-      saveReadingProgress: (progress) => {
-        const { readingProgress } = get();
-        const filtered = readingProgress.filter((p) => p.bookId !== progress.bookId);
-        set({ readingProgress: [progress, ...filtered] });
-      },
+      saveReadingProgress: (progress) =>
+        set({ readingProgress: replaceByKey(get().readingProgress, 'bookId', progress.bookId, progress) }),
 
-      saveAudioProgress: (progress) => {
-        const { audioProgress } = get();
-        const filtered = audioProgress.filter((p) => p.audioId !== progress.audioId);
-        set({ audioProgress: [progress, ...filtered] });
-      },
+      saveAudioProgress: (progress) =>
+        set({ audioProgress: replaceByKey(get().audioProgress, 'audioId', progress.audioId, progress) }),
 
-      getReadingProgress: (bookId) => {
-        return get().readingProgress.find((p) => p.bookId === bookId);
-      },
+      getReadingProgress: (bookId) => findByKey(get().readingProgress, 'bookId', bookId),
 
-      getAudioProgress: (audioId) => {
-        return get().audioProgress.find((p) => p.audioId === audioId);
-      },
+      getAudioProgress: (audioId) => findByKey(get().audioProgress, 'audioId', audioId),
 
       clearHistory: () => set({ history: [] }),
 
@@ -305,6 +312,7 @@ export const useStore = create<LibraryStore>()(
         audioVolume: state.audioVolume,
         goals: state.goals,
         readingPlan: state.readingPlan,
+        theme: state.theme,
       }),
     }
   )

@@ -5,6 +5,7 @@ import { useStore } from '../store/useStore';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import LiveStatsBadge from './LiveStatsBadge';
+import ThemeToggle from './ThemeToggle';
 
 const pageNames: Record<string, string> = {
   '/': 'Главная',
@@ -60,9 +61,9 @@ export default function Header() {
   return (
     <header style={{
       height: '64px',
-      background: 'rgba(10, 26, 15, 0.95)',
+      background: 'var(--color-bg-primary)',
       backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(212, 175, 55, 0.1)',
+      borderBottom: '1px solid var(--color-border)',
       display: 'flex',
       alignItems: 'center',
       padding: '0 24px',
@@ -70,6 +71,7 @@ export default function Header() {
       position: 'sticky',
       top: 0,
       zIndex: 30,
+      transition: 'background-color 0.3s ease, border-color 0.3s ease',
     }}>
       {/* Mobile menu btn */}
       <button
@@ -77,7 +79,7 @@ export default function Header() {
         style={{
           background: 'none',
           border: 'none',
-          color: '#9db8a3',
+          color: 'var(--color-text-secondary)',
           cursor: 'pointer',
           padding: '6px',
           borderRadius: '8px',
@@ -91,9 +93,9 @@ export default function Header() {
 
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flex: 1 }}>
-        <span style={{ fontSize: '12px', color: '#5a7a63' }}>Salaf Library</span>
-        <ChevronRight size={12} color="#5a7a63" />
-        <span style={{ fontSize: '14px', fontWeight: 600, color: '#f0f4f1' }}>{pageName}</span>
+        <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Salaf Library</span>
+        <ChevronRight size={12} color="var(--color-text-muted)" />
+        <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text-primary)' }}>{pageName}</span>
       </div>
 
       {/* Search */}
@@ -103,13 +105,13 @@ export default function Header() {
           alignItems: 'center',
           gap: '8px',
           background: 'rgba(255,255,255,0.05)',
-          border: '1px solid rgba(212,175,55,0.15)',
+          border: '1px solid var(--color-border)',
           borderRadius: '10px',
           padding: '6px 14px',
           width: '280px',
           transition: 'all 0.3s ease',
         }}>
-          <Search size={15} color="#5a7a63" />
+          <Search size={15} color="var(--color-text-muted)" />
           <input
             type="text"
             value={searchVal}
@@ -119,7 +121,7 @@ export default function Header() {
               background: 'none',
               border: 'none',
               outline: 'none',
-              color: '#f0f4f1',
+              color: 'var(--color-text-primary)',
               fontSize: '14px',
               width: '100%',
               fontFamily: 'inherit',
@@ -131,15 +133,16 @@ export default function Header() {
       {/* Notification */}
       <LiveStatsBadge />
       <LanguageSwitcher />
+      <ThemeToggle />
 
       <style>{`@media (max-width: 720px) { .header-search { display: none !important; } }`}</style>
 
       <button style={{ 
         background: 'rgba(255,255,255,0.05)',
-        border: '1px solid rgba(212,175,55,0.15)',
+        border: '1px solid var(--color-border)',
         borderRadius: '10px',
         padding: '8px',
-        color: '#9db8a3',
+        color: 'var(--color-text-secondary)',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
@@ -152,7 +155,7 @@ export default function Header() {
           right: '6px',
           width: '6px',
           height: '6px',
-          background: '#d4af37',
+          background: 'var(--color-gold)',
           borderRadius: '50%',
         }} />
       </button>
