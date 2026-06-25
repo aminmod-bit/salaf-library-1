@@ -1,32 +1,29 @@
-Salaf Library — Full Audit Fix Release 3.1
+Salaf Library — Installable PWA Release 3.2
 
 Дата сборки: 2026-06-25
 
-Выполнено:
-- название проекта сохранено: Salaf Library;
-- ребрендинг не выполнялся;
-- исправлена мультиязычность: GlobalTextTranslator снова подключён, но в оптимизированном режиме;
-- RU/EN/AR/TG/UZ/FA переключаются через верхний LanguageSwitcher;
-- основной поиск в header ведёт в каталог книг, отдельная страница поиска отключена;
-- публичные маршруты Категории и Dashboard отключены;
-- публичные разделы Коран, Аудиоуроки, Фаваиды отключены;
-- раздел Хадисы возвращён;
-- раздел Книги показывает тематические папки перед списком книг;
-- раздел Статьи показывает тематические папки перед списком статей;
-- раздел Азкары показывает папки перед списком азкаров;
-- из categories.json убраны Тафсир, Фикх, Общее, Фаваиды;
-- тяжёлые PDF-cover рендеры отключены, оставлены лёгкие SVG/премиальные авто-обложки;
-- загрузка audio/fawaid на старте отключена;
-- каталог книг порционный: 24 + Показать ещё;
-- добавлена совместимость store для старых ThemeToggle/tests;
-- тестовые файлы исключены из production TypeScript build.
+Добавлено:
+- полноценная Installable PWA логика;
+- кнопка «Установить приложение» для Android / Chrome / Edge / Desktop;
+- iPhone/iPad инструкция «Добавить на экран Домой» для Safari;
+- уведомление о доступном обновлении приложения;
+- обновлён service worker с app shell cache и runtime cache;
+- корректный skipWaiting / controllerchange flow;
+- offline fallback на index.html;
+- исключено агрессивное кэширование PDF/audio, чтобы не забивать память устройства;
+- обновлён manifest.json: id, display_override, shortcuts, screenshots, maskable icons;
+- добавлены PWA screenshots: pwa-screenshot-wide.png и pwa-screenshot-mobile.png;
+- добавлен capacitor.config.json для будущей сборки Android APK/AAB и iOS IPA;
+- сохранение пользовательских данных остаётся через localStorage/Zustand persist;
+- архитектура подготовлена для Capacitor без переписывания приложения.
+
+Совместимость:
+- Android: установка через beforeinstallprompt;
+- iPhone/iPad: ручная установка через Safari Add to Home Screen;
+- Windows/macOS/Linux: установка через Chrome/Edge как отдельное приложение;
+- Capacitor: webDir=dist, appId=org.salaflibrary.app, appName=Salaf Library.
 
 Проверка:
 - npm run build: OK
 - npm run check: OK
 - npm audit moderate+: 0 vulnerabilities
-
-Цель:
-- восстановить языки;
-- облегчить сайт;
-- подготовить библиотеку к нормальному наполнению книгами, статьями, хадисами и азкарами.

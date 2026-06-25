@@ -1,0 +1,17 @@
+{
+  "appId": "org.salaflibrary.app",
+  "appName": "Salaf Library",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "backgroundColor": "#07130b",
+      "showSpinner": false
+    }
+  }
+}
