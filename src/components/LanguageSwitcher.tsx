@@ -13,7 +13,7 @@ const DEFAULT_LANGUAGES: LanguageOption[] = [
   { code: 'ru', label: 'RU', name: 'Русский', dir: 'ltr' },
   { code: 'en', label: 'EN', name: 'English', dir: 'ltr' },
   { code: 'ar', label: 'AR', name: 'العربية', dir: 'rtl' },
-  { code: 'tg', label: 'TG', name: 'Тоҷикӣ', dir: 'ltr' },
+  { code: 'tg', label: 'TJ', name: 'Тоҷикӣ', dir: 'ltr' },
   { code: 'uz', label: 'UZ', name: 'O‘zbek', dir: 'ltr' },
   { code: 'fa', label: 'FA', name: 'فارسی', dir: 'rtl' },
 ];
