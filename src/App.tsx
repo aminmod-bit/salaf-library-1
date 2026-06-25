@@ -6,6 +6,7 @@ import { loadLibraryData } from "./utils/loadLibraryData";
 
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import GlobalTextTranslator from "./components/GlobalTextTranslator";
 import HomePage from "./pages/HomePage";
 import BooksPage from "./pages/BooksPage";
 import BookDetailPage from "./pages/BookDetailPage";
@@ -87,6 +88,7 @@ export default function App() {
 
   return (
     <HashRouter>
+      <GlobalTextTranslator />
       <div className="app-layout">
         <Sidebar />
         <div className="main-content">

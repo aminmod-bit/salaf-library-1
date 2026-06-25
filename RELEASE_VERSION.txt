@@ -1,21 +1,32 @@
-Salaf Library — Build Fix Release 3.0
+Salaf Library — Full Audit Fix Release 3.1
 
 Дата сборки: 2026-06-25
 
-Исправлено:
-- GitHub Actions падал из-за старых тестовых файлов src/tests/*, которые требовали vitest и @testing-library/react;
-- TypeScript build теперь исключает тестовые файлы: src/tests, *.test.ts, *.test.tsx, *.spec.ts, *.spec.tsx;
-- добавлена совместимость store с устаревшим ThemeToggle.tsx:
-  - export type ThemeMode = 'dark' | 'light' | 'system';
-  - theme в Zustand store;
-  - setTheme(theme);
-- theme добавлен в persisted state;
-- это сохраняет совместимость, если в репозитории остались старые ThemeToggle/tests после ручных загрузок.
+Выполнено:
+- название проекта сохранено: Salaf Library;
+- ребрендинг не выполнялся;
+- исправлена мультиязычность: GlobalTextTranslator снова подключён, но в оптимизированном режиме;
+- RU/EN/AR/TG/UZ/FA переключаются через верхний LanguageSwitcher;
+- основной поиск в header ведёт в каталог книг, отдельная страница поиска отключена;
+- публичные маршруты Категории и Dashboard отключены;
+- публичные разделы Коран, Аудиоуроки, Фаваиды отключены;
+- раздел Хадисы возвращён;
+- раздел Книги показывает тематические папки перед списком книг;
+- раздел Статьи показывает тематические папки перед списком статей;
+- раздел Азкары показывает папки перед списком азкаров;
+- из categories.json убраны Тафсир, Фикх, Общее, Фаваиды;
+- тяжёлые PDF-cover рендеры отключены, оставлены лёгкие SVG/премиальные авто-обложки;
+- загрузка audio/fawaid на старте отключена;
+- каталог книг порционный: 24 + Показать ещё;
+- добавлена совместимость store для старых ThemeToggle/tests;
+- тестовые файлы исключены из production TypeScript build.
 
 Проверка:
 - npm run build: OK
 - npm run check: OK
 - npm audit moderate+: 0 vulnerabilities
 
-Commit message:
-Build fix 3.0 theme and tests compatibility
+Цель:
+- восстановить языки;
+- облегчить сайт;
+- подготовить библиотеку к нормальному наполнению книгами, статьями, хадисами и азкарами.
