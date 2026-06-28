@@ -1,15 +1,24 @@
-Salaf Library — Language Cleanup Release 3.9
+Salaf Library — PWA/SEO Files Audit Patch 3.9.1
 
 Дата сборки: 2026-06-28
 
-Изменение:
-- удалены все языки кроме русского и английского;
-- в переключателе языков оставлены только RU и EN;
-- public/data/languages.json содержит только русский и английский;
-- удалены locale-файлы ar/tg/uz/fa из src/i18n/locales и public/locales;
-- i18n ограничен supportedLngs: ru, en;
-- раздел «Книги на разных языках» показывает только Русский и English;
-- архитектура i18n сохранена: при необходимости новые языки можно снова добавить через locales и languages.json.
+Проверены предоставленные файлы:
+- robots.txt;
+- sitemap.xml;
+- sw.js.
+
+Результат аудита:
+- предоставленный robots.txt использует относительный Sitemap: ./sitemap.xml — для production лучше абсолютный URL;
+- текущий robots.txt проекта уже правильный: Sitemap: https://salaflibrary.org/sitemap.xml;
+- предоставленный sitemap.xml содержит hash-route URL и относительные ./#/ пути — для SEO это слабее, чем текущая генерация sitemap через scripts/generate-seo.mjs;
+- предоставленный sw.js рассчитан на manifest.webmanifest и icons/*, а текущий проект использует manifest.json, icon-192.png, icon-512.png, logo.svg;
+- текущий service worker проекта функциональнее: app shell cache, runtime cache, update flow, offline fallback.
+
+Внесено:
+- обновлена версия service worker cache до 3.9.1-pwa-shell;
+- удалено упоминание audio из service worker large media matcher;
+- сохранено поведение: PDF/крупные media не кэшируются агрессивно, чтобы не забивать память телефона;
+- robots/sitemap оставлены в production-правильном варианте.
 
 Проверка:
 - npm run build: OK

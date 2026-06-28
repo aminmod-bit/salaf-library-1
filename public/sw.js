@@ -1,4 +1,4 @@
-const CACHE_VERSION = '3.2-pwa-installable';
+const CACHE_VERSION = '3.9.1-pwa-shell';
 const APP_SHELL_CACHE = `salaf-library-shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `salaf-library-runtime-${CACHE_VERSION}`;
 
@@ -47,9 +47,9 @@ function isNavigation(request) {
   return request.mode === 'navigate' || (request.headers.get('accept') || '').includes('text/html');
 }
 
-function isPdfOrAudio(request) {
+function isLargeMedia(request) {
   const url = new URL(request.url);
-  return /\.(pdf|mp3|m4a|ogg|wav)$/i.test(url.pathname);
+  return /\.(pdf|zip|mp4|webm)$/i.test(url.pathname);
 }
 
 async function networkFirst(request) {
@@ -67,7 +67,7 @@ async function staleWhileRevalidate(request) {
   const cache = await caches.open(RUNTIME_CACHE);
   const cached = await cache.match(request);
   const fetching = fetch(request).then((response) => {
-    if (response && response.ok && !isPdfOrAudio(request)) cache.put(request, response.clone()).catch(() => undefined);
+    if (response && response.ok && !isLargeMedia(request)) cache.put(request, response.clone()).catch(() => undefined);
     return response;
   }).catch(() => cached);
   return cached || fetching;
@@ -85,7 +85,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (isPdfOrAudio(request)) {
+  if (isLargeMedia(request)) {
     event.respondWith(fetch(request).catch(() => caches.match(request)));
     return;
   }
