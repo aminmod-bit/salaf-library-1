@@ -7,10 +7,6 @@ import { useStore } from '../store/useStore';
 
 const LANGS = [
   { key: 'ru', label: 'Русский', native: 'Русский', bookValue: 'Русский', color: '#22c55e' },
-  { key: 'ar', label: 'Arabic', native: 'العربية', bookValue: 'Арабский', color: '#d4af37' },
-  { key: 'tg', label: 'Tajik', native: 'Тоҷикӣ', bookValue: 'Таджикский', color: '#60a5fa' },
-  { key: 'uz', label: 'Uzbek', native: 'O‘zbek', bookValue: 'Узбекский', color: '#a78bfa' },
-  { key: 'fa', label: 'Persian', native: 'فارسی', bookValue: 'Персидский', color: '#f472b6' },
   { key: 'en', label: 'English', native: 'English', bookValue: 'Английский', color: '#fb923c' },
 ];
 
