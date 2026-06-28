@@ -1,17 +1,26 @@
-Salaf Library — Web3 Build Fix Release 4.0.1
+Salaf Library — PWA/SEO Files Audit Patch 3.9.1
 
 Дата сборки: 2026-06-28
 
-Исправлено:
-- GitHub Actions падал из-за старых файлов, оставшихся после копирования нового web-3 архива поверх старого проекта;
-- старые файлы src/components/ThemeToggle.tsx, Sidebar.tsx, GeneratedCover.tsx, FawaidCard.tsx, BookCard.tsx, AudioPlayer.tsx больше не участвуют в production TypeScript build;
-- старые тесты src/tests/* исключены из build;
-- старые pages/admin и устаревшие страницы также исключены;
-- гарантированно добавлен корректный src/i18n/index.ts с export setLanguage;
-- package.json/package-lock.json соответствуют web-3 релизу;
-- build проверен локально и проходит успешно;
-- npm audit moderate+: 0 vulnerabilities.
+Проверены предоставленные файлы:
+- robots.txt;
+- sitemap.xml;
+- sw.js.
 
-Важно:
-- этот архив можно накатывать поверх уже загруженного Web3 release;
-- для идеальной чистоты лучше в будущем удалить старые лишние файлы из репозитория, но этот patch исправляет build без ручного удаления.
+Результат аудита:
+- предоставленный robots.txt использует относительный Sitemap: ./sitemap.xml — для production лучше абсолютный URL;
+- текущий robots.txt проекта уже правильный: Sitemap: https://salaflibrary.org/sitemap.xml;
+- предоставленный sitemap.xml содержит hash-route URL и относительные ./#/ пути — для SEO это слабее, чем текущая генерация sitemap через scripts/generate-seo.mjs;
+- предоставленный sw.js рассчитан на manifest.webmanifest и icons/*, а текущий проект использует manifest.json, icon-192.png, icon-512.png, logo.svg;
+- текущий service worker проекта функциональнее: app shell cache, runtime cache, update flow, offline fallback.
+
+Внесено:
+- обновлена версия service worker cache до 3.9.1-pwa-shell;
+- удалено упоминание audio из service worker large media matcher;
+- сохранено поведение: PDF/крупные media не кэшируются агрессивно, чтобы не забивать память телефона;
+- robots/sitemap оставлены в production-правильном варианте.
+
+Проверка:
+- npm run build: OK
+- npm run check: OK
+- npm audit moderate+: 0 vulnerabilities

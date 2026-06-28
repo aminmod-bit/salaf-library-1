@@ -6,43 +6,27 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "types": ["node"],
+
+    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+
+    /* Path mapping */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
+
+    /* Linting */
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "vite.config.ts"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/tests",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "src/components/*.tsx",
-    "src/hooks/**",
-    "src/pages/admin/**",
-    "src/pages/AudioPage.tsx",
-    "src/pages/CategoriesPage.tsx",
-    "src/pages/DashboardPage.tsx",
-    "src/pages/FawaidPage.tsx",
-    "src/pages/GoalsPage.tsx",
-    "src/pages/HistoryPage.tsx",
-    "src/pages/ReadingPlansPage.tsx",
-    "src/pages/ReportIssuePage.tsx",
-    "src/pages/QuranPage.tsx",
-    "src/pages/AdminBookEditorPage.tsx",
-    "src/store/useStore.ts"
-  ]
+  "exclude": ["src/tests", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"]
 }
