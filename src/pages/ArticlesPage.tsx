@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BookOpenText, Calendar, Folder, Search, Tag } from 'lucide-react';
+import { BookOpenText, Calendar, Search, Tag } from 'lucide-react';
+import FolderCard from '../components/FolderCard';
 
 interface Article {
   id: string;
@@ -61,11 +62,15 @@ export default function ArticlesPage() {
       {showFolders ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
           {folderStats.map(item => (
-            <button key={item.name} className="glass-card" onClick={() => item.count > 0 && setFolder(item.name)} style={{ padding: 22, textAlign: 'left', opacity: item.count ? 1 : .45, cursor: item.count ? 'pointer' : 'not-allowed' }}>
-              <div style={{ width: 44, height: 44, borderRadius: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(212,175,55,.12)', color: '#d4af37', marginBottom: 12 }}><Folder size={22}/></div>
-              <div style={{ color: '#f0f4f1', fontWeight: 850, fontSize: 18 }}>{item.name}</div>
-              <div style={{ color: '#9db8a3', fontSize: 13, marginTop: 5 }}>{item.count ? `${item.count} материалов` : 'Будет добавлено'}</div>
-            </button>
+            <FolderCard
+              key={item.name}
+              title={item.name}
+              subtitle="Тематический раздел статей"
+              count={item.count}
+              countLabel="материалов"
+              disabled={item.count === 0}
+              onClick={() => setFolder(item.name)}
+            />
           ))}
         </div>
       ) : filtered.length === 0 ? (

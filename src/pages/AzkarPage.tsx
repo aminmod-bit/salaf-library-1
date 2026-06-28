@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Folder, Repeat, Search, Shield, Sparkles } from 'lucide-react';
+import { Repeat, Search, Shield, Sparkles } from 'lucide-react';
+import FolderCard from '../components/FolderCard';
 
 interface Zikr {
   id: string; type: string; category: string; title: string; arabic: string; translationRu: string; source: string; repeat: number; benefit: string;
@@ -68,11 +69,15 @@ export default function AzkarPage() {
       {showFolders ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
           {folderStats.map(item => (
-            <button key={`${item.id}-${item.label}`} className="glass-card" onClick={() => item.count > 0 && setFolder(item.id)} style={{ padding: 22, textAlign: 'left', opacity: item.count ? 1 : .45, cursor: item.count ? 'pointer' : 'not-allowed' }}>
-              <div style={{ width: 44, height: 44, borderRadius: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(212,175,55,.12)', color: '#d4af37', marginBottom: 12 }}><Folder size={22}/></div>
-              <div style={{ color: '#f0f4f1', fontWeight: 850, fontSize: 18 }}>{item.label}</div>
-              <div style={{ color: '#9db8a3', fontSize: 13, marginTop: 5 }}>{item.count ? `${item.count} записей` : 'Будет добавлено'}</div>
-            </button>
+            <FolderCard
+              key={`${item.id}-${item.label}`}
+              title={item.label}
+              subtitle="Папка азкаров и дуа"
+              count={item.count}
+              countLabel="записей"
+              disabled={item.count === 0}
+              onClick={() => setFolder(item.id)}
+            />
           ))}
         </div>
       ) : (

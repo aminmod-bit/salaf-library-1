@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BookOpen, Folder, Grid3X3, List, Search } from 'lucide-react';
+import { BookOpen, Grid3X3, List, Search } from 'lucide-react';
+import FolderCard from '../components/FolderCard';
 import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
 
@@ -137,15 +138,17 @@ export default function BooksPage() {
       </div>
 
       {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
           {sectionStats.map(section => (
-            <button key={section.name} onClick={() => section.count > 0 && setSelectedCat(section.name)} className="glass-card" style={{ padding: 22, textAlign: 'left', cursor: section.count > 0 ? 'pointer' : 'not-allowed', opacity: section.count > 0 ? 1 : .45 }}>
-              <div style={{ width: 46, height: 46, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(212,175,55,.12)', color: '#d4af37', marginBottom: 14 }}>
-                <Folder size={23}/>
-              </div>
-              <div style={{ color: '#f0f4f1', fontWeight: 850, fontSize: 18 }}>{section.name}</div>
-              <div style={{ color: '#9db8a3', fontSize: 13, marginTop: 6 }}>{section.count > 0 ? `${section.count} книг` : 'Будет добавлено'}</div>
-            </button>
+            <FolderCard
+              key={section.name}
+              title={section.name}
+              subtitle="Тематическая папка библиотеки"
+              count={section.count}
+              countLabel="книг"
+              disabled={section.count === 0}
+              onClick={() => setSelectedCat(section.name)}
+            />
           ))}
         </div>
       ) : filtered.length === 0 ? (

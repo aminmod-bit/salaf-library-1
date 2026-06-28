@@ -2,6 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, BookOpen, FileText, Folder, Languages, Sparkles } from 'lucide-react';
+import FolderCard from '../components/FolderCard';
 import { useStore } from '../store/useStore';
 
 const LANGS = [
@@ -94,30 +95,16 @@ export default function BookLanguagesPage() {
 
           <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
             {selected.folderStats.map(folder => (
-              <button
+              <FolderCard
                 key={folder.name}
-                className="glass-card"
-                onClick={() => folder.count > 0 && navigate(`/books?language=${encodeURIComponent(selected.bookValue)}&category=${encodeURIComponent(folder.name)}`)}
-                style={{
-                  padding: 22,
-                  textAlign: 'left',
-                  cursor: folder.count > 0 ? 'pointer' : 'not-allowed',
-                  opacity: folder.count > 0 ? 1 : .48,
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
-                <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 80% 10%, ${selected.color}1f, transparent 38%)`, pointerEvents: 'none' }} />
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 15, background: `${selected.color}22`, color: selected.color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
-                    <Folder size={22} />
-                  </div>
-                  <div style={{ color: '#f0f4f1', fontWeight: 850, fontSize: 18 }}>{folder.name}</div>
-                  <div style={{ color: '#9db8a3', fontSize: 13, marginTop: 6 }}>
-                    {folder.count > 0 ? `${folder.count} книг` : 'Будет добавлено'}
-                  </div>
-                </div>
-              </button>
+                title={folder.name}
+                subtitle={`Папка языка: ${selected.native}`}
+                count={folder.count}
+                countLabel="книг"
+                color={selected.color}
+                disabled={folder.count === 0}
+                onClick={() => navigate(`/books?language=${encodeURIComponent(selected.bookValue)}&category=${encodeURIComponent(folder.name)}`)}
+              />
             ))}
           </section>
         </>
