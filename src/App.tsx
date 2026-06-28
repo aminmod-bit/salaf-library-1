@@ -1,174 +1,60 @@
-import { lazy, Suspense, useEffect } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import { useStore } from "./store/useStore";
-import { loadLibraryData } from "./utils/loadLibraryData";
-
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
-import PwaInstallPrompt from "./components/PwaInstallPrompt";
-import GlobalTextTranslator from "./components/GlobalTextTranslator";
-import HomePage from "./pages/HomePage";
-import BooksPage from "./pages/BooksPage";
-import BookDetailPage from "./pages/BookDetailPage";
-
-import BiographiesPage from "./pages/BiographiesPage";
-import BiographyDetailPage from "./pages/BiographyDetailPage";
-import FavoritesPage from "./pages/FavoritesPage";
-import AdminPage from "./pages/AdminPage";
-import AdminImportPage from "./pages/admin/AdminImportPage";
-import AdminStatsPage from "./pages/admin/AdminStatsPage";
-import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
-import AboutPage from "./pages/AboutPage";
-import ReportIssuePage from "./pages/ReportIssuePage";
-import BookLanguagesPage from "./pages/BookLanguagesPage";
-import ArticlesPage from "./pages/ArticlesPage";
-import HadithPage from "./pages/HadithPage";
-import AzkarPage from "./pages/AzkarPage";
-import AdminBookEditorPage from "./pages/AdminBookEditorPage";
-
-const BookReaderPage = lazy(() => import("./pages/BookReaderPage"));
-
-function PageLoader() {
-  return (
-    <div
-      style={{
-        minHeight: "50vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: "#d4af37",
-        fontWeight: 700,
-      }}
-    >
-      Загрузка страницы...
-    </div>
-  );
-}
+import { useEffect } from "react";
+import "@/i18n";
+import HomePage from "@/pages/HomePage";
+import { BooksFoldersPage, BookFolderPage } from "@/pages/BooksPage";
+import BookReaderPage from "@/pages/PDFReaderPage";
+import { AzkarFoldersPage, AzkarFolderPage } from "@/pages/AzkarPage";
+import { HadithCollectionsPage, HadithCollectionPage } from "@/pages/HadithPage";
+import { ArticlesFoldersPage, ArticleFolderPage, ArticleViewPage } from "@/pages/ArticlesPage";
+import { BiographiesFoldersPage, BiographiesFolderPage, BiographyViewPage } from "@/pages/BiographiesPage";
+import LibraryPage, { LibraryLanguagePage } from "@/pages/LibraryPage";
+import { FavoritesPage, HistoryPage, SearchPage } from "@/pages/UtilityPages";
+import AdminPage from "@/pages/AdminPage";
+import { AboutPage, NotFoundPage } from "@/pages/InfoPages";
+import { setLanguage } from "@/i18n";
 
 export default function App() {
-  const {
-    setBooks,
-    setBiographies,
-    setAudioLessons,
-    setFawaid,
-    setCategories,
-    setLoading,
-  } = useStore();
-
   useEffect(() => {
-    let mounted = true;
-
-    loadLibraryData()
-      .then((data) => {
-        if (!mounted) return;
-        setBooks(data.books);
-        setBiographies(data.biographies);
-        setAudioLessons(data.audioLessons);
-        setFawaid(data.fawaid);
-        setCategories(data.categories);
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [
-    setAudioLessons,
-    setBiographies,
-    setBooks,
-    setCategories,
-    setFawaid,
-    setLoading,
-  ]);
+    // Set initial direction on mount
+    const lng = (localStorage.getItem("salaf.lang") || "ru");
+    setLanguage(lng);
+  }, []);
 
   return (
     <HashRouter>
-      <GlobalTextTranslator />
-      <div className="app-layout">
-        <Sidebar />
-        <div className="main-content">
-          <Header />
-          <div className="page-content">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/books" element={<BooksPage />} />
-                <Route path="/books/:id" element={<BookDetailPage />} />
-                <Route path="/read/:id" element={<BookReaderPage />} />
-                <Route path="/biographies" element={<BiographiesPage />} />
-                <Route
-                  path="/biographies/:id"
-                  element={<BiographyDetailPage />}
-                />
-                <Route path="/favorites" element={<FavoritesPage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="/admin/import" element={<AdminImportPage />} />
-                <Route path="/admin/stats" element={<AdminStatsPage />} />
-                <Route path="/admin/settings" element={<AdminSettingsPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/report" element={<ReportIssuePage />} />
-                <Route path="/book-languages" element={<BookLanguagesPage />} />
-                <Route path="/articles" element={<ArticlesPage />} />
-                <Route path="/hadith" element={<HadithPage />} />
-                <Route path="/azkar" element={<AzkarPage />} />
-                <Route
-                  path="/admin/books-editor"
-                  element={<AdminBookEditorPage />}
-                />
-              </Routes>
-            </Suspense>
-          </div>
-        </div>
-        <PwaInstallPrompt />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#112a1a",
-              color: "#f0f4f1",
-              border: "1px solid rgba(212, 175, 55, 0.3)",
-              borderRadius: "12px",
-              fontSize: "14px",
-            },
-          }}
-        />
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/books" element={<BooksFoldersPage />} />
+        <Route path="/books/folder/:folderKey" element={<BookFolderPage />} />
+        <Route path="/books/reader/:bookId" element={<BookReaderPage />} />
 
-      <style>{`
-        .app-layout {
-          display: flex;
-          min-height: 100vh;
-          background: var(--color-bg-primary);
-        }
+        <Route path="/azkar" element={<AzkarFoldersPage />} />
+        <Route path="/azkar/folder/:folderKey" element={<AzkarFolderPage />} />
 
-        .main-content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          min-width: 0;
-          margin-left: 260px;
-          transition: margin-left 0.3s ease;
-        }
+        <Route path="/hadith" element={<HadithCollectionsPage />} />
+        <Route path="/hadith/collection/:collectionId" element={<HadithCollectionPage />} />
 
-        .page-content {
-          flex: 1;
-          padding: 24px;
-          padding-bottom: 24px;
-        }
+        <Route path="/articles" element={<ArticlesFoldersPage />} />
+        <Route path="/articles/folder/:folderKey" element={<ArticleFolderPage />} />
+        <Route path="/articles/view/:articleId" element={<ArticleViewPage />} />
 
-        @media (max-width: 1024px) {
-          .main-content {
-            margin-left: 0;
-          }
+        <Route path="/biographies" element={<BiographiesFoldersPage />} />
+        <Route path="/biographies/folder/:folderKey" element={<BiographiesFolderPage />} />
+        <Route path="/biographies/view/:biographyId" element={<BiographyViewPage />} />
 
-          .page-content {
-            padding: 16px;
-          }
-        }
-      `}</style>
+        <Route path="/library" element={<LibraryPage />} />
+        <Route path="/library/:langCode" element={<LibraryLanguagePage />} />
+
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/search" element={<SearchPage />} />
+
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/about" element={<AboutPage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </HashRouter>
   );
 }

@@ -17,14 +17,13 @@ export default defineConfig({
   },
   build: {
     target: "es2020",
-    cssCodeSplit: true,
     sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
           react: ["react", "react-dom", "react-router-dom"],
-          i18n: ["i18next", "react-i18next", "i18next-browser-languagedetector"],
-          ui: ["lucide-react", "zustand", "react-hot-toast"],
+          i18n: ["i18next", "react-i18next"],
+          ui: ["lucide-react", "zustand"],
         },
       },
     },

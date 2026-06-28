@@ -1,26 +1,31 @@
-Salaf Library — PWA/SEO Files Audit Patch 3.9.1
+Salaf Library — Web-3 Complete Redesign Release 4.0
 
 Дата сборки: 2026-06-28
 
-Проверены предоставленные файлы:
-- robots.txt;
-- sitemap.xml;
-- sw.js.
+Источник дизайна и структуры:
+- https://github.com/aminmod-bit/web-3
+- загруженные файлы index.html / package.json / tsconfig.json
 
-Результат аудита:
-- предоставленный robots.txt использует относительный Sitemap: ./sitemap.xml — для production лучше абсолютный URL;
-- текущий robots.txt проекта уже правильный: Sitemap: https://salaflibrary.org/sitemap.xml;
-- предоставленный sitemap.xml содержит hash-route URL и относительные ./#/ пути — для SEO это слабее, чем текущая генерация sitemap через scripts/generate-seo.mjs;
-- предоставленный sw.js рассчитан на manifest.webmanifest и icons/*, а текущий проект использует manifest.json, icon-192.png, icon-512.png, logo.svg;
-- текущий service worker проекта функциональнее: app shell cache, runtime cache, update flow, offline fallback.
+Что сделано:
+- проект пересобран на основе web-3;
+- взяты все основные файлы web-3: src, public, i18n, pages, components, store, types, utils;
+- сохранена публикация через GitHub Pages;
+- добавлен CNAME salaflibrary.org;
+- добавлен workflow .github/workflows/deploy.yml;
+- обновлён package.json под production;
+- удалён vite-plugin-singlefile, чтобы сборка была нормальной chunk-based;
+- исправлена ошибка PDFReaderCanvas с несуществующими fav/toggleFav/bookId;
+- обновлены зависимости через npm audit fix;
+- npm audit moderate+: 0 vulnerabilities;
+- PWA service worker подключён в src/main.tsx;
+- robots.txt и sitemap.xml приведены к production URL salaflibrary.org.
 
-Внесено:
-- обновлена версия service worker cache до 3.9.1-pwa-shell;
-- удалено упоминание audio из service worker large media matcher;
-- сохранено поведение: PDF/крупные media не кэшируются агрессивно, чтобы не забивать память телефона;
-- robots/sitemap оставлены в production-правильном варианте.
+Важно:
+- этот релиз является полной визуальной переработкой сайта в стиле web-3;
+- дизайн стал светлым, бумажным, современным и более app-like;
+- структура страниц соответствует web-3: books folders, azkar folders, hadith collections, articles, biographies, library by language, reader, admin, about;
+- если нужно вернуть автоматический импорт книг из предыдущей ветки, его можно интегрировать следующим релизом.
 
 Проверка:
 - npm run build: OK
-- npm run check: OK
-- npm audit moderate+: 0 vulnerabilities
+- npm audit --audit-level=moderate: OK

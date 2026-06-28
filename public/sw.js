@@ -1,94 +1,60 @@
-const CACHE_VERSION = '3.9.1-pwa-shell';
-const APP_SHELL_CACHE = `salaf-library-shell-${CACHE_VERSION}`;
-const RUNTIME_CACHE = `salaf-library-runtime-${CACHE_VERSION}`;
-
-const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.json',
-  './favicon.svg',
-  './logo.svg',
-  './logo-mark.svg',
-  './icon-192.png',
-  './icon-512.png',
-  './pwa-screenshot-wide.png',
-  './pwa-screenshot-mobile.png',
-  './data/books.json',
-  './data/biographies.json',
-  './data/categories.json',
-  './data/articles.json',
-  './data/azkar.json'
+/* Salaf Library Service Worker — offline shell */
+const CACHE_NAME = "salaf-library-v1.0.0";
+const SHELL = [
+  "./",
+  "./index.html",
+  "./manifest.webmanifest",
+  "./icons/favicon.svg",
+  "./icons/icon-192.svg",
+  "./icons/icon-512.svg",
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(APP_SHELL_CACHE)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
-      .catch(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL)).catch(() => {})
   );
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys
-        .filter((key) => key !== APP_SHELL_CACHE && key !== RUNTIME_CACHE)
-        .map((key) => caches.delete(key))))
-      .then(() => self.clients.claim())
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    )
   );
+  self.clients.claim();
 });
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
-});
-
-function isNavigation(request) {
-  return request.mode === 'navigate' || (request.headers.get('accept') || '').includes('text/html');
-}
-
-function isLargeMedia(request) {
-  const url = new URL(request.url);
-  return /\.(pdf|zip|mp4|webm)$/i.test(url.pathname);
-}
-
-async function networkFirst(request) {
-  const cache = await caches.open(RUNTIME_CACHE);
-  try {
-    const response = await fetch(request);
-    if (response && response.ok) cache.put(request, response.clone()).catch(() => undefined);
-    return response;
-  } catch {
-    return (await cache.match(request)) || (await caches.match('./index.html'));
-  }
-}
-
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(RUNTIME_CACHE);
-  const cached = await cache.match(request);
-  const fetching = fetch(request).then((response) => {
-    if (response && response.ok && !isLargeMedia(request)) cache.put(request, response.clone()).catch(() => undefined);
-    return response;
-  }).catch(() => cached);
-  return cached || fetching;
-}
-
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  // Only same-origin
   if (url.origin !== self.location.origin) return;
 
-  if (isNavigation(request)) {
-    event.respondWith(networkFirst(request));
+  // Network-first for HTML navigations
+  if (req.mode === "navigate" || req.destination === "document") {
+    event.respondWith(
+      fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+        return res;
+      }).catch(() => caches.match(req).then((r) => r || caches.match("./index.html")))
+    );
     return;
   }
 
-  if (isLargeMedia(request)) {
-    event.respondWith(fetch(request).catch(() => caches.match(request)));
-    return;
-  }
-
-  event.respondWith(staleWhileRevalidate(request));
+  // Cache-first for static assets
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+      return fetch(req).then((res) => {
+        if (res && res.status === 200 && res.type === "basic") {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+        }
+        return res;
+      }).catch(() => cached);
+    })
+  );
 });

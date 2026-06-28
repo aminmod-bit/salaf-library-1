@@ -1,103 +1,132 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { BookOpenText, Calendar, Search, Tag } from 'lucide-react';
-import FolderCard from '../components/FolderCard';
+import { useMemo } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { PageShell } from "@/components/system/PageShell";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Icon } from "@/components/ui/Icon";
+import { SearchBar } from "@/components/ui/SearchBar";
+import { useState } from "react";
+import { ARTICLE_FOLDERS } from "@/data/folders";
+import { ARTICLES } from "@/data/content";
+import { FolderCard } from "@/components/ui/FolderCard";
 
-interface Article {
-  id: string;
-  language: string;
-  title: string;
-  category: string;
-  author: string;
-  date: string;
-  summary: string;
-  content: string;
-  tags: string[];
-  featured?: boolean;
-}
-
-const langMap: Record<string, string> = { ru: 'Русский', en: 'Английский', ar: 'Арабский', tg: 'Таджикский', uz: 'Узбекский', fa: 'Персидский' };
-const ARTICLE_FOLDERS = ['Акыда', 'Манхадж', 'Фикх', 'Тафсир', 'Хадис', 'Воспитание', 'Семья', 'Даава', 'История', 'Ответы на вопросы', 'Полезные статьи', 'О нас', 'Помощь'];
-
-export default function ArticlesPage() {
-  const { i18n, t } = useTranslation();
-  const activeLanguage = langMap[(i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0]] || 'Русский';
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [query, setQuery] = useState('');
-  const [folder, setFolder] = useState('');
-
-  useEffect(() => {
-    fetch('./data/articles.json').then(r => r.json()).then(setArticles).catch(() => setArticles([]));
+export function ArticlesFoldersPage() {
+  const { t } = useTranslation();
+  const counts = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const a of ARTICLES) map[a.folder] = (map[a.folder] || 0) + 1;
+    return map;
   }, []);
 
-  const current = useMemo(() => articles.filter(a => a.language === activeLanguage), [articles, activeLanguage]);
-  const folderStats = useMemo(() => ARTICLE_FOLDERS.map(name => ({ name, count: current.filter(a => a.category === name).length })), [current]);
-  const filtered = useMemo(() => {
-    let result = folder ? current.filter(a => a.category === folder) : [];
-    const q = query.trim().toLowerCase();
-    if (q) result = current.filter(a => `${a.title} ${a.summary} ${a.content} ${a.author} ${a.tags.join(' ')}`.toLowerCase().includes(q));
-    return result.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || b.date.localeCompare(a.date));
-  }, [current, query, folder]);
+  return (
+    <PageShell title={t("articles.title")}>
+      <div className="container-x pt-4">
+        <SectionHeader title={t("articles.title")} subtitle={t("articles.subtitle")} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {ARTICLE_FOLDERS.map((f) => (
+            <FolderCard key={f.id} folder={f} count={counts[f.key]} to={`/articles/folder/${f.key}`} />
+          ))}
+        </div>
+      </div>
+    </PageShell>
+  );
+}
 
-  const showFolders = !folder && !query.trim();
+export function ArticleFolderPage() {
+  const { t } = useTranslation();
+  const { folderKey = "" } = useParams<{ folderKey: string }>();
+  const nav = useNavigate();
+  const folder = ARTICLE_FOLDERS.find((f) => f.key === folderKey);
+  const list = useMemo(() => ARTICLES.filter((a) => a.folder === folderKey), [folderKey]);
+  const [q, setQ] = useState("");
+  const filtered = useMemo(() => {
+    if (!q.trim()) return list;
+    const s = q.toLowerCase();
+    return list.filter((a) => a.title.toLowerCase().includes(s) || a.excerpt.toLowerCase().includes(s));
+  }, [list, q]);
 
   return (
-    <div className="fade-in" style={{ maxWidth: 1180, margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 30, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><BookOpenText size={16}/> {t('articles.eyebrow', 'Материалы')}</div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 50px)', lineHeight: 1.06, fontWeight: 950 }}>{showFolders ? 'Разделы статей' : folder || t('articles.title', 'Статьи и материалы')}</h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.75, maxWidth: 760, marginTop: 12 }}>
-          {showFolders ? 'Выберите тематическую папку. Материалы показываются только на активном языке.' : t('articles.description', 'Раздел для статей, ответов, пояснений и полезных материалов по выбранному языку.')}
-        </p>
-      </section>
-
-      <div className="glass-card" style={{ padding: 16, display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(212,175,55,.14)', borderRadius: 12, padding: '9px 12px' }}>
-          <Search size={15} color="#5a7a63" />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder={t('articles.search', 'Поиск статей...')} style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
-        </div>
-        {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setQuery(''); }}>Все папки</button>}
+    <PageShell title={folder?.label} showBack>
+      <div className="container-x pt-4">
+        <button onClick={() => nav("/articles")} className="mb-3 flex items-center gap-1 text-xs font-medium text-ink-soft hover:text-emerald-800">
+          <Icon name="ArrowLeft" size={12} /> Все разделы
+        </button>
+        <SearchBar value={q} onChange={setQ} placeholder="Поиск по статьям…" className="mb-4" />
+        {filtered.length === 0 ? (
+          <div className="paper p-10 text-center">
+            <Icon name="FileX" size={36} className="mx-auto text-ink-mute" />
+            <p className="mt-3 text-sm text-ink-soft">{t("common.empty")}</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((a) => (
+              <button
+                key={a.id}
+                onClick={() => window.location.hash = `#/articles/view/${a.id}`}
+                className="paper lift flex w-full flex-col gap-2 p-5 text-left"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-serif text-base font-semibold text-ink sm:text-lg">{a.title}</h3>
+                  {a.readingTime && (
+                    <span className="shrink-0 text-[11px] text-ink-mute">{a.readingTime} мин</span>
+                  )}
+                </div>
+                <p className="text-sm text-ink-soft line-clamp-2">{a.excerpt}</p>
+                <div className="mt-1 flex items-center gap-2 text-[11px] text-ink-mute">
+                  {a.author && <span>{a.author}</span>}
+                  {a.date && <span>· {a.date}</span>}
+                  {a.tags && a.tags.length > 0 && (
+                    <span className="ml-auto flex gap-1">
+                      {a.tags.slice(0, 3).map((tg) => (
+                        <span key={tg} className="rounded-full bg-paper-2 px-2 py-0.5">#{tg}</span>
+                      ))}
+                    </span>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+    </PageShell>
+  );
+}
 
-      {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
-          {folderStats.map(item => (
-            <FolderCard
-              key={item.name}
-              title={item.name}
-              subtitle="Тематический раздел статей"
-              count={item.count}
-              countLabel="материалов"
-              disabled={item.count === 0}
-              onClick={() => setFolder(item.name)}
-            />
-          ))}
+export function ArticleViewPage() {
+  const { t } = useTranslation();
+  const { articleId = "" } = useParams<{ articleId: string }>();
+  const nav = useNavigate();
+  const article = ARTICLES.find((a) => a.id === articleId);
+  if (!article) {
+    return (
+      <PageShell title={t("articles.title")} showBack>
+        <div className="container-x py-10 text-center">
+          <p className="text-sm text-ink-soft">Статья не найдена</p>
         </div>
-      ) : filtered.length === 0 ? (
-        <div className="glass-card" style={{ padding: 46, textAlign: 'center', color: '#9db8a3' }}>
-          <div style={{ fontSize: 44, marginBottom: 12 }}>📄</div>
-          <h2 style={{ color: '#f0f4f1', fontWeight: 850, marginBottom: 8 }}>{t('articles.emptyTitle', 'Материалы пока не добавлены')}</h2>
-          <p>{t('articles.emptyText', 'Когда появятся материалы на выбранном языке, они будут отображаться здесь.')}</p>
+      </PageShell>
+    );
+  }
+  return (
+    <PageShell title={article.title} showBack>
+      <article className="container-x mx-auto max-w-3xl pt-4">
+        <button onClick={() => nav(`/articles/folder/${article.folder}`)} className="mb-3 flex items-center gap-1 text-xs font-medium text-ink-soft hover:text-emerald-800">
+          <Icon name="ArrowLeft" size={12} /> Назад к разделу
+        </button>
+        <div className="paper p-6 sm:p-8">
+          <h1 className="font-serif text-2xl font-bold text-ink sm:text-3xl">{article.title}</h1>
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-ink-mute">
+            {article.author && <span>{article.author}</span>}
+            {article.date && <span>· {article.date}</span>}
+            {article.readingTime && <span>· {article.readingTime} мин чтения</span>}
+          </div>
+          <p className="mt-4 border-l-2 border-amber-400 pl-3 text-sm italic text-ink-soft">{article.excerpt}</p>
+          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-ink">
+            {article.body.split("\n").map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
         </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
-          {filtered.map(article => (
-            <article key={article.id} className="glass-card" style={{ padding: 22 }}>
-              {article.featured && <span className="badge badge-gold" style={{ marginBottom: 12 }}>Избранное</span>}
-              <h2 style={{ color: '#f0f4f1', fontSize: 19, fontWeight: 900, lineHeight: 1.25, marginBottom: 10 }}>{article.title}</h2>
-              <p style={{ color: '#9db8a3', lineHeight: 1.65, marginBottom: 14 }}>{article.summary}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: '#5a7a63', fontSize: 12, flexWrap: 'wrap' }}>
-                <span><Calendar size={12} style={{ display: 'inline', marginRight: 4 }} />{article.date}</span>
-                <span><Tag size={12} style={{ display: 'inline', marginRight: 4 }} />{article.category}</span>
-              </div>
-              <details style={{ marginTop: 14 }}>
-                <summary style={{ cursor: 'pointer', color: '#d4af37', fontWeight: 800 }}>{t('common.read', 'Читать')}</summary>
-                <p style={{ color: '#c0d4c8', lineHeight: 1.75, marginTop: 12 }}>{article.content}</p>
-              </details>
-            </article>
-          ))}
-        </div>
-      )}
-    </div>
+      </article>
+    </PageShell>
   );
 }

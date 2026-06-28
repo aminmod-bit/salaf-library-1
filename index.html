@@ -3,40 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Salaf Library — Исламская цифровая библиотека</title>
-    <meta name="description" content="Salaf Library — профессиональная исламская цифровая библиотека: книги, онлайн-читалка, азкары, статьи и биографии." />
-    <meta name="keywords" content="ислам, библиотека, книги, учёные, салаф, фаваиды, аудио, биографии, акыда, фикх, хадис" />
+    <meta name="theme-color" content="#0f3d2e" />
+    <meta name="description" content="Salaf Library — профессиональная исламская цифровая библиотека: книги, PDF-читалка, азкары, хадисы, биографии, статьи. На русском, арабском, таджикском, узбекском, фарси и английском." />
+    <meta name="keywords" content="Salaf Library, исламская библиотека, акыда, тафсир, хадисы, биографии, азкары, саляф, книги, PDF" />
     <meta name="author" content="Salaf Library" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#0d3320" />
-    <meta name="color-scheme" content="dark" />
-    <link rel="canonical" href="https://salaflibrary.org/" />
 
-    <meta property="og:title" content="Salaf Library — Исламская цифровая библиотека" />
-    <meta property="og:description" content="Книги, биографии, аудиоуроки и фаваиды в одном современном приложении." />
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="Salaf Library — Исламская цифровая библиотека" />
+    <meta property="og:description" content="Книги, хадисы, азкары, биографии, статьи. Профессиональная читалка PDF. Мультиязычно. PWA." />
+    <meta property="og:image" content="./icons/og-image.svg" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:site_name" content="Salaf Library" />
-    <meta property="og:url" content="https://salaflibrary.org/" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Salaf Library" />
-    <meta name="twitter:description" content="Профессиональная исламская цифровая библиотека." />
 
-    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
-    <link rel="manifest" href="%BASE_URL%manifest.json" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Salaf Library" />
-    <link rel="apple-touch-icon" href="%BASE_URL%icon-192.png" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Salaf Library — Исламская цифровая библиотека" />
+    <meta name="twitter:description" content="Книги, хадисы, азкары, биографии, статьи. PWA. Мультиязычно." />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.svg" />
+
+    <title>Salaf Library — Исламская цифровая библиотека</title>
+
+    <style>
+      :root { color-scheme: light; }
+      html, body, #root { height: 100%; }
+      body {
+        margin: 0;
+        background: #f6f5f1;
+        color: #1c1a17;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "Helvetica Neue", Arial, "Noto Naskh Arabic", "Noto Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+      .app-loader {
+        position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(160deg, #f6f5f1 0%, #e8e3d6 100%);
+        z-index: 9999;
+      }
+      .app-loader-mark {
+        width: 64px; height: 64px; border-radius: 18px;
+        background: linear-gradient(135deg, #0f3d2e 0%, #1b5e3f 60%, #c9a44a 100%);
+        box-shadow: 0 14px 38px rgba(15, 61, 46, 0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+        display: flex; align-items: center; justify-content: center;
+        color: #f6f5f1; font-weight: 700; letter-spacing: 0.5px;
+        animation: pulse 1.6s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(0.94); opacity: 0.85; }
+      }
+    </style>
   </head>
   <body>
-    <noscript>Для работы Salaf Library необходимо включить JavaScript.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="app-loader">
+        <div class="app-loader-mark">SL</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

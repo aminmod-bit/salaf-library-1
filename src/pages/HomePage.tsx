@@ -1,113 +1,203 @@
-import { useNavigate } from 'react-router-dom';
-import { BookOpen, Send, Radio, Video, FolderOpen, Library, Users } from 'lucide-react';
-import { useStore } from '../store/useStore';
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { PageShell } from "@/components/system/PageShell";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { BookCard } from "@/components/ui/BookCard";
+import { Icon } from "@/components/ui/Icon";
+import { Button } from "@/components/ui/Button";
+import { BOOKS, HADITHS } from "@/data/content";
+import { BOOK_FOLDERS, AZKAR_FOLDERS, HADITH_COLLECTIONS } from "@/data/folders";
+import { colorFromString } from "@/utils/helpers";
+
+const STATS = [
+  { key: "books", icon: "BookOpen", value: BOOKS.length, suffix: "книг", color: "#0f3d2e" },
+  { key: "hadith", icon: "Quote", value: HADITH_COLLECTIONS.length, suffix: "сборников", color: "#1b5e3f" },
+  { key: "azkar", icon: "Moon", value: AZKAR_FOLDERS.length, suffix: "разделов", color: "#3a2a14" },
+  { key: "langs", icon: "Languages", value: 6, suffix: "языков", color: "#1f2a3a" },
+];
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const { books, biographies, isLoading } = useStore();
-  const showcase = books.slice(0, 3);
-
-  if (isLoading) {
-    return (
-      <div className="app-loader">
-        <div className="app-loader-mark">SL</div>
-      </div>
-    );
-  }
+  const { t } = useTranslation();
+  const nav = useNavigate();
+  const featured = BOOKS.filter((b) => b.featured).slice(0, 6);
+  const newest = BOOKS.filter((b) => b.isNew).slice(0, 6);
+  const todaysHadith = HADITHS[Math.floor(Date.now() / 86_400_000) % HADITHS.length];
 
   return (
-    <main className="heritage-page fade-in">
-      <section className="heritage-hero">
-        <div className="heritage-hero-inner">
-          <img className="heritage-hero-mark" src="./logo-mark.svg" alt="Salaf Library" />
-          <h1>Salaf Library</h1>
-          <div className="heritage-divider" />
-          <p>Достоверные исламские книги, переводы и исследования в соответствии с пониманием праведных предшественников.</p>
+    <PageShell>
+      {/* Hero */}
+      <section className="container-x pt-4 sm:pt-6">
+        <div className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-700 p-6 text-white shadow-xl sm:p-10">
+          <div
+            className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-amber-400/20"
+            style={{ filter: "blur(10px)" }}
+          />
+          <div
+            className="absolute right-12 bottom-0 h-32 w-32 rounded-full bg-amber-300/10"
+            style={{ filter: "blur(20px)" }}
+          />
+          <div className="relative">
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur-sm">
+              <Icon name="Sparkles" size={12} className="text-amber-300" />
+              <span>v 1.0 · {t("app.tagline")}</span>
+            </div>
+            <h1 className="font-serif text-3xl font-bold leading-tight sm:text-5xl">
+              {t("home.hero_title")}
+            </h1>
+            <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
+              {t("home.hero_subtitle")}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Button onClick={() => nav("/books")} variant="gold" icon={<Icon name="BookOpen" size={16} />}>
+                {t("nav.books")}
+              </Button>
+              <Button onClick={() => nav("/hadith")} variant="secondary" className="bg-white/10 text-white hover:bg-white/20" icon={<Icon name="Quote" size={16} />}>
+                {t("nav.hadith")}
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <div className="heritage-content">
-        <section className="heritage-section">
-          <div className="heritage-section-head">
-            <h2>Книги</h2>
-            <button className="heritage-count" onClick={() => navigate('/books')}>{books.length} книг</button>
+      {/* Stats */}
+      <section className="container-x mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {STATS.map((s) => (
+          <div
+            key={s.key}
+            className="paper flex items-center gap-3 p-3 sm:p-4"
+            style={{ borderLeft: `4px solid ${s.color}` }}
+          >
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-white"
+              style={{ background: s.color }}
+            >
+              <Icon name={s.icon} size={18} />
+            </div>
+            <div>
+              <div className="text-lg font-semibold text-ink">{s.value}</div>
+              <div className="text-[11px] text-ink-mute">{s.suffix}</div>
+            </div>
           </div>
+        ))}
+      </section>
 
-          {showcase.length > 0 ? (
-            <div className="heritage-grid">
-              {showcase.map(book => (
-                <article key={book.id} className="heritage-book-card">
-                  <div className="heritage-book-cover">
-                    {book.coverImage ? <img src={book.coverImage} alt={book.title} /> : <BookCover title={book.title} category={book.category} />}
-                  </div>
-                  <div className="heritage-book-info">
-                    <h3>{book.title}</h3>
-                    <p className="author">{book.author}</p>
-                    <p>{book.description}</p>
-                    <button onClick={() => navigate(`/read/${book.id}`)}><BookOpen size={17}/> Читать PDF</button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="heritage-empty">
-              <Library size={34} style={{ margin: '0 auto 12px', color: '#8ea66a' }} />
-              <strong>Библиотека готова к наполнению</strong>
-              <p style={{ marginTop: 8 }}>Добавьте PDF в папки <code>Books/...</code> или используйте импорт в админке.</p>
-              <button className="btn-primary" style={{ marginTop: 18 }} onClick={() => navigate('/books')}>
-                <FolderOpen size={16}/> Открыть разделы
-              </button>
-            </div>
+      {/* Hadith of the day */}
+      <section className="container-x mt-8">
+        <SectionHeader title={t("home.hadith_of_day")} />
+        <div className="paper relative overflow-hidden p-6 sm:p-8">
+          <div
+            className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-amber-400/10"
+            style={{ filter: "blur(8px)" }}
+          />
+          {todaysHadith && (
+            <>
+              <div className="arabic text-xl leading-loose text-emerald-900 sm:text-2xl">
+                {todaysHadith.arabic}
+              </div>
+              <div className="mt-4 border-l-2 border-amber-400 pl-4 text-sm italic text-ink-soft">
+                {todaysHadith.text}
+              </div>
+              <div className="mt-3 flex items-center gap-3 text-xs text-ink-mute">
+                <span className="rounded-full bg-emerald-900/10 px-2 py-0.5 text-emerald-800">
+                  {todaysHadith.book}
+                </span>
+                <span>·</span>
+                <span>{todaysHadith.narrator}</span>
+              </div>
+            </>
           )}
-        </section>
+        </div>
+      </section>
 
-        <section className="resources-panel heritage-section">
-          <h2>Наши ресурсы</h2>
-          <div className="resources-grid">
-            <a className="resource-link" href="#" onClick={(e) => e.preventDefault()}><Send size={28} color="#2aabee"/> Telegram</a>
-            <a className="resource-link" href="#" onClick={(e) => e.preventDefault()}><Radio size={28} color="#d9468f"/> Instagram</a>
-            <a className="resource-link" href="#" onClick={(e) => e.preventDefault()}><Video size={32} color="#ff2b2b"/> YouTube</a>
+      {/* Featured */}
+      {featured.length > 0 && (
+        <section className="container-x mt-8">
+          <SectionHeader
+            title={t("home.featured_books")}
+            action={
+              <button onClick={() => nav("/books")} className="flex items-center gap-1 text-xs font-medium text-emerald-800 hover:underline">
+                {t("common.more")} <Icon name="ChevronRight" size={14} />
+              </button>
+            }
+          />
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {featured.map((b) => <BookCard key={b.id} book={b} />)}
           </div>
         </section>
+      )}
 
-        <section className="heritage-section">
-          <div className="heritage-grid">
-            <button className="heritage-mini-card" onClick={() => navigate('/books')}>
-              <FolderOpen size={24}/>
-              <span>Разделы книг</span>
-              <small>Папочная структура для большой библиотеки</small>
+      {/* Browse by section */}
+      <section className="container-x mt-10">
+        <SectionHeader
+          title={t("home.explore_categories")}
+          subtitle={t("home.explore_subtitle")}
+        />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {BOOK_FOLDERS.slice(0, 8).map((f) => (
+            <button
+              key={f.id}
+              onClick={() => nav(`/books/folder/${f.key}`)}
+              className="paper lift relative flex flex-col gap-2 overflow-hidden rounded-2xl p-4 text-left"
+            >
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-white"
+                style={{ background: f.coverColor }}
+              >
+                <Icon name={f.iconKey} size={20} />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-ink">{f.label}</div>
+                {f.labelAr && <div className="arabic text-xs text-ink-mute">{f.labelAr}</div>}
+              </div>
+              <div className="text-[11px] text-ink-mute line-clamp-2">{f.description}</div>
             </button>
-            <button className="heritage-mini-card" onClick={() => navigate('/azkar')}>
-              <BookOpen size={24}/>
-              <span>Азкары и дуа</span>
-              <small>Готово для наполнения утренними и вечерними азкарами</small>
+          ))}
+        </div>
+      </section>
+
+      {/* Quick access */}
+      <section className="container-x mt-10">
+        <SectionHeader title={t("home.quick")} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {[
+            { to: "/azkar", icon: "Moon", label: t("nav.azkar"), color: "#0a2a3a" },
+            { to: "/hadith", icon: "Quote", label: t("nav.hadith"), color: "#1f2a3a" },
+            { to: "/articles", icon: "FileText", label: t("nav.articles"), color: "#2a3d1a" },
+            { to: "/biographies", icon: "User", label: t("nav.biographies"), color: "#3a1a2a" },
+          ].map((q) => (
+            <button
+              key={q.to}
+              onClick={() => nav(q.to)}
+              className="paper lift relative flex flex-col gap-2 overflow-hidden rounded-2xl p-4 text-left"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl text-white" style={{ background: q.color }}>
+                <Icon name={q.icon} size={20} />
+              </div>
+              <div className="text-sm font-semibold text-ink">{q.label}</div>
+              <Icon name="ChevronRight" size={14} className="absolute right-3 top-3 text-ink-mute" />
             </button>
-            <button className="heritage-mini-card" onClick={() => navigate('/biographies')}>
-              <Users size={24}/>
-              <span>Биографии</span>
-              <small>{biographies.length} записей в базе</small>
-            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* New */}
+      {newest.length > 0 && (
+        <section className="container-x mt-10 mb-2">
+          <SectionHeader title={t("home.new_books")} />
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {newest.map((b) => <BookCard key={b.id} book={b} />)}
           </div>
         </section>
+      )}
 
-        <footer className="heritage-footer">© 2026 Salaf Library. Все права защищены.</footer>
+      <div className="container-x mt-10 mb-6 text-center">
+        <p className="text-xs text-ink-mute">
+          Salaf Library · {new Date().getFullYear()} · Built with ❤ for the ummah
+        </p>
+        <p className="mt-1 text-[10px] text-ink-mute">
+          Используется material из открытых исламских источников · {colorFromString("footer").toUpperCase()}
+        </p>
       </div>
-
-      <style>{`
-        .heritage-book-card{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:18px;border-radius:8px;background:#eee9dd;color:#181711;box-shadow:0 12px 35px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.5)}
-        .heritage-book-cover{height:210px;border-radius:4px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35)}
-        .heritage-book-cover img{width:100%;height:100%;object-fit:cover;display:block}.heritage-book-info{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}.heritage-book-info h3{font-family:Georgia,'Times New Roman',serif;font-size:25px;line-height:1.15;margin-bottom:12px;color:#111}.heritage-book-info .author{color:#383830;font-size:15px;margin-bottom:18px}.heritage-book-info p{color:#272721;line-height:1.55;margin-bottom:18px}.heritage-book-info button{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:4px;background:#4c6a3b;color:#fff;padding:11px 18px;font-family:Georgia,'Times New Roman',serif;font-size:18px;cursor:pointer}.heritage-book-info button:hover{background:#3f5d31}.heritage-mini-card{padding:22px;text-align:left;border-radius:10px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.03);color:#f3ead8;display:flex;flex-direction:column;gap:10px;cursor:pointer}.heritage-mini-card svg{color:#8ea66a}.heritage-mini-card span{font-family:Georgia,'Times New Roman',serif;font-size:23px}.heritage-mini-card small{color:#bdb4a1;line-height:1.55}.heritage-footer{text-align:center;color:#cfc4ad;border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:18px;background:rgba(255,255,255,.025);font-family:Georgia,'Times New Roman',serif}@media(max-width:720px){.heritage-book-card{grid-template-columns:1fr}.heritage-book-cover{width:150px;margin:auto}.heritage-hero{margin-left:-16px;margin-right:-16px}.heritage-section h2{font-size:26px}}
-      `}</style>
-    </main>
-  );
-}
-
-function BookCover({ title, category }: { title: string; category: string }) {
-  return (
-    <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg,#173524,#07130b)', border: '1px solid rgba(201,164,74,.45)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 14, textAlign: 'center' }}>
-      <div style={{ color: '#c9a44a', fontSize: 11, fontWeight: 800, letterSpacing: '.12em' }}>{category}</div>
-      <div style={{ color: '#f3ead8', fontFamily: 'Georgia,serif', fontSize: 18, fontWeight: 800, lineHeight: 1.2 }}>{title}</div>
-      <div style={{ color: '#c9a44a', fontSize: 24 }}>◇</div>
-    </div>
+    </PageShell>
   );
 }

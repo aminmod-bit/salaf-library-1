@@ -1,108 +1,175 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Repeat, Search, Shield, Sparkles } from 'lucide-react';
-import FolderCard from '../components/FolderCard';
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+// (useNavigate retained for child page)
+import { useTranslation } from "react-i18next";
+import { PageShell } from "@/components/system/PageShell";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Icon } from "@/components/ui/Icon";
+import { Button } from "@/components/ui/Button";
+import { FolderCard } from "@/components/ui/FolderCard";
+import { SearchBar } from "@/components/ui/SearchBar";
+import { AZKAR_FOLDERS } from "@/data/folders";
+import { AZKAR } from "@/data/content";
+import { useApp } from "@/store/useApp";
 
-interface Zikr {
-  id: string; type: string; category: string; title: string; arabic: string; translationRu: string; source: string; repeat: number; benefit: string;
-}
-
-const folders = [
-  { id: 'all', label: 'Все азкары' },
-  { id: 'featured', label: 'Избранные' },
-  { id: 'morning', label: 'Утренние' },
-  { id: 'evening', label: 'Вечерние' },
-  { id: 'sleep', label: 'Перед сном' },
-  { id: 'after-prayer', label: 'После молитвы' },
-  { id: 'after-prayer', label: 'После намаза' },
-  { id: 'istikharah', label: 'Истихара' },
-  { id: 'before-food', label: 'Перед едой' },
-  { id: 'after-food', label: 'После еды' },
-  { id: 'enter-home', label: 'При входе в дом' },
-  { id: 'leave-home', label: 'При выходе из дома' },
-  { id: 'enter-masjid', label: 'При входе в мечеть' },
-  { id: 'leave-masjid', label: 'При выходе из мечети' },
-  { id: 'travel', label: 'Для путешествия' },
-  { id: 'rain', label: 'Во время дождя' },
-  { id: 'illness', label: 'При болезни' },
-  { id: 'misc', label: 'Разные азкары' },
-];
-
-export default function AzkarPage() {
-  const [azkar, setAzkar] = useState<Zikr[]>([]);
-  const [folder, setFolder] = useState('');
-  const [query, setQuery] = useState('');
-  const [done, setDone] = useState<Record<string, number>>({});
-
-  useEffect(() => {
-    fetch('./data/azkar.json').then(r => r.json()).then(setAzkar).catch(() => setAzkar([]));
-  }, []);
-
-  const folderStats = useMemo(() => folders.map(item => ({ ...item, count: item.id === 'all' ? azkar.length : item.id === 'featured' ? Math.min(azkar.length, 2) : azkar.filter(z => z.type === item.id).length })), [azkar]);
-
-  const filtered = useMemo(() => {
-    let result = folder === 'all' || !folder ? azkar : folder === 'featured' ? azkar.slice(0, 2) : azkar.filter(item => item.type === folder);
-    const q = query.toLowerCase().trim();
-    if (q) result = azkar.filter(item => `${item.title} ${item.translationRu} ${item.source}`.toLowerCase().includes(q));
-    return result;
-  }, [azkar, folder, query]);
-
-  const increment = (id: string, max: number) => setDone(prev => ({ ...prev, [id]: Math.min((prev[id] || 0) + 1, max) }));
-  const reset = (id: string) => setDone(prev => ({ ...prev, [id]: 0 }));
-  const showFolders = !folder && !query.trim();
+export function AzkarFoldersPage() {
+  const { t } = useTranslation();
+  const favs = useApp((s) => s.favorites.azkar);
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { all: AZKAR.length, favorites: favs.length };
+    for (const a of AZKAR) map[a.folder] = (map[a.folder] || 0) + 1;
+    return map;
+  }, [favs.length]);
 
   return (
-    <div className="fade-in" style={{ maxWidth: 1180, margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 32, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><Shield size={16}/> Daily Azkar</div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 950, lineHeight: 1.05, marginBottom: 12 }}>{showFolders ? 'Папки азкаров и дуа' : folders.find(f => f.id === folder)?.label || 'Азкары и дуа'}</h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.75, maxWidth: 760 }}>Сначала выберите папку: утренние, вечерние, перед сном, после намаза и другие разделы.</p>
-      </section>
-
-      <div className="glass-card" style={{ padding: 16, marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(212,175,55,.14)', borderRadius: 12, padding: '9px 12px' }}>
-          <Search size={15} color="#5a7a63" />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Поиск азкаров..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
-        </div>
-        {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setQuery(''); }}>Все папки</button>}
-      </div>
-
-      {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
-          {folderStats.map(item => (
+    <PageShell title={t("azkar.title")}>
+      <div className="container-x pt-4">
+        <SectionHeader title={t("azkar.title")} subtitle={t("azkar.subtitle")} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {AZKAR_FOLDERS.map((f) => (
             <FolderCard
-              key={`${item.id}-${item.label}`}
-              title={item.label}
-              subtitle="Папка азкаров и дуа"
-              count={item.count}
-              countLabel="записей"
-              disabled={item.count === 0}
-              onClick={() => setFolder(item.id)}
+              key={f.id}
+              folder={f}
+              count={counts[f.key]}
+              to={`/azkar/folder/${f.key}`}
             />
           ))}
         </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
-          {filtered.map(item => {
-            const count = done[item.id] || 0;
-            return (
-              <article key={item.id} className="glass-card" style={{ padding: 22 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start', marginBottom: 14 }}>
-                  <div><span className="badge badge-gold">{item.category}</span><h2 style={{ color: '#f0f4f1', fontSize: 20, fontWeight: 900, marginTop: 10 }}>{item.title}</h2></div>
-                  <div style={{ color: '#d4af37', display: 'flex', gap: 5, alignItems: 'center', fontWeight: 900 }}><Repeat size={16}/>{item.repeat}x</div>
-                </div>
-                <p dir="rtl" style={{ fontFamily: 'Amiri, serif', fontSize: 25, lineHeight: 2, color: '#f8efd1', textAlign: 'right', padding: 14, border: '1px solid rgba(212,175,55,.12)', borderRadius: 14, background: 'rgba(212,175,55,.04)' }}>{item.arabic}</p>
-                <p style={{ color: '#9db8a3', lineHeight: 1.75, marginTop: 12 }}>{item.translationRu}</p>
-                <p style={{ color: '#5a7a63', fontSize: 12, marginTop: 8 }}>{item.source}</p>
-                <div style={{ marginTop: 14, display: 'grid', gridTemplateColumns: '1fr auto', gap: 10, alignItems: 'center' }}>
-                  <div style={{ height: 8, background: 'rgba(255,255,255,.08)', borderRadius: 999, overflow: 'hidden' }}><div style={{ width: `${(count / item.repeat) * 100}%`, height: '100%', background: 'linear-gradient(90deg,#d4af37,#22c55e)' }} /></div>
-                  <button className="btn-primary" onClick={() => count >= item.repeat ? reset(item.id) : increment(item.id, item.repeat)}>{count >= item.repeat ? 'Сброс' : `${count}/${item.repeat}`}</button>
-                </div>
-                {item.benefit && <div style={{ marginTop: 12, color: '#9db8a3', fontSize: 13, display: 'flex', gap: 7 }}><Sparkles size={14} color="#d4af37"/> {item.benefit}</div>}
-              </article>
-            );
-          })}
+      </div>
+    </PageShell>
+  );
+}
+
+export function AzkarFolderPage() {
+  const { t } = useTranslation();
+  const { folderKey = "" } = useParams<{ folderKey: string }>();
+  const nav = useNavigate();
+  const folder = AZKAR_FOLDERS.find((f) => f.key === folderKey);
+  const favs = useApp((s) => s.favorites.azkar);
+  const isFav = folderKey === "favorites";
+  const list = useMemo(() => {
+    if (isFav) return AZKAR.filter((a) => favs.includes(a.id));
+    if (folderKey === "all") return AZKAR;
+    return AZKAR.filter((a) => a.folder === folderKey);
+  }, [folderKey, favs, isFav]);
+  const [query, setQuery] = useState("");
+  const filtered = useMemo(() => {
+    if (!query.trim()) return list;
+    const q = query.toLowerCase();
+    return list.filter((a) =>
+      (a.title || "").toLowerCase().includes(q) ||
+      (a.translation || "").toLowerCase().includes(q) ||
+      (a.arabic || "").includes(query)
+    );
+  }, [list, query]);
+
+  return (
+    <PageShell title={folder?.label} showBack>
+      <div className="container-x pt-4">
+        <button onClick={() => nav("/azkar")} className="mb-3 flex items-center gap-1 text-xs font-medium text-ink-soft hover:text-emerald-800">
+          <Icon name="ArrowLeft" size={12} /> Все разделы
+        </button>
+        <SearchBar value={query} onChange={setQuery} placeholder="Поиск по азкарам…" className="mb-4" />
+        {filtered.length === 0 ? (
+          <div className="paper p-10 text-center">
+            <Icon name="BookX" size={36} className="mx-auto text-ink-mute" />
+            <p className="mt-3 text-sm text-ink-soft">{t("common.empty")}</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((a) => <AzkarItemRow key={a.id} item={a} />)}
+          </div>
+        )}
+      </div>
+    </PageShell>
+  );
+}
+
+interface AzkarItemRowProps { item: typeof AZKAR[number]; }
+
+function AzkarItemRow({ item }: AzkarItemRowProps) {
+  const fav = useApp((s) => s.favorites.azkar.includes(item.id));
+  const toggle = useApp((s) => s.toggleFavorite);
+  const [count, setCount] = useState(0);
+  const target = item.count || 1;
+
+  const done = count >= target;
+
+  return (
+    <article className="paper relative overflow-hidden p-4 sm:p-5">
+      {done && (
+        <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-700 text-white shadow">
+          <Icon name="Check" size={14} />
         </div>
       )}
-    </div>
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <h3 className="font-serif text-base font-semibold text-ink sm:text-lg">{item.title}</h3>
+          {item.titleAr && <div className="arabic mt-0.5 text-sm text-ink-mute">{item.titleAr}</div>}
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => toggle("azkar", item.id)}
+            className={`rounded-full p-1.5 transition-colors ${fav ? "text-amber-500" : "text-ink-mute hover:text-amber-500"}`}
+            aria-label={fav ? "Remove" : "Save"}
+          >
+            <Icon name="Star" size={14} className={fav ? "fill-amber-400" : ""} />
+          </button>
+        </div>
+      </div>
+
+      {item.arabic && (
+        <div className="arabic mt-3 rounded-xl bg-paper-2/60 p-4 text-lg leading-loose text-emerald-900">
+          {item.arabic}
+        </div>
+      )}
+      {item.transliteration && (
+        <div className="mt-2 italic text-sm text-ink-soft">{item.transliteration}</div>
+      )}
+      {item.translation && (
+        <p className="mt-2 border-l-2 border-amber-400 pl-3 text-sm text-ink">{item.translation}</p>
+      )}
+      <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-ink-mute">
+        {item.source && (
+          <span className="rounded-full bg-paper-2 px-2 py-0.5">📚 {item.source}</span>
+        )}
+        {item.fadl && (
+          <span className="rounded-full bg-emerald-900/10 px-2 py-0.5 text-emerald-800">✨ {item.fadl}</span>
+        )}
+      </div>
+
+      {target > 1 && (
+        <div className="mt-4 flex items-center gap-2">
+          <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-paper-2">
+            <div
+              className="absolute inset-y-0 left-0 rounded-full bg-emerald-700 transition-all"
+              style={{ width: `${Math.min(100, (count / target) * 100)}%` }}
+            />
+          </div>
+          <div className="text-xs font-medium text-ink-soft">
+            {count}/{target}
+          </div>
+        </div>
+      )}
+
+      <div className="mt-3 flex gap-2">
+        <Button
+          size="sm"
+          variant={done ? "secondary" : "primary"}
+          onClick={() => setCount((c) => Math.min(target, c + 1))}
+          icon={<Icon name="Plus" size={14} />}
+        >
+          {done ? "Готово" : `Считать (${count}/${target})`}
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => setCount(0)}
+          icon={<Icon name="RotateCcw" size={14} />}
+        >
+          Сброс
+        </Button>
+      </div>
+    </article>
   );
 }
