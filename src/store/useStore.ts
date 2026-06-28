@@ -11,6 +11,8 @@ export interface Book {
   id: string;
   title: string;
   titleAr?: string;
+  originalTitle?: string;
+  slug?: string;
   author: string;
   authorId?: string;
   category: string;
@@ -27,6 +29,12 @@ export interface Book {
   downloadUrl?: string;
   year?: string;
   publisher?: string;
+  isbn?: string;
+  translator?: string;
+  editor?: string;
+  sourceFolder?: string;
+  needsReview?: boolean;
+  categoryConfidence?: number;
   rating?: number;
   downloads?: number;
   views?: number;
