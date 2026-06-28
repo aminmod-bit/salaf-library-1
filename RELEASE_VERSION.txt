@@ -1,31 +1,17 @@
-Salaf Library — Web-3 Complete Redesign Release 4.0
+Salaf Library — Web3 Build Fix Release 4.0.1
 
 Дата сборки: 2026-06-28
 
-Источник дизайна и структуры:
-- https://github.com/aminmod-bit/web-3
-- загруженные файлы index.html / package.json / tsconfig.json
-
-Что сделано:
-- проект пересобран на основе web-3;
-- взяты все основные файлы web-3: src, public, i18n, pages, components, store, types, utils;
-- сохранена публикация через GitHub Pages;
-- добавлен CNAME salaflibrary.org;
-- добавлен workflow .github/workflows/deploy.yml;
-- обновлён package.json под production;
-- удалён vite-plugin-singlefile, чтобы сборка была нормальной chunk-based;
-- исправлена ошибка PDFReaderCanvas с несуществующими fav/toggleFav/bookId;
-- обновлены зависимости через npm audit fix;
-- npm audit moderate+: 0 vulnerabilities;
-- PWA service worker подключён в src/main.tsx;
-- robots.txt и sitemap.xml приведены к production URL salaflibrary.org.
+Исправлено:
+- GitHub Actions падал из-за старых файлов, оставшихся после копирования нового web-3 архива поверх старого проекта;
+- старые файлы src/components/ThemeToggle.tsx, Sidebar.tsx, GeneratedCover.tsx, FawaidCard.tsx, BookCard.tsx, AudioPlayer.tsx больше не участвуют в production TypeScript build;
+- старые тесты src/tests/* исключены из build;
+- старые pages/admin и устаревшие страницы также исключены;
+- гарантированно добавлен корректный src/i18n/index.ts с export setLanguage;
+- package.json/package-lock.json соответствуют web-3 релизу;
+- build проверен локально и проходит успешно;
+- npm audit moderate+: 0 vulnerabilities.
 
 Важно:
-- этот релиз является полной визуальной переработкой сайта в стиле web-3;
-- дизайн стал светлым, бумажным, современным и более app-like;
-- структура страниц соответствует web-3: books folders, azkar folders, hadith collections, articles, biographies, library by language, reader, admin, about;
-- если нужно вернуть автоматический импорт книг из предыдущей ветки, его можно интегрировать следующим релизом.
-
-Проверка:
-- npm run build: OK
-- npm audit --audit-level=moderate: OK
+- этот архив можно накатывать поверх уже загруженного Web3 release;
+- для идеальной чистоты лучше в будущем удалить старые лишние файлы из репозитория, но этот patch исправляет build без ручного удаления.
