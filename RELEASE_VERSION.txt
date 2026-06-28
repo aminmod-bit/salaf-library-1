@@ -1,12 +1,24 @@
-Salaf Library — Language Label Patch 3.3.1
+Salaf Library — Manual Books Sync Release 3.4
 
 Дата сборки: 2026-06-25
 
-Изменение:
-- в переключателе языков таджикский язык теперь отображается как TJ вместо TG;
-- обновлено public/data/languages.json;
-- обновлён fallback в src/components/LanguageSwitcher.tsx;
-- все изменения релиза 3.3 сохранены.
+Добавлено:
+- упрощено ручное добавление книг через папки;
+- добавлен скрипт scripts/sync-books-folders.mjs;
+- добавлена команда npm run books:sync;
+- build теперь автоматически выполняет books:sync перед seo:generate;
+- если положить PDF в Books/Aqeedah, Books/Tawhid, Books/Hadith и т.д., книга автоматически появится в public/data/books.json;
+- PDF автоматически копируется в public/books/{folder}/;
+- если рядом с PDF лежит обложка с тем же именем (.webp/.jpg/.jpeg/.png), она автоматически копируется в public/covers/{folder}/ и подключается как coverImage;
+- добавлен файл public/data/books.manual.json для ручных записей, которые не должны перезаписываться;
+- добавлен Books/README.md с инструкцией;
+- папочная структура Books/Articles/Adhkar/Hadith сохранена для дальнейшего наполнения.
+
+Как пользоваться:
+1. Положить PDF: Books/Aqeedah/tri-osnovy.pdf
+2. При желании положить обложку: Books/Aqeedah/tri-osnovy.webp
+3. Сделать commit и push.
+4. GitHub Actions сам выполнит npm run books:sync и опубликует книгу.
 
 Проверка:
 - npm run build: OK
