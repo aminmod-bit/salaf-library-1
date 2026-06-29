@@ -21,5 +21,28 @@
     "featured": false,
     "popular": false,
     "isNew": true
+  },
+  {
+    "id": "b002",
+    "title": "173-амали-солеҳ-ба-муносибати-даҳаи-зулҳиҷҷа",
+    "author": "Шейх Салих аль Мунаджид",
+    "category": "Общее",
+    "language": "Русский",
+    "size": "5.8 МБ",
+    "description": "Книга «173-амали-солеҳ-ба-муносибати-даҳаи-зулҳиҷҷа» добавлена в Salaf Library. Раздел: Общее.",
+    "coverColor": "#1a3a2a",
+    "coverEmoji": "📖",
+    "tags": [
+      "общее"
+    ],
+    "fileUrl": "./books/173-amali-sole-ba-munosibati-da-ai-zul-i-a.pdf",
+    "downloadUrl": "./books/173-amali-sole-ba-munosibati-da-ai-zul-i-a.pdf",
+    "year": "2026",
+    "rating": 5,
+    "downloads": 0,
+    "views": 0,
+    "featured": false,
+    "popular": false,
+    "isNew": true
   }
 ]
