@@ -1,430 +1,277 @@
-import { useMemo, useState } from 'react';
-import { AlertCircle, CheckCircle, FileText, Loader2, Upload } from 'lucide-react';
+import { useState } from 'react';
+import { Upload, FileText, CheckCircle, AlertCircle, Loader2, Database } from 'lucide-react';
 import toast from 'react-hot-toast';
-import {
-  commitGitHubFiles,
-  fileToBase64,
-  getGitHubFile,
-  hasGitHubSettings,
-  loadGitHubSettings,
-  slugifyFileName,
-  type GitHubCommitFile,
-} from '../../utils/githubApi';
-import { extractMetadataFromPdfFile, renderPdfFirstPageImages, type ExtractedPdfMetadata } from '../../utils/pdfMetadata';
-import type { Biography, Book } from '../../store/useStore';
+import { getGitHubFile, hasGitHubSettings, loadGitHubSettings, nextContentId, slugifyFileName, upsertBinaryFile, upsertTextFile } from '../../utils/githubApi';
+import { extractMetadataFromPdfFile } from '../../utils/pdfMetadata';
+import type { Book } from '../../store/useStore';
 
-interface ImportBook {
+interface QueuedBook {
   uid: string;
   file: File;
-  status: 'queued' | 'analyzing' | 'ready' | 'review' | 'error';
-  progress: string;
   title: string;
-  originalTitle?: string;
   author: string;
-  authorId?: string;
   category: string;
-  categoryConfidence: number;
-  needsReview: boolean;
-  language: string;
-  pages?: number;
-  size: string;
-  createdAt?: string;
-  isbn?: string;
-  publisher?: string;
-  translator?: string;
-  editor?: string;
-  tags: string[];
   description: string;
-  slug: string;
-  folder: string;
-  cover?: Blob;
-  thumb?: Blob;
-  error?: string;
+  tags: string;
 }
-
-interface Report {
-  imported: number;
-  authorsFound: number;
-  newAuthors: number;
-  categoriesAuto: number;
-  needsReview: number;
-  covers: number;
-}
-
-const CATEGORY_TO_FOLDER: Record<string, string> = {
-  'Акыда': 'Aqeedah',
-  'Таухид': 'Tawhid',
-  'Манхадж': 'Manhaj',
-  'Тафсир': 'Tafsir',
-  'Хадисы': 'Hadith',
-  'Сира': 'Seerah',
-  'Фикх': 'Fiqh',
-  'Азкары': 'Azkar',
-  'Дуа': 'Dua',
-  'Биографии': 'Biography',
-  'История': 'History',
-  'Арабский язык': 'Arabic',
-  'Воспитание': 'Tarbiyah',
-  'Даава': 'Dawah',
-  'Другое': 'Other',
-  'Другие разделы': 'Other',
-};
-
-const REVIEW_CATEGORIES = Object.keys(CATEGORY_TO_FOLDER);
 
 function cleanTitle(fileName: string) {
-  return fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return fileName.replace(/\.[^.]+$/, '').replace(/[_]+/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function slugBase(value: string) {
-  return slugifyFileName(`${value}.pdf`).replace(/\.pdf$/, '') || 'book';
+function splitTitleAuthor(value: string) {
+  const parts = value.split(/\s+—\s+|\s+-\s+/).map(part => part.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    return { title: parts.slice(0, -1).join(' — '), author: parts.at(-1) || 'Автор не указан' };
+  }
+  const match = value.match(/(.+?)[,\s]+(Усаймин|Ибн Баз|аль[-\s]Альбани|аль[-\s]Фаузан|аль[-\s]Мунаджид|Маджид ибн Сулейман|ан[-\s]Навави|аль[-\s]Аджуррии?й?)$/i);
+  if (match) return { title: match[1].trim(), author: match[2].trim() };
+  return { title: value, author: 'Автор не указан' };
 }
 
-function uid(file: File) {
-  return `${file.name}-${file.lastModified}-${file.size}`;
+function detectCategory(title: string) {
+  const value = title.toLowerCase();
+  if (/дуа|зикр|мольб/.test(value)) return 'Дуа и зикр';
+  if (/хадис|сунн/.test(value)) return 'Хадисы';
+  if (/коран|тафсир|сур[аы]/.test(value)) return 'Коран';
+  if (/таухид|акыд|основ|правил|ширк|вероубежд/.test(value)) return 'Акыда';
+  if (/намаз|пост|рамадан|закят|хадж|фикх|омовен/.test(value)) return 'Фикх';
+  if (/сира|пророк|сподвиж/.test(value)) return 'Сира';
+  return 'Общее';
 }
 
 function fileSizeMb(file: File) {
   return `${(file.size / 1024 / 1024).toFixed(file.size < 10 * 1024 * 1024 ? 1 : 0)} МБ`;
 }
 
-function folderFor(category: string) {
-  return CATEGORY_TO_FOLDER[category] || 'Other';
-}
-
-function nextAuthorId(authors: Biography[]) {
-  const max = authors.reduce((acc, item) => {
-    const match = String(item.id || '').match(/a(\d+)/);
-    return match ? Math.max(acc, Number(match[1])) : acc;
-  }, 0);
-  return `a${String(max + 1).padStart(3, '0')}`;
-}
-
-function findOrCreateAuthor(authorName: string, authors: Biography[]) {
-  const normalized = authorName.trim().toLowerCase();
-  if (!normalized || normalized === 'автор не указан') return { authorId: undefined, authors, created: false, found: false };
-  const existing = authors.find(author => author.name.toLowerCase() === normalized || (author.nameAr || '').toLowerCase() === normalized);
-  if (existing) return { authorId: existing.id, authors, created: false, found: true };
-  const author: Biography = {
-    id: nextAuthorId(authors),
-    name: authorName.trim(),
-    type: 'scholar',
-    description: `Автор добавлен автоматически при импорте книги.`,
-    tags: ['автор'],
-    coverColor: '#1a3a2a',
-    coverEmoji: '👤',
-    featured: false,
-  };
-  return { authorId: author.id, authors: [...authors, author], created: true, found: false };
-}
-
-function createInitialBook(file: File): ImportBook {
-  const title = cleanTitle(file.name);
-  return {
-    uid: uid(file),
-    file,
-    status: 'queued',
-    progress: 'Ожидает анализа',
-    title,
-    author: 'Автор не указан',
-    category: 'Другое',
-    categoryConfidence: 0,
-    needsReview: true,
-    language: 'Русский',
-    size: fileSizeMb(file),
-    tags: ['другое'],
-    description: `Книга «${title}» добавлена в Salaf Library.`,
-    slug: slugBase(title),
-    folder: 'Other',
-  };
-}
-
-function applyMetadata(item: ImportBook, meta: ExtractedPdfMetadata): ImportBook {
-  const title = meta.title || item.title;
-  const author = meta.author || item.author;
-  const category = meta.category || item.category;
-  const slug = slugBase(title);
-  return {
-    ...item,
-    status: meta.needsReview ? 'review' : 'ready',
-    progress: meta.needsReview ? 'Требует проверки' : 'Готово к импорту',
-    title,
-    originalTitle: meta.originalTitle,
-    author,
-    category,
-    categoryConfidence: meta.categoryConfidence || 0,
-    needsReview: Boolean(meta.needsReview),
-    language: meta.language || item.language,
-    pages: meta.pages,
-    size: meta.size || item.size,
-    createdAt: meta.createdAt,
-    isbn: meta.isbn,
-    publisher: meta.publisher,
-    translator: meta.translator,
-    editor: meta.editor,
-    tags: meta.tags?.length ? meta.tags : item.tags,
-    description: `Книга «${title}» добавлена в Salaf Library.${author && author !== 'Автор не указан' ? ` Автор: ${author}.` : ''} Раздел: ${category}.`,
-    slug,
-    folder: folderFor(category),
-  };
-}
-
-async function blobToBase64(blob: Blob) {
-  return fileToBase64(new File([blob], 'blob.webp', { type: blob.type || 'image/webp' }));
-}
-
-function chunk<T>(items: T[], size: number) {
-  const result: T[][] = [];
-  for (let i = 0; i < items.length; i += size) result.push(items.slice(i, i + size));
-  return result;
-}
-
 export default function AdminImportPage() {
-  const [items, setItems] = useState<ImportBook[]>([]);
-  const [status, setStatus] = useState<'idle' | 'analyzing' | 'processing' | 'success' | 'error'>('idle');
+  const [books, setBooks] = useState<QueuedBook[]>([]);
+  const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
   const [logs, setLogs] = useState<string[]>([]);
-  const [report, setReport] = useState<Report | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
 
-  const summary = useMemo(() => ({
-    total: items.length,
-    ready: items.filter(item => item.status === 'ready').length,
-    review: items.filter(item => item.needsReview).length,
-    covers: items.filter(item => item.cover).length,
-  }), [items]);
+  const appendFiles = (incoming: File[]) => {
+    const pdfs = incoming.filter(f => f.name.toLowerCase().endsWith('.pdf'));
+    const mapped = pdfs.map((file) => {
+      const cleaned = cleanTitle(file.name);
+      const { title, author } = splitTitleAuthor(cleaned);
+      const category = detectCategory(cleaned);
+      return {
+        uid: `${file.name}-${file.lastModified}-${file.size}`,
+        file,
+        title,
+        author,
+        category,
+        description: `Книга «${title}» добавлена в Salaf Library.`,
+        tags: category.toLowerCase(),
+      };
+    });
 
-  const patchItem = (uidValue: string, patch: Partial<ImportBook>) => {
-    setItems(prev => prev.map(item => item.uid === uidValue ? { ...item, ...patch } : item));
-  };
+    setBooks(prev => [...prev, ...mapped]);
 
-  const analyzeFiles = async (files: File[]) => {
-    const pdfs = files.filter(file => file.name.toLowerCase().endsWith('.pdf'));
-    if (!pdfs.length) return;
-
-    const initial = pdfs.map(createInitialBook);
-    setItems(prev => [...prev, ...initial]);
-    setStatus('analyzing');
-    setLogs(prev => [...prev, `Выбрано PDF: ${pdfs.length}`]);
-
-    for (const item of initial) {
-      patchItem(item.uid, { status: 'analyzing', progress: 'Анализ первых страниц PDF...' });
+    // Асинхронно читаем первые страницы PDF и улучшаем название / автора / категорию.
+    setAnalyzing(true);
+    mapped.forEach(async (item, index) => {
       try {
-        const knownAuthors: string[] = [];
-        const meta = await extractMetadataFromPdfFile(item.file, item.title, knownAuthors);
-        let next = applyMetadata(item, meta);
-        patchItem(item.uid, next);
-        setLogs(prev => [...prev, `✓ ${next.title}: ${next.author}, ${next.category} (${next.categoryConfidence}%)`]);
-
-        try {
-          patchItem(item.uid, { progress: 'Создание cover.webp и thumb.webp...' });
-          const images = await renderPdfFirstPageImages(item.file);
-          patchItem(item.uid, { cover: images.cover, thumb: images.thumb, progress: next.needsReview ? 'Требует проверки' : 'Готово к импорту' });
-        } catch {
-          patchItem(item.uid, { progress: next.needsReview ? 'Требует проверки; обложка будет fallback' : 'Готово; обложка будет fallback' });
-        }
-      } catch (error) {
-        patchItem(item.uid, { status: 'error', error: error instanceof Error ? error.message : 'Ошибка анализа', progress: 'Ошибка анализа' });
-        setLogs(prev => [...prev, `! ${item.file.name}: не удалось проанализировать PDF`]);
+        setLogs(prev => [...prev, `🔎 Анализ PDF: ${item.file.name}`]);
+        const meta = await extractMetadataFromPdfFile(item.file, item.title);
+        setBooks(prev => prev.map(book => {
+          if (book.uid !== item.uid) return book;
+          const title = meta.title || book.title;
+          const author = meta.author || book.author;
+          const category = meta.category || book.category;
+          return {
+            ...book,
+            title,
+            author,
+            category,
+            tags: meta.tags?.join(', ') || book.tags,
+            description: `Книга «${title}» добавлена в Salaf Library.${author && author !== 'Автор не указан' ? ` Автор: ${author}.` : ''} Раздел: ${category}.`,
+          };
+        }));
+        setLogs(prev => [...prev, `✅ Метаданные найдены: ${meta.title || item.title}${meta.author ? ` — ${meta.author}` : ''}`]);
+      } catch {
+        setLogs(prev => [...prev, `ℹ️ Не удалось прочитать метаданные PDF: ${item.file.name}. Используется имя файла.`]);
+      } finally {
+        if (index === mapped.length - 1) setAnalyzing(false);
       }
-    }
-
-    setStatus('idle');
+    });
   };
 
-  const handleDrop = (event: React.DragEvent) => {
-    event.preventDefault();
-    analyzeFiles(Array.from(event.dataTransfer.files));
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    appendFiles(Array.from(e.dataTransfer.files));
   };
 
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    analyzeFiles(Array.from(event.target.files || []));
-    event.target.value = '';
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    appendFiles(Array.from(e.target.files || []));
+    e.target.value = '';
   };
 
-  const updateItem = (index: number, patch: Partial<ImportBook>) => {
-    setItems(prev => prev.map((item, i) => {
-      if (i !== index) return item;
-      const category = patch.category || item.category;
-      return { ...item, ...patch, folder: patch.category ? folderFor(category) : item.folder, needsReview: patch.category ? false : item.needsReview };
-    }));
+  const updateBook = (index: number, patch: Partial<QueuedBook>) => {
+    setBooks(prev => prev.map((book, i) => i === index ? { ...book, ...patch } : book));
   };
 
   const processImport = async () => {
-    if (!items.length) return;
+    if (!books.length) return;
     if (!hasGitHubSettings()) {
       toast.error('Сначала заполните GitHub Token и репозиторий в настройках');
       return;
     }
 
-    setStatus('processing');
-    setLogs(prev => [...prev, 'Подключение к GitHub...']);
     const settings = loadGitHubSettings();
+    setStatus('processing');
+    setLogs(['Подключение к GitHub...', `Репозиторий: ${settings.repo}`, `Файлов к публикации: ${books.length}`]);
 
     try {
-      const existingBooksFile = await getGitHubFile(settings, 'public/data/books.json');
-      const existingAuthorsFile = await getGitHubFile(settings, 'public/data/biographies.json');
-      const existingBooks: Book[] = existingBooksFile?.content ? JSON.parse(existingBooksFile.content) : [];
-      let authors: Biography[] = existingAuthorsFile?.content ? JSON.parse(existingAuthorsFile.content) : [];
+      const existingFile = await getGitHubFile(settings, 'public/data/books.json');
+      const existingBooks: Book[] = existingFile?.content ? JSON.parse(existingFile.content) : [];
       const nextBooks = [...existingBooks];
 
-      let authorsFound = 0;
-      let newAuthors = 0;
-      let categoriesAuto = 0;
-      let needsReview = 0;
-      let covers = 0;
-      const files: GitHubCommitFile[] = [];
+      for (let i = 0; i < books.length; i += 1) {
+        const item = books[i];
+        const safeName = slugifyFileName(item.file.name);
+        const publicPath = `public/books/${safeName}`;
+        const sitePath = `./books/${safeName}`;
 
-      for (const item of items) {
-        const folder = item.folder || folderFor(item.category);
-        const pdfPath = `Books/${folder}/${item.slug}.pdf`;
-        const coverPath = `Books/${folder}/${item.slug}.cover.webp`;
-        const thumbPath = `Books/${folder}/${item.slug}.thumb.webp`;
-        const sidecarPath = `Books/${folder}/${item.slug}.json`;
-        const publicPdfPath = `./books/${slugifyFileName(folder).replace(/\.[^.]+$/, '')}/${item.slug}.pdf`;
+        setLogs(prev => [...prev, `⬆️ Загрузка PDF: ${item.file.name}`]);
+        await upsertBinaryFile(settings, publicPath, item.file, `Upload book PDF: ${item.title}`);
 
-        const authorResult = findOrCreateAuthor(item.author, authors);
-        authors = authorResult.authors;
-        if (authorResult.found) authorsFound += 1;
-        if (authorResult.created) newAuthors += 1;
-        if (!item.needsReview) categoriesAuto += 1;
-        if (item.needsReview) needsReview += 1;
-        if (item.cover) covers += 1;
-
-        const book: Book = {
-          id: item.uid.startsWith('b') ? item.uid : `b${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`,
+        const id = nextContentId(nextBooks, 'b');
+        nextBooks.push({
+          id,
           title: item.title,
-          originalTitle: item.originalTitle,
-          slug: item.slug,
           author: item.author || 'Автор не указан',
-          authorId: authorResult.authorId,
-          category: item.category || 'Другое',
-          language: item.language,
-          pages: item.pages,
-          size: item.size,
-          description: item.description,
+          category: item.category || 'Общее',
+          language: 'Русский',
+          size: fileSizeMb(item.file),
+          description: item.description || `Книга «${item.title}» добавлена в Salaf Library.`,
           coverColor: '#1a3a2a',
           coverEmoji: '📖',
-          coverImage: item.cover ? `./covers/${slugifyFileName(folder).replace(/\.[^.]+$/, '')}/${item.slug}.cover.webp` : undefined,
-          tags: item.tags,
-          fileUrl: publicPdfPath,
-          downloadUrl: publicPdfPath,
+          tags: item.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+          fileUrl: sitePath,
+          downloadUrl: sitePath,
           year: String(new Date().getFullYear()),
-          publisher: item.publisher,
-          isbn: item.isbn,
-          translator: item.translator,
-          editor: item.editor,
-          sourceFolder: pdfPath,
-          needsReview: item.needsReview,
-          categoryConfidence: item.categoryConfidence,
           rating: 5,
           downloads: 0,
           views: 0,
           featured: false,
           popular: false,
           isNew: true,
-        };
+        });
 
-        nextBooks.push(book);
-        files.push({ path: pdfPath, contentBase64: await fileToBase64(item.file) });
-        if (item.cover) files.push({ path: coverPath, contentBase64: await blobToBase64(item.cover) });
-        if (item.thumb) files.push({ path: thumbPath, contentBase64: await blobToBase64(item.thumb) });
-        files.push({ path: sidecarPath, contentBase64: btoa(unescape(encodeURIComponent(JSON.stringify(book, null, 2) + '\n'))) });
+        setLogs(prev => [...prev, `✅ Добавлено в каталог: ${item.title}`]);
       }
 
-      files.push({ path: 'public/data/books.json', contentBase64: btoa(unescape(encodeURIComponent(JSON.stringify(nextBooks, null, 2) + '\n'))) });
-      files.push({ path: 'public/data/biographies.json', contentBase64: btoa(unescape(encodeURIComponent(JSON.stringify(authors, null, 2) + '\n'))) });
-      files.push({ path: 'public/data/search-index.json', contentBase64: btoa(unescape(encodeURIComponent(JSON.stringify({ books: nextBooks.map(book => ({ id: book.id, title: book.title, author: book.author, category: book.category, tags: book.tags })) }, null, 2) + '\n'))) });
+      setLogs(prev => [...prev, '📝 Обновление public/data/books.json...']);
+      await upsertTextFile(
+        settings,
+        'public/data/books.json',
+        JSON.stringify(nextBooks, null, 2) + '\n',
+        `Import ${books.length} book(s) from admin panel`
+      );
 
-      const batches = chunk(files, 35);
-      for (let i = 0; i < batches.length; i += 1) {
-        setLogs(prev => [...prev, `Коммит batch ${i + 1}/${batches.length}: ${batches[i].length} файлов`]);
-        await commitGitHubFiles(settings, batches[i], `Import books batch ${i + 1}/${batches.length}`);
-      }
-
-      const finalReport = { imported: items.length, authorsFound, newAuthors, categoriesAuto, needsReview, covers };
-      setReport(finalReport);
       setStatus('success');
-      setItems([]);
-      setLogs(prev => [...prev, `Импортировано: ${finalReport.imported}`, `Авторы найдены: ${finalReport.authorsFound}`, `Новые авторы: ${finalReport.newAuthors}`, `Категории автоматически: ${finalReport.categoriesAuto}`, `Требуют проверки: ${finalReport.needsReview}`]);
-      toast.success('Пакетный импорт завершён. Дождитесь GitHub Actions.');
+      setLogs(prev => [...prev, '✅ Импорт завершён. GitHub Actions сейчас опубликует сайт.']);
+      toast.success('Книги отправлены в GitHub');
+      setBooks([]);
     } catch (error) {
       setStatus('error');
       const message = error instanceof Error ? error.message : 'Ошибка импорта';
-      setLogs(prev => [...prev, `Ошибка: ${message}`]);
+      setLogs(prev => [...prev, `❌ ${message}`]);
       toast.error(message);
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="glass-card" style={{ padding: 26 }}>
-        <h1 style={{ color: '#f0f4f1', fontSize: 28, fontWeight: 900, marginBottom: 8 }}>Автоматический импорт книг</h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.7 }}>Выберите PDF-файлы. Система сама прочитает первые страницы, определит название, автора, язык, страницы, категорию, теги, создаст cover.webp/thumb.webp, JSON и отправит всё в правильную папку Books/*.</p>
+      <h2 className="text-white font-bold text-xl flex items-center gap-2">
+        <Upload size={20} className="text-amber-400" />
+        Импорт книг в GitHub
+      </h2>
+
+      <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-100 text-sm flex gap-3">
+        <Database size={18} className="text-blue-300 flex-shrink-0 mt-0.5" />
+        <div>
+          Эта панель загружает PDF прямо в репозиторий через GitHub API и обновляет <b>public/data/books.json</b>.
+          Перед импортом заполните токен в разделе <b>Админка → Настройки</b>.
+        </div>
       </div>
 
-      <div onDragOver={e => e.preventDefault()} onDrop={handleDrop} className="border-2 border-dashed border-slate-700/50 rounded-2xl p-8 text-center hover:border-amber-500/30 transition-colors bg-[#0c2240]/40">
-        <Upload size={42} className="text-slate-600 mx-auto mb-4" />
-        <p className="text-slate-400 text-sm mb-2">Перетащите PDF файлы сюда — можно пакетно</p>
-        <p className="text-slate-600 text-xs mb-4">10 / 50 / 100 / 500 PDF — система обработает очередь автоматически</p>
+      <div
+        onDragOver={e => e.preventDefault()}
+        onDrop={handleDrop}
+        className="border-2 border-dashed border-slate-700/50 rounded-2xl p-8 text-center hover:border-amber-500/30 transition-colors bg-[#0c2240]/40"
+      >
+        <Upload size={40} className="text-slate-600 mx-auto mb-4" />
+        <p className="text-slate-400 text-sm mb-2">Перетащите PDF файлы сюда — можно сразу много</p>
+        <p className="text-slate-600 text-xs mb-4">или</p>
         <label className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-xl text-sm cursor-pointer hover:bg-amber-500/20 transition-colors">
-          <FileText size={16} /> Выбрать PDF
+          <FileText size={16} />
+          Выбрать PDF файлы
           <input type="file" accept=".pdf" multiple className="hidden" onChange={handleSelect} />
         </label>
       </div>
 
-      {summary.total > 0 && (
-        <div className="glass-card" style={{ padding: 18, display: 'grid', gap: 12 }}>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', color: '#9db8a3' }}>
-            <b style={{ color: '#d4af37' }}>Всего: {summary.total}</b>
-            <span>Готово: {summary.ready}</span>
-            <span>Требуют проверки: {summary.review}</span>
-            <span>Обложки: {summary.covers}</span>
+      {books.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-slate-400 text-sm">
+              {books.length} файлов выбрано{analyzing ? ' · идёт авто-анализ первых страниц PDF...' : ''}
+            </p>
+            <button
+              onClick={processImport}
+              disabled={status === 'processing'}
+              className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-xl text-sm font-medium hover:bg-amber-400 transition-colors disabled:opacity-50"
+            >
+              {status === 'processing' ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+              Опубликовать в GitHub
+            </button>
           </div>
-          <button onClick={processImport} disabled={status === 'processing' || status === 'analyzing'} className="btn-primary" style={{ justifyContent: 'center' }}>
-            {status === 'processing' ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />} Импортировать автоматически
-          </button>
+
+          <div className="space-y-3">
+            {books.map((book, i) => (
+              <div key={book.uid} className="p-4 bg-[#0c2240]/60 rounded-xl border border-slate-700/30 space-y-3">
+                <div className="flex items-center gap-3">
+                  <FileText size={16} className="text-amber-400" />
+                  <span className="text-slate-300 text-sm flex-1 truncate">{book.file.name}</span>
+                  <span className="text-slate-600 text-xs">{fileSizeMb(book.file)}</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <input value={book.title} onChange={e => updateBook(i, { title: e.target.value })} className="bg-[#07182e]/60 border border-slate-700/30 rounded-lg px-3 py-2 text-white text-sm" placeholder="Название" />
+                  <input value={book.author} onChange={e => updateBook(i, { author: e.target.value })} className="bg-[#07182e]/60 border border-slate-700/30 rounded-lg px-3 py-2 text-white text-sm" placeholder="Автор" />
+                  <input value={book.category} onChange={e => updateBook(i, { category: e.target.value })} className="bg-[#07182e]/60 border border-slate-700/30 rounded-lg px-3 py-2 text-white text-sm" placeholder="Категория" />
+                  <input value={book.tags} onChange={e => updateBook(i, { tags: e.target.value })} className="bg-[#07182e]/60 border border-slate-700/30 rounded-lg px-3 py-2 text-white text-sm" placeholder="Теги через запятую" />
+                </div>
+                <textarea value={book.description} onChange={e => updateBook(i, { description: e.target.value })} className="w-full bg-[#07182e]/60 border border-slate-700/30 rounded-lg px-3 py-2 text-white text-sm min-h-[70px]" placeholder="Описание" />
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {items.length > 0 && (
-        <div style={{ display: 'grid', gap: 12 }}>
-          {items.map((item, index) => (
-            <div key={item.uid} className="glass-card" style={{ padding: 16, borderColor: item.needsReview ? 'rgba(245,158,11,.45)' : undefined }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 12 }}>
-                <div><b style={{ color: '#f0f4f1' }}>{item.title}</b><div style={{ color: '#9db8a3', fontSize: 12 }}>{item.file.name} · {item.progress}</div></div>
-                <span className={item.needsReview ? 'badge badge-gold' : 'badge badge-green'}>{item.needsReview ? 'Проверить' : 'Авто' } · {item.categoryConfidence}%</span>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 10 }}>
-                <input className="input-field" value={item.title} onChange={e => updateItem(index, { title: e.target.value, slug: slugBase(e.target.value) })} placeholder="Название" />
-                <input className="input-field" value={item.author} onChange={e => updateItem(index, { author: e.target.value })} placeholder="Автор" />
-                <select className="input-field" value={item.category} onChange={e => updateItem(index, { category: e.target.value })}>{REVIEW_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}</select>
-                <input className="input-field" value={item.language} onChange={e => updateItem(index, { language: e.target.value })} placeholder="Язык" />
-              </div>
-              <div style={{ marginTop: 10, color: '#5a7a63', fontSize: 12 }}>
-                Страниц: {item.pages || '—'} · Размер: {item.size} · ISBN: {item.isbn || '—'} · Издательство: {item.publisher || '—'} · Переводчик: {item.translator || '—'} · Редактор: {item.editor || '—'} · Папка: Books/{item.folder}
-              </div>
-            </div>
-          ))}
+      {status === 'success' && (
+        <div className="flex items-center gap-2 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm">
+          <CheckCircle size={18} />
+          Импорт завершён успешно. Подождите GitHub Actions.
         </div>
       )}
 
-      {report && (
-        <div className="glass-card" style={{ padding: 18, color: '#9db8a3', display: 'grid', gap: 6 }}>
-          <div style={{ color: '#22c55e', fontWeight: 900 }}><CheckCircle size={16} style={{ display: 'inline', marginRight: 6 }} />Отчёт импорта</div>
-          <div>✔ Импортировано: {report.imported}</div>
-          <div>✔ Авторы найдены: {report.authorsFound}</div>
-          <div>✔ Новые авторы: {report.newAuthors}</div>
-          <div>✔ Категории определены автоматически: {report.categoriesAuto}</div>
-          <div>✔ Требуют проверки: {report.needsReview}</div>
-          <div>✔ Обложки созданы: {report.covers}</div>
+      {status === 'error' && (
+        <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+          <AlertCircle size={18} />
+          Ошибка импорта
         </div>
       )}
-
-      {status === 'error' && <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm"><AlertCircle size={18} /> Ошибка импорта</div>}
 
       {logs.length > 0 && (
-        <div className="glass-card" style={{ padding: 16 }}>
-          <h3 style={{ color: '#9db8a3', fontSize: 12, textTransform: 'uppercase', marginBottom: 8 }}>Лог</h3>
-          <div style={{ display: 'grid', gap: 4, fontFamily: 'monospace', fontSize: 12 }}>{logs.slice(-80).map((log, i) => <p key={i} style={{ color: '#5a7a63' }}>{log}</p>)}</div>
+        <div className="p-4 bg-[#0c2240]/60 rounded-xl border border-slate-700/30">
+          <h3 className="text-slate-400 text-xs font-medium uppercase mb-2">Лог</h3>
+          <div className="space-y-1 font-mono text-xs">
+            {logs.map((log, i) => (
+              <p key={i} className="text-slate-500">{log}</p>
+            ))}
+          </div>
         </div>
       )}
     </div>

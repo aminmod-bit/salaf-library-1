@@ -196,5 +196,3 @@ export const audioData: AudioLesson[] = [
     views: 19800,
   },
 ];
-
-export const fallbackAudio = audioData;

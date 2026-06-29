@@ -8,19 +8,21 @@ import {
 import { useStore } from '../store/useStore';
 import toast from 'react-hot-toast';
 
-type AdminTab = 'dashboard' | 'books' | 'authors' | 'bios';
+type AdminTab = 'dashboard' | 'books' | 'authors' | 'bios' | 'audio' | 'fawaid';
 
 export default function AdminPage() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<AdminTab>('dashboard');
   const [showAddBook, setShowAddBook] = useState(false);
-  const { books, biographies, categories } = useStore();
+  const { books, biographies, audioLessons, fawaid, categories } = useStore();
 
   const tabs = [
     { id: 'dashboard' as AdminTab, icon: BarChart3, label: 'Dashboard' },
     { id: 'books' as AdminTab, icon: BookOpen, label: 'Книги' },
     { id: 'authors' as AdminTab, icon: Users, label: 'Авторы' },
     { id: 'bios' as AdminTab, icon: Users, label: 'Биографии' },
+    { id: 'audio' as AdminTab, icon: Headphones, label: 'Аудио' },
+    { id: 'fawaid' as AdminTab, icon: Sparkles, label: 'Фаваиды' },
   ];
 
   const totalSize = books.reduce((acc, b) => {
@@ -90,6 +92,8 @@ export default function AdminPage() {
                 {[
                   { icon: '📚', label: 'Книг', value: books.length, sub: 'в каталоге', color: '#d4af37' },
                   { icon: '👤', label: 'Биографий', value: biographies.length, sub: 'учёных', color: '#22c55e' },
+                  { icon: '🎧', label: 'Аудиоуроков', value: audioLessons.length, sub: 'в библиотеке', color: '#60a5fa' },
+                  { icon: '💎', label: 'Фаваидов', value: fawaid.length, sub: 'изречений', color: '#a78bfa' },
                   { icon: '📂', label: 'Категорий', value: categories.length, sub: 'разделов', color: '#fb923c' },
                   { icon: '💾', label: 'Объём', value: `${totalSize.toFixed(1)} МБ`, sub: 'данных', color: '#f472b6' },
                 ].map(({ icon, label, value, sub, color }) => (
@@ -287,10 +291,12 @@ export default function AdminPage() {
           )}
 
           {/* Other tabs */}
-          {(tab === 'authors' || tab === 'bios') && (
+          {(tab === 'authors' || tab === 'bios' || tab === 'audio' || tab === 'fawaid') && (
             <div>
               <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#f0f4f1', marginBottom: '20px' }}>
-                {tab === 'authors' ? 'Авторы' : 'Биографии'}
+                {tab === 'authors' ? '👤 Авторы' :
+                  tab === 'bios' ? '📜 Биографии' :
+                    tab === 'audio' ? '🎧 Аудиоуроки' : '💎 Фаваиды'}
               </h2>
 
               <div style={{
@@ -301,11 +307,13 @@ export default function AdminPage() {
               }}>
                 <div>
                   <div style={{ fontSize: '20px', fontWeight: 700, color: '#d4af37' }}>
-                    {tab === 'bios' ? biographies.length : '—'}
+                    {tab === 'audio' ? audioLessons.length :
+                      tab === 'bios' ? biographies.length :
+                        tab === 'fawaid' ? fawaid.length : '—'}
                   </div>
                   <div style={{ fontSize: '12px', color: '#9db8a3' }}>записей в базе</div>
                 </div>
-                <button className="btn-primary" onClick={() => navigate('/admin/settings')}>
+                <button className="btn-primary" onClick={() => tab === 'audio' ? navigate('/admin/import') : navigate('/admin/settings')}>
                   <Plus size={14} /> Управлять
                 </button>
               </div>

@@ -119,47 +119,6 @@ export async function putGitHubFile(settings: GitHubSettings, filePath: string, 
   });
 }
 
-export interface GitHubCommitFile {
-  path: string;
-  contentBase64: string;
-}
-
-export async function commitGitHubFiles(settings: GitHubSettings, files: GitHubCommitFile[], message: string) {
-  if (files.length === 0) return null;
-  const { owner, name } = parseRepo(settings.repo);
-  const branch = settings.branch || 'main';
-  const ref = await githubFetch(settings, `/repos/${owner}/${name}/git/ref/heads/${encodeURIComponent(branch)}`);
-  const latestCommitSha = ref.object.sha;
-  const latestCommit = await githubFetch(settings, `/repos/${owner}/${name}/git/commits/${latestCommitSha}`);
-  const baseTreeSha = latestCommit.tree.sha;
-
-  const tree = [];
-  for (const file of files) {
-    const blob = await githubFetch(settings, `/repos/${owner}/${name}/git/blobs`, {
-      method: 'POST',
-      body: JSON.stringify({ content: file.contentBase64, encoding: 'base64' }),
-    });
-    tree.push({ path: file.path, mode: '100644', type: 'blob', sha: blob.sha });
-  }
-
-  const newTree = await githubFetch(settings, `/repos/${owner}/${name}/git/trees`, {
-    method: 'POST',
-    body: JSON.stringify({ base_tree: baseTreeSha, tree }),
-  });
-
-  const newCommit = await githubFetch(settings, `/repos/${owner}/${name}/git/commits`, {
-    method: 'POST',
-    body: JSON.stringify({ message, tree: newTree.sha, parents: [latestCommitSha] }),
-  });
-
-  await githubFetch(settings, `/repos/${owner}/${name}/git/refs/heads/${encodeURIComponent(branch)}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ sha: newCommit.sha, force: false }),
-  });
-
-  return newCommit;
-}
-
 export async function upsertTextFile(settings: GitHubSettings, filePath: string, text: string, message: string) {
   const existing = await getGitHubFile(settings, filePath);
   return putGitHubFile(settings, filePath, encodeUtf8Base64(text), message, existing?.sha);

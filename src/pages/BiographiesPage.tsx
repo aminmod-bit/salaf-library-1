@@ -1,122 +1,156 @@
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, UserRound } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import FolderCard from '../components/FolderCard';
-
-const BIO_FOLDERS = [
-  { id: 'prophet', label: 'Пророки', subtitle: 'Биографии пророков' },
-  { id: 'companion', label: 'Сподвижники', subtitle: 'Сахабы, да будет доволен ими Аллах' },
-  { id: 'tabiin', label: 'Табиины', subtitle: 'Поколение после сподвижников' },
-  { id: 'scholar', label: 'Учёные', subtitle: 'Классические и современные учёные' },
-  { id: 'modern', label: 'Современные', subtitle: 'Современные биографии' },
-  { id: 'authors', label: 'Авторы книг', subtitle: 'Авторы, связанные с библиотекой' },
-];
 
 const TYPE_LABELS: Record<string, string> = {
-  prophet: 'Пророк',
-  companion: 'Сподвижник',
-  tabiin: 'Табиин',
-  scholar: 'Учёный',
-  modern: 'Современный',
+  all: 'Все',
+  prophet: '🌟 Пророки',
+  companion: '⚔️ Сподвижники',
+  tabiin: '📜 Табиины',
+  scholar: '📚 Учёные',
+  modern: '🎖️ Современные',
 };
 
 export default function BiographiesPage() {
   const navigate = useNavigate();
   const { biographies } = useStore();
   const [search, setSearch] = useState('');
-  const [folder, setFolder] = useState('');
-
-  const folderStats = useMemo(() => BIO_FOLDERS.map(item => ({
-    ...item,
-    count: item.id === 'authors'
-      ? biographies.filter(bio => bio.relatedBooks?.length || bio.type === 'scholar').length
-      : biographies.filter(bio => bio.type === item.id).length,
-  })), [biographies]);
+  const [typeFilter, setTypeFilter] = useState('all');
 
   const filtered = useMemo(() => {
-    let result = folder
-      ? folder === 'authors'
-        ? biographies.filter(bio => bio.relatedBooks?.length || bio.type === 'scholar')
-        : biographies.filter(bio => bio.type === folder)
-      : [];
-
-    const q = search.trim().toLowerCase();
-    if (q) {
-      result = biographies.filter(bio =>
-        bio.name.toLowerCase().includes(q) ||
-        (bio.nameAr || '').includes(q) ||
-        bio.description.toLowerCase().includes(q)
+    let result = [...biographies];
+    if (search) {
+      const q = search.toLowerCase();
+      result = result.filter(b =>
+        b.name.toLowerCase().includes(q) ||
+        (b.nameAr || '').includes(q) ||
+        b.description.toLowerCase().includes(q)
       );
     }
+    if (typeFilter !== 'all') {
+      result = result.filter(b => b.type === typeFilter);
+    }
     return result;
-  }, [biographies, search, folder]);
-
-  const showFolders = !folder && !search.trim();
+  }, [biographies, search, typeFilter]);
 
   return (
     <div className="fade-in" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 30, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
-          <UserRound size={16} /> Биографии
-        </div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 50px)', fontWeight: 950, lineHeight: 1.08 }}>
-          {showFolders ? 'Папки биографий' : BIO_FOLDERS.find(item => item.id === folder)?.label || 'Биографии'}
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#f0f4f1', marginBottom: '6px' }}>
+          👤 Биографии
         </h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.7, marginTop: 12, maxWidth: 760 }}>
-          {showFolders ? 'Сначала выберите раздел биографий. Такая структура удобна для большого количества авторов и учёных.' : `${filtered.length} записей в выбранном разделе.`}
+        <p style={{ color: '#9db8a3', fontSize: '14px' }}>
+          {filtered.length} биографий — пророки, сподвижники, табиины и учёные
         </p>
-      </section>
-
-      <div className="glass-card" style={{ padding: 16, marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(212,175,55,.14)', borderRadius: 12, padding: '9px 12px' }}>
-          <Search size={15} color="#5a7a63" />
-          <input value={search} onChange={event => setSearch(event.target.value)} placeholder="Поиск по биографиям..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
-        </div>
-        {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setSearch(''); }}>Все папки</button>}
       </div>
 
-      {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
-          {folderStats.map(item => (
-            <FolderCard
-              key={item.id}
-              title={item.label}
-              subtitle={item.subtitle}
-              count={item.count}
-              countLabel="записей"
-              disabled={item.count === 0}
-              onClick={() => setFolder(item.id)}
-            />
-          ))}
+      {/* Filters */}
+      <div style={{
+        background: 'var(--color-bg-card)', border: '1px solid var(--color-border)',
+        borderRadius: '16px', padding: '16px 20px', marginBottom: '20px',
+        display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center',
+      }}>
+        <div style={{
+          flex: 1, minWidth: '200px',
+          display: 'flex', alignItems: 'center', gap: '8px',
+          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '10px', padding: '8px 14px',
+        }}>
+          <Search size={15} color="#5a7a63" />
+          <input
+            type="text" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="Поиск по биографиям..."
+            style={{ background: 'none', border: 'none', outline: 'none', color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit', width: '100%' }}
+          />
         </div>
-      ) : filtered.length === 0 ? (
-        <div className="glass-card" style={{ padding: 50, textAlign: 'center', color: '#9db8a3' }}>
-          <UserRound size={42} style={{ margin: '0 auto 14px', color: '#5a7a63' }} />
-          <div style={{ fontSize: 18, fontWeight: 700, color: '#f0f4f1' }}>Ничего не найдено</div>
+      </div>
+
+      {/* Type tabs */}
+      <div className="scroll-row" style={{ marginBottom: '24px', gap: '8px' }}>
+        {Object.entries(TYPE_LABELS).map(([value, label]) => (
+          <button
+            key={value}
+            onClick={() => setTypeFilter(value)}
+            className={`tag ${typeFilter === value ? 'active' : ''}`}
+            style={{ whiteSpace: 'nowrap' }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid */}
+      {filtered.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#5a7a63' }}>
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}>👤</div>
+          <div style={{ fontSize: '18px', fontWeight: 600, color: '#9db8a3' }}>Ничего не найдено</div>
         </div>
       ) : (
         <div className="cards-grid">
           {filtered.map(bio => (
-            <button
+            <div
               key={bio.id}
               onClick={() => navigate(`/biographies/${bio.id}`)}
-              className="glass-card"
-              style={{ display: 'flex', gap: 14, padding: 16, textAlign: 'left', cursor: 'pointer' }}
+              style={{
+                background: 'var(--color-bg-card)', border: '1px solid var(--color-border)',
+                borderRadius: '14px', overflow: 'hidden', cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(212,175,55,0.4)';
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border)';
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+              }}
             >
-              <div style={{ width: 54, height: 54, borderRadius: 18, flexShrink: 0, background: `linear-gradient(160deg, ${bio.coverColor || '#1a3a2a'}, ${bio.coverColor || '#1a3a2a'}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37' }}>
-                <UserRound size={25} />
+              {/* Avatar */}
+              <div style={{
+                width: '100px', flexShrink: 0,
+                background: `linear-gradient(160deg, ${bio.coverColor || '#1a3a2a'}, ${bio.coverColor || '#1a3a2a'}88)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '40px',
+              }}>
+                {bio.coverEmoji || '👤'}
               </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ display: 'flex', gap: 6, marginBottom: 6, flexWrap: 'wrap' }}>
-                  <span className="badge badge-gold" style={{ fontSize: 10 }}>{TYPE_LABELS[bio.type] || bio.type}</span>
-                  {bio.featured && <span className="badge badge-green" style={{ fontSize: 10 }}>Избранный</span>}
+
+              {/* Info */}
+              <div style={{ padding: '16px', flex: 1 }}>
+                <div style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                  <span className="badge badge-gold" style={{ fontSize: '10px' }}>
+                    {TYPE_LABELS[bio.type]?.replace(/^[^\s]+ /, '') || bio.type}
+                  </span>
+                  {bio.featured && <span className="badge badge-green" style={{ fontSize: '10px' }}>Избранный</span>}
                 </div>
-                <h3 style={{ fontSize: 15, fontWeight: 800, color: '#f0f4f1', marginBottom: 2 }}>{bio.name}</h3>
-                {bio.nameAr && <div style={{ fontFamily: 'Amiri, serif', fontSize: 14, color: '#d4af37', direction: 'rtl', marginBottom: 4 }}>{bio.nameAr}</div>}
-                <p style={{ fontSize: 12, color: '#9db8a3', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{bio.description}</p>
+
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#f0f4f1', marginBottom: '2px' }}>
+                  {bio.name}
+                </h3>
+                {bio.nameAr && (
+                  <div style={{
+                    fontFamily: 'Amiri, serif', fontSize: '14px',
+                    color: '#d4af37', direction: 'rtl', marginBottom: '4px',
+                  }}>
+                    {bio.nameAr}
+                  </div>
+                )}
+                {(bio.birthYear || bio.deathYear) && (
+                  <div style={{ fontSize: '11px', color: '#5a7a63', marginBottom: '8px' }}>
+                    {bio.birthYear}{bio.deathYear ? ` — ${bio.deathYear}` : ''}
+                    {bio.birthPlace ? ` · ${bio.birthPlace}` : ''}
+                  </div>
+                )}
+                <p style={{
+                  fontSize: '12px', color: '#9db8a3', lineHeight: 1.5,
+                  display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                }}>
+                  {bio.description}
+                </p>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       )}

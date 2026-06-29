@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" role="img" aria-label="Salaf Library">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="Salaf Library">
   <defs>
-    <linearGradient id="ink" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#182018"/><stop offset="1" stop-color="#050705"/></linearGradient>
-    <linearGradient id="green" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#365434"/><stop offset="1" stop-color="#0f3d2e"/></linearGradient>
-    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#e6c978"/><stop offset="1" stop-color="#a7833b"/></linearGradient>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f3d2e"/>
+      <stop offset="1" stop-color="#07130b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f0d77a"/>
+      <stop offset="0.55" stop-color="#d4af37"/>
+      <stop offset="1" stop-color="#92751c"/>
+    </linearGradient>
   </defs>
-  <g transform="translate(26 8) scale(1.05)">
-    <rect x="25" y="16" width="78" height="96" rx="7" fill="none" stroke="url(#ink)" stroke-width="7"/>
-    <path d="M65 13c18 19 17 36 8 49 9-5 15-13 18-23 4 24-5 42-20 54l-5 24-6-24C45 80 38 63 43 43c4 9 10 16 18 20-9-18-7-34 4-50Z" fill="url(#ink)"/>
-    <path d="M64 29v72" stroke="#f8f5ec" stroke-width="3" stroke-linecap="round" opacity=".9"/>
-    <path d="M43 80c7-8 14-8 20 0M84 80c-7-8-14-8-20 0" stroke="url(#green)" stroke-width="7" stroke-linecap="round" fill="none"/>
-    <path d="M50 92h12M78 92h12" stroke="url(#green)" stroke-width="7" stroke-linecap="round"/>
-  </g>
-  <text x="176" y="70" fill="#11140f" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700">مكتبة السلف</text>
-  <path d="M178 91h238" stroke="url(#green)" stroke-width="2" stroke-linecap="round"/>
-  <path d="M290 91l9-7 9 7-9 7-9-7Z" fill="url(#green)"/>
-  <text x="176" y="132" fill="#11140f" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="7">SALAF LIBRARY</text>
-  <text x="178" y="160" fill="#0f3d2e" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="4">KNOWLEDGE  |  HERITAGE  |  GUIDANCE</text>
+  <rect x="4" y="8" width="80" height="80" rx="22" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/>
+  <path d="M28 28h19c10 0 18 8 18 18v22H44c-9 0-16-7-16-16V28Z" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M37 38h19M37 48h18M37 58h13" stroke="#f5e6b3" stroke-width="4" stroke-linecap="round"/>
+  <path d="M64 27c-3-7-10-12-18-12 3 6 9 10 18 12Z" fill="#22c55e" opacity=".9"/>
+  <text x="104" y="43" fill="#f0f4f1" font-family="Inter,Segoe UI,sans-serif" font-size="28" font-weight="800">Salaf Library</text>
+  <text x="105" y="66" fill="#d4af37" font-family="Inter,Segoe UI,sans-serif" font-size="12" font-weight="700" letter-spacing="2">ISLAMIC DIGITAL LIBRARY</text>
 </svg>

@@ -1,24 +1,32 @@
-Salaf Library — PWA/SEO Files Audit Patch 3.9.1
+Maktabah / Salaf Library — Branding Admin Release 2.7
 
-Дата сборки: 2026-06-28
+Дата сборки: 2026-06-22
 
-Проверены предоставленные файлы:
-- robots.txt;
-- sitemap.xml;
-- sw.js.
+Добавлено:
+- новая страница админки /#/admin/branding;
+- инструмент полной смены имени сайта через GitHub API;
+- можно указать старые названия, например Salaf Library / Muslim Library;
+- можно указать новое название, например Maktabah;
+- режим проверки без записи показывает, какие файлы будут изменены;
+- режим применения обновляет текстовые файлы проекта в GitHub;
+- создаётся/обновляется public/data/branding.json;
+- инструмент проходит по source/config/meta/README/manifest/svg/html/xml/yaml/css файлам;
+- пропускает dist, node_modules, .git, public/catalog и package-lock, чтобы не делать лишнюю тяжёлую запись;
+- GitHub Actions после применения пересобирает sitemap и SEO-страницы из обновлённых исходников;
+- добавлена кнопка «Брендинг» в админ-панель.
 
-Результат аудита:
-- предоставленный robots.txt использует относительный Sitemap: ./sitemap.xml — для production лучше абсолютный URL;
-- текущий robots.txt проекта уже правильный: Sitemap: https://salaflibrary.org/sitemap.xml;
-- предоставленный sitemap.xml содержит hash-route URL и относительные ./#/ пути — для SEO это слабее, чем текущая генерация sitemap через scripts/generate-seo.mjs;
-- предоставленный sw.js рассчитан на manifest.webmanifest и icons/*, а текущий проект использует manifest.json, icon-192.png, icon-512.png, logo.svg;
-- текущий service worker проекта функциональнее: app shell cache, runtime cache, update flow, offline fallback.
-
-Внесено:
-- обновлена версия service worker cache до 3.9.1-pwa-shell;
-- удалено упоминание audio из service worker large media matcher;
-- сохранено поведение: PDF/крупные media не кэшируются агрессивно, чтобы не забивать память телефона;
-- robots/sitemap оставлены в production-правильном варианте.
+Как использовать:
+1. Открыть /#/admin/settings и подключить GitHub API.
+2. Открыть /#/admin/branding.
+3. В старые названия вписать:
+   Salaf Library
+   Muslim Library
+4. В новое название вписать:
+   Maktabah
+5. Сначала нажать «Проверить».
+6. Если всё хорошо, снять галочку «Проверка без записи».
+7. Нажать «Применить ребрендинг».
+8. Дождаться GitHub Actions.
 
 Проверка:
 - npm run build: OK

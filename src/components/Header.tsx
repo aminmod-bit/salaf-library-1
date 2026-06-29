@@ -1,19 +1,30 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, Search } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Search, Menu, Bell, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import LiveStatsBadge from './LiveStatsBadge';
 
-const navItems = [
-  { path: '/', label: 'Главная', key: 'home' },
-  { path: '/books', label: 'Книги', key: 'books' },
-  { path: '/hadith', label: 'Хадисы', key: 'hadith' },
-  { path: '/azkar', label: 'Азкары', key: 'azkar' },
-  { path: '/articles', label: 'Статьи', key: 'articles' },
-  { path: '/about', label: 'О нас', key: 'about' },
-];
+const pageNames: Record<string, string> = {
+  '/': 'Главная',
+  '/books': 'Книги',
+  '/biographies': 'Биографии',
+  '/audio': 'Аудиоуроки',
+  '/fawaid': 'Фаваиды',
+  '/search': 'Поиск',
+  '/favorites': 'Избранное',
+  '/history': 'История',
+  '/categories': 'Категории',
+  '/admin': 'Админ-панель',
+  '/about': 'О проекте',
+  '/report': 'Сообщить об ошибке',
+  '/quran': 'Коран',
+  '/book-languages': 'Книги на разных языках',
+  '/articles': 'Статьи',
+  '/hadith': 'Хадисы',
+  '/azkar': 'Азкары',
+};
 
 export default function Header() {
   const { t } = useTranslation();
@@ -22,42 +33,132 @@ export default function Header() {
   const location = useLocation();
   const [searchVal, setSearchVal] = useState('');
 
+  const pageNameRaw = pageNames[location.pathname] ||
+    (location.pathname.startsWith('/books/') ? 'Книга' :
+      location.pathname.startsWith('/biographies/') ? 'Биография' : 'Страница');
+  const pageName = location.pathname === '/' ? t('nav.home', pageNameRaw)
+    : location.pathname === '/books' ? t('nav.books', pageNameRaw)
+    : location.pathname === '/quran' ? t('nav.quran', pageNameRaw)
+    : location.pathname === '/hadith' ? t('nav.hadith', pageNameRaw)
+    : location.pathname === '/azkar' ? t('nav.azkar', pageNameRaw)
+    : location.pathname === '/book-languages' ? t('nav.bookLanguages', pageNameRaw)
+    : location.pathname === '/biographies' ? t('nav.biographies', pageNameRaw)
+    : location.pathname === '/audio' ? t('nav.audio', pageNameRaw)
+    : location.pathname === '/fawaid' ? t('nav.fawaid', pageNameRaw)
+    : location.pathname === '/search' ? t('nav.search', pageNameRaw)
+    : location.pathname === '/favorites' ? t('nav.favorites', pageNameRaw)
+    : location.pathname === '/history' ? t('nav.history', pageNameRaw)
+    : location.pathname === '/about' ? t('nav.about', pageNameRaw)
+    : location.pathname === '/report' ? t('nav.report', pageNameRaw)
+    : pageNameRaw;
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchVal.trim()) {
-      navigate(`/books?q=${encodeURIComponent(searchVal.trim())}`);
+      navigate(`/search?q=${encodeURIComponent(searchVal.trim())}`);
       setSearchVal('');
     }
   };
 
   return (
-    <header className="site-topbar">
-      <div className="site-brand" onClick={() => navigate('/')} role="button" tabIndex={0}>
-        <img src="./logo-mark.svg" alt="Salaf Library" />
-        <div>
-          <strong>Salaf Library</strong>
-          <span>Исламская библиотека</span>
-        </div>
+    <header style={{
+      height: '64px',
+      background: 'rgba(10, 26, 15, 0.95)',
+      backdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(212, 175, 55, 0.1)',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 24px',
+      gap: '16px',
+      position: 'sticky',
+      top: 0,
+      zIndex: 30,
+    }}>
+      {/* Mobile menu btn */}
+      <button
+        onClick={() => setSidebarOpen(true)}
+        style={{
+          background: 'none',
+          border: 'none',
+          color: '#9db8a3',
+          cursor: 'pointer',
+          padding: '6px',
+          borderRadius: '8px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        className="lg:hidden"
+      >
+        <Menu size={22} />
+      </button>
+
+      {/* Breadcrumb */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flex: 1 }}>
+        <span style={{ fontSize: '12px', color: '#5a7a63' }}>Salaf Library</span>
+        <ChevronRight size={12} color="#5a7a63" />
+        <span style={{ fontSize: '14px', fontWeight: 600, color: '#f0f4f1' }}>{pageName}</span>
       </div>
 
-      <nav className="site-nav" aria-label="Основная навигация">
-        {navItems.map(item => (
-          <Link key={item.path} to={item.path} className={location.pathname === item.path ? 'active' : ''}>
-            {t(`nav.${item.key}`, item.label)}
-          </Link>
-        ))}
-      </nav>
-
-      <form onSubmit={handleSearch} className="site-search">
-        <Search size={16} />
-        <input value={searchVal} onChange={e => setSearchVal(e.target.value)} placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')} />
+      {/* Search */}
+      <form onSubmit={handleSearch} className="header-search" style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(212,175,55,0.15)',
+          borderRadius: '10px',
+          padding: '6px 14px',
+          width: '280px',
+          transition: 'all 0.3s ease',
+        }}>
+          <Search size={15} color="#5a7a63" />
+          <input
+            type="text"
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+            placeholder="Поиск по библиотеке..."
+            style={{
+              background: 'none',
+              border: 'none',
+              outline: 'none',
+              color: '#f0f4f1',
+              fontSize: '14px',
+              width: '100%',
+              fontFamily: 'inherit',
+            }}
+          />
+        </div>
       </form>
 
-      <div className="site-actions">
-        <LiveStatsBadge />
-        <LanguageSwitcher />
-        <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Открыть меню"><Menu size={22}/></button>
-      </div>
+      {/* Notification */}
+      <LiveStatsBadge />
+      <LanguageSwitcher />
+
+      <style>{`@media (max-width: 720px) { .header-search { display: none !important; } }`}</style>
+
+      <button style={{ 
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(212,175,55,0.15)',
+        borderRadius: '10px',
+        padding: '8px',
+        color: '#9db8a3',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+      }}>
+        <Bell size={18} />
+        <span style={{
+          position: 'absolute',
+          top: '6px',
+          right: '6px',
+          width: '6px',
+          height: '6px',
+          background: '#d4af37',
+          borderRadius: '50%',
+        }} />
+      </button>
     </header>
   );
 }

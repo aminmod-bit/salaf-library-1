@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BookOpenText, Calendar, Search, Tag } from 'lucide-react';
-import FolderCard from '../components/FolderCard';
 
 interface Article {
   id: string;
@@ -17,37 +16,35 @@ interface Article {
 }
 
 const langMap: Record<string, string> = { ru: 'Русский', en: 'Английский', ar: 'Арабский', tg: 'Таджикский', uz: 'Узбекский', fa: 'Персидский' };
-const ARTICLE_FOLDERS = ['Акыда', 'Манхадж', 'Фикх', 'Тафсир', 'Хадис', 'Воспитание', 'Семья', 'Даава', 'История', 'Ответы на вопросы', 'Полезные статьи', 'О нас', 'Помощь'];
 
 export default function ArticlesPage() {
   const { i18n, t } = useTranslation();
   const activeLanguage = langMap[(i18n.resolvedLanguage || i18n.language || 'ru').split('-')[0]] || 'Русский';
   const [articles, setArticles] = useState<Article[]>([]);
   const [query, setQuery] = useState('');
-  const [folder, setFolder] = useState('');
+  const [category, setCategory] = useState('all');
 
   useEffect(() => {
     fetch('./data/articles.json').then(r => r.json()).then(setArticles).catch(() => setArticles([]));
   }, []);
 
   const current = useMemo(() => articles.filter(a => a.language === activeLanguage), [articles, activeLanguage]);
-  const folderStats = useMemo(() => ARTICLE_FOLDERS.map(name => ({ name, count: current.filter(a => a.category === name).length })), [current]);
+  const categories = useMemo(() => Array.from(new Set(current.map(a => a.category))), [current]);
   const filtered = useMemo(() => {
-    let result = folder ? current.filter(a => a.category === folder) : [];
+    let result = [...current];
     const q = query.trim().toLowerCase();
-    if (q) result = current.filter(a => `${a.title} ${a.summary} ${a.content} ${a.author} ${a.tags.join(' ')}`.toLowerCase().includes(q));
+    if (q) result = result.filter(a => `${a.title} ${a.summary} ${a.content} ${a.author} ${a.tags.join(' ')}`.toLowerCase().includes(q));
+    if (category !== 'all') result = result.filter(a => a.category === category);
     return result.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || b.date.localeCompare(a.date));
-  }, [current, query, folder]);
-
-  const showFolders = !folder && !query.trim();
+  }, [current, query, category]);
 
   return (
     <div className="fade-in" style={{ maxWidth: 1180, margin: '0 auto' }}>
       <section className="glass-card" style={{ padding: 30, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
         <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><BookOpenText size={16}/> {t('articles.eyebrow', 'Материалы')}</div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 50px)', lineHeight: 1.06, fontWeight: 950 }}>{showFolders ? 'Разделы статей' : folder || t('articles.title', 'Статьи и материалы')}</h1>
+        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 50px)', lineHeight: 1.06, fontWeight: 950 }}>{t('articles.title', 'Статьи и материалы')}</h1>
         <p style={{ color: '#9db8a3', lineHeight: 1.75, maxWidth: 760, marginTop: 12 }}>
-          {showFolders ? 'Выберите тематическую папку. Материалы показываются только на активном языке.' : t('articles.description', 'Раздел для статей, ответов, пояснений и полезных материалов по выбранному языку.')}
+          {t('articles.description', 'Раздел для статей, ответов, пояснений и полезных материалов по выбранному языку. Контент не переводится искусственно: показываются только реально добавленные материалы.')}
         </p>
       </section>
 
@@ -56,34 +53,23 @@ export default function ArticlesPage() {
           <Search size={15} color="#5a7a63" />
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder={t('articles.search', 'Поиск статей...')} style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
         </div>
-        {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setQuery(''); }}>Все папки</button>}
+        <select className="input-field" style={{ width: 'auto' }} value={category} onChange={e => setCategory(e.target.value)}>
+          <option value="all">{t('common.all', 'Все')}</option>
+          {categories.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
       </div>
 
-      {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16 }}>
-          {folderStats.map(item => (
-            <FolderCard
-              key={item.name}
-              title={item.name}
-              subtitle="Тематический раздел статей"
-              count={item.count}
-              countLabel="материалов"
-              disabled={item.count === 0}
-              onClick={() => setFolder(item.name)}
-            />
-          ))}
-        </div>
-      ) : filtered.length === 0 ? (
+      {filtered.length === 0 ? (
         <div className="glass-card" style={{ padding: 46, textAlign: 'center', color: '#9db8a3' }}>
           <div style={{ fontSize: 44, marginBottom: 12 }}>📄</div>
-          <h2 style={{ color: '#f0f4f1', fontWeight: 850, marginBottom: 8 }}>{t('articles.emptyTitle', 'Материалы пока не добавлены')}</h2>
-          <p>{t('articles.emptyText', 'Когда появятся материалы на выбранном языке, они будут отображаться здесь.')}</p>
+          <h2 style={{ color: '#f0f4f1', fontWeight: 850, marginBottom: 8 }}>{t('articles.emptyTitle', 'Материалы на этом языке пока не добавлены')}</h2>
+          <p>{t('articles.emptyText', 'Когда появятся статьи на выбранном языке, они будут отображаться здесь.')}</p>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
           {filtered.map(article => (
             <article key={article.id} className="glass-card" style={{ padding: 22 }}>
-              {article.featured && <span className="badge badge-gold" style={{ marginBottom: 12 }}>Избранное</span>}
+              {article.featured && <span className="badge badge-gold" style={{ marginBottom: 12 }}>✨ {t('common.featured', 'Избранное')}</span>}
               <h2 style={{ color: '#f0f4f1', fontSize: 19, fontWeight: 900, lineHeight: 1.25, marginBottom: 10 }}>{article.title}</h2>
               <p style={{ color: '#9db8a3', lineHeight: 1.65, marginBottom: 14 }}>{article.summary}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: '#5a7a63', fontSize: 12, flexWrap: 'wrap' }}>
