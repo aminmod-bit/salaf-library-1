@@ -33,7 +33,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
     e.stopPropagation();
     toggleFavorite(book.id);
     toast(fav ? 'Удалено из избранного' : 'Добавлено в избранное', {
-      icon: fav ? '💔' : '❤️',
+      icon: fav ? '♡' : '♥',
     });
   };
 
@@ -150,7 +150,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
             fontSize: '9px', fontWeight: 700,
             padding: '2px 6px', borderRadius: '4px',
           }}>
-            ⭐ ТОП
+            ТОП
           </span>
         )}
 
@@ -236,7 +236,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
               if (book.downloadUrl || book.fileUrl) {
                 window.open(book.downloadUrl || book.fileUrl, '_blank');
               } else {
-                toast('PDF файл пока не добавлен', { icon: '📥' });
+                toast('PDF файл пока не добавлен');
               }
             }}
             style={{

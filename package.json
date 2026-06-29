@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run seo:generate && tsc --noEmit && vite build",
+    "build": "npm run books:sync && npm run seo:generate && tsc --noEmit && vite build",
     "preview": "vite preview",
     "check": "tsc --noEmit && npm audit --audit-level=moderate",
     "import:books": "node scripts/import-content.mjs books",
@@ -17,7 +17,8 @@
     "import:github-books:download": "node scripts/import-github-books.mjs https://github.com/aminmod-bit/salaf-library/tree/main/books --mode=download",
     "polish:data": "node scripts/polish-library-data.mjs",
     "seo:generate": "node scripts/generate-seo.mjs",
-    "metadata:enrich": "node scripts/enrich-book-metadata.mjs"
+    "metadata:enrich": "node scripts/enrich-book-metadata.mjs",
+    "books:sync": "node scripts/sync-books-folders.mjs"
   },
   "dependencies": {
     "clsx": "2.1.1",

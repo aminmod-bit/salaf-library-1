@@ -1,28 +1,33 @@
 {
+  "id": "/",
   "name": "Salaf Library",
   "short_name": "Salaf Library",
-  "description": "Профессиональная исламская цифровая библиотека: книги, биографии, аудио и фаваиды.",
+  "description": "Профессиональная исламская цифровая библиотека: книги, азкары, статьи, биографии и онлайн-читалка.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a1a0f",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+  "background_color": "#07130b",
   "theme_color": "#0d3320",
-  "orientation": "portrait-primary",
-  "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "categories": ["education", "books", "reference"],
+  "orientation": "any",
+  "dir": "ltr",
   "lang": "ru",
-  "dir": "ltr"
+  "categories": ["education", "books", "reference"],
+  "launch_handler": { "client_mode": "navigate-existing" },
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Книги", "short_name": "Книги", "description": "Открыть каталог книг", "url": "./#/books", "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }] },
+    { "name": "Азкары", "short_name": "Азкары", "description": "Открыть азкары и дуа", "url": "./#/azkar", "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }] },
+    { "name": "Продолжить чтение", "short_name": "Читать", "description": "Открыть библиотеку", "url": "./#/history", "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "./pwa-screenshot-wide.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide", "label": "Salaf Library desktop" },
+    { "src": "./pwa-screenshot-mobile.png", "sizes": "540x960", "type": "image/png", "form_factor": "narrow", "label": "Salaf Library mobile" }
+  ]
 }

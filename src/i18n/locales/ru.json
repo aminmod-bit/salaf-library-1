@@ -14,7 +14,7 @@
     "goals": "Цели",
     "readingPlans": "Планы чтения",
     "quran": "Коран",
-    "about": "О проекте",
+    "about": "О нас",
     "report": "Ошибка",
     "bookLanguages": "Книги на разных языках",
     "articles": "Статьи",
@@ -156,8 +156,8 @@
     "languageSections": "Книги по языкам"
   },
   "about": {
-    "eyebrow": "О проекте",
-    "title": "Salaf Library — исламская цифровая библиотека для ежедневного чтения"
+    "eyebrow": "О нас",
+    "title": "О нас"
   },
   "report": {
     "title": "Сообщить об ошибке"
