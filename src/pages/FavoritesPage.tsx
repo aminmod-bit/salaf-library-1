@@ -1,22 +1,38 @@
 import { useNavigate } from 'react-router-dom';
-import { Heart, BookOpen } from 'lucide-react';
+import { Heart, BookOpen, Trash2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import BookCard from '../components/BookCard';
+import toast from 'react-hot-toast';
 
 export default function FavoritesPage() {
   const navigate = useNavigate();
-  const { books, favorites } = useStore();
+  const { books, favorites, setBooks } = useStore();
   const favoriteBooks = books.filter(b => favorites.includes(b.id));
+
+  const clearFavorites = () => {
+    if (!confirm('Очистить избранное?')) return;
+    // Keep only valid book IDs
+    const validIds = favorites.filter(id => books.some(b => b.id === id));
+    useStore.setState({ favorites: [] });
+    toast.success('Избранное очищено');
+  };
 
   return (
     <div className="fade-in" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#f0f4f1', marginBottom: '6px' }}>
-          ❤️ Избранное
-        </h1>
-        <p style={{ color: '#9db8a3', fontSize: '14px' }}>
-          {favoriteBooks.length} книг в вашем избранном
-        </p>
+      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '6px' }}>
+            ❤️ Избранное
+          </h1>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>
+            {favoriteBooks.length} книг в вашем избранном
+          </p>
+        </div>
+        {favoriteBooks.length > 0 && (
+          <button className="btn-ghost" onClick={clearFavorites} style={{ color: '#ef4444' }}>
+            <Trash2 size={14} /> Очистить
+          </button>
+        )}
       </div>
 
       {favoriteBooks.length === 0 ? (

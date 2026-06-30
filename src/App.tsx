@@ -27,6 +27,7 @@ import ArticlesPage from "./pages/ArticlesPage";
 import HadithPage from "./pages/HadithPage";
 import AzkarPage from "./pages/AzkarPage";
 import AdminBookEditorPage from "./pages/AdminBookEditorPage";
+import OfflinePage from "./pages/OfflinePage";
 
 const BookReaderPage = lazy(() => import("./pages/BookReaderPage"));
 
@@ -110,6 +111,7 @@ function AppRoutes() {
                 <Route path="/articles" element={<ArticlesPage />} />
                 <Route path="/hadith" element={<HadithPage />} />
                 <Route path="/azkar" element={<AzkarPage />} />
+                <Route path="/offline" element={<OfflinePage />} />
                 <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
               </Routes>
             </div>

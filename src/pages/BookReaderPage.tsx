@@ -88,6 +88,15 @@ export default function BookReaderPage() {
   const [searching, setSearching] = useState(false);
   const [chromeHidden, setChromeHidden] = useState(false);
   const [twoPages, setTwoPages] = useState(() => window.innerWidth > 900);
+
+  // Auto-disable two-page mode on small screens
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth <= 900 && twoPages) setTwoPages(false);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [twoPages]);
   const [readerTheme, setReaderTheme] = useState<ReaderTheme>(() => {
     try { return (JSON.parse(localStorage.getItem(settingsKey(id)) || '{}').theme) || 'dark'; } catch { return 'dark'; }
   });

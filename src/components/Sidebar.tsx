@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
-  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText
+  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText, WifiOff
 } from 'lucide-react';
 import Logo from './Logo';
 
@@ -19,6 +19,7 @@ const navItems = [
 
 const userItems = [
   { path: '/favorites', icon: Heart, label: 'Избранное', key: 'favorites' },
+  { path: '/offline', icon: WifiOff, label: 'Офлайн', key: 'offline' },
   { path: '/about', icon: Info, label: 'О нас', key: 'about' },
   { path: '/report', icon: MessageSquare, label: 'Ошибка', key: 'report' },
 ];
@@ -27,6 +28,9 @@ export default function Sidebar() {
   const { sidebarOpen, setSidebarOpen, favorites, books } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Filter favorites to only include books that exist
+  const validFavorites = favorites.filter(id => books.some(b => b.id === id));
 
   const handleNav = (path: string) => {
     navigate(path);
@@ -112,7 +116,7 @@ export default function Sidebar() {
         }}>
           {[
             { icon: BookMarked, label: 'Книг', value: books.length + '+' },
-            { icon: Star, label: 'Избранных', value: favorites.length },
+            { icon: Star, label: 'Избранных', value: validFavorites.length },
           ].map(({ icon: Icon, label, value }) => (
             <div key={label} style={{
               background: 'var(--color-bg-hover)',
@@ -173,7 +177,7 @@ export default function Sidebar() {
               >
                 <Icon size={16} />
                 <span>{label}</span>
-                {path === '/favorites' && favorites.length > 0 && (
+                {path === '/favorites' && validFavorites.length > 0 && (
                   <span style={{
                     marginLeft: 'auto',
                     background: 'rgba(212,175,55,0.2)',
@@ -183,7 +187,7 @@ export default function Sidebar() {
                     padding: '2px 7px',
                     borderRadius: '100px',
                   }}>
-                    {favorites.length}
+                    {validFavorites.length}
                   </span>
                 )}
               </button>

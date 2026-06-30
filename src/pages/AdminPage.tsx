@@ -5,10 +5,11 @@ import {
   BarChart3, Plus, Edit3, Trash2, Download, Upload,
   LogOut, Save, X, Search, ChevronRight, Star, Clock,
   AlertCircle, FileText, CheckSquare, Square, Check,
-  Image, FolderOpen, Package, Eye, Heart
+  Image, FolderOpen, Package, Eye, Heart, Wand2
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import type { Book } from '../store/useStore';
+import { analyzePdf, generateCoverFromPdf } from '../utils/pdfAnalysis';
 import toast from 'react-hot-toast';
 
 const ADMIN_PIN = '1234';
@@ -445,6 +446,104 @@ export default function AdminPage() {
     toast.success('Книга удалена');
   };
 
+  // ─── Auto-detect metadata from PDF ──────────────────────────────────────
+  const autoDetectMetadata = async (bookId: string) => {
+    const book = drafts.find(d => d.id === bookId) || currentBooks.find(b => b.id === bookId);
+    if (!book?.fileUrl) { toast.error('Нет fileUrl для анализа'); return; }
+
+    toast.loading('Анализ PDF...', { id: 'analyze' });
+    try {
+      const url = book.fileUrl.startsWith('http') ? book.fileUrl : new URL(book.fileUrl, window.location.origin).toString();
+      const analysis = await analyzePdf(url);
+      toast.success(`Уверенность: ${analysis.confidence}%`, { id: 'analyze' });
+
+      // Show suggested values as a toast or update draft
+      const source = drafts.find(d => d.id === bookId);
+      if (source) {
+        updateDraft(bookId, {
+          title: analysis.suggestedTitle !== 'Без названия' ? analysis.suggestedTitle : source.title,
+          author: analysis.suggestedAuthor !== 'Автор не указан' ? analysis.suggestedAuthor : source.author,
+          category: analysis.suggestedCategory !== 'Общее' ? analysis.suggestedCategory : source.category,
+          language: analysis.suggestedLanguage,
+          tags: analysis.suggestedTags.length > 0 ? analysis.suggestedTags : source.tags,
+        });
+        toast.success('Данные обновлены. Проверьте и отредактируйте.');
+      }
+    } catch (e) {
+      toast.error('Не удалось проанализировать PDF', { id: 'analyze' });
+    }
+  };
+
+  const autoDetectAll = async () => {
+    if (drafts.length === 0) { toast.error('Нет черновиков'); return; }
+    toast.loading(`Анализ ${drafts.length} книг...`, { id: 'analyze-all' });
+    let done = 0;
+    for (const draft of drafts) {
+      if (!draft.fileUrl) continue;
+      try {
+        const url = draft.fileUrl.startsWith('http') ? draft.fileUrl : new URL(draft.fileUrl, window.location.origin).toString();
+        const analysis = await analyzePdf(url);
+        updateDraft(draft.id, {
+          title: analysis.suggestedTitle !== 'Без названия' ? analysis.suggestedTitle : draft.title,
+          author: analysis.suggestedAuthor !== 'Автор не указан' ? analysis.suggestedAuthor : draft.author,
+          category: analysis.suggestedCategory !== 'Общее' ? analysis.suggestedCategory : draft.category,
+          language: analysis.suggestedLanguage,
+          tags: analysis.suggestedTags.length > 0 ? analysis.suggestedTags : draft.tags,
+        });
+        done++;
+      } catch {}
+    }
+    toast.success(`Обновлено ${done} из ${drafts.length}`, { id: 'analyze-all' });
+  };
+
+  // ─── Auto-cover from PDF ────────────────────────────────────────────────
+  const generateCover = async (bookId: string) => {
+    const book = drafts.find(d => d.id === bookId) || currentBooks.find(b => b.id === bookId);
+    if (!book?.fileUrl) { toast.error('Нет fileUrl'); return; }
+
+    toast.loading('Генерация обложки...', { id: 'cover' });
+    try {
+      const url = book.fileUrl.startsWith('http') ? book.fileUrl : new URL(book.fileUrl, window.location.origin).toString();
+      const dataUrl = await generateCoverFromPdf(url);
+      if (dataUrl) {
+        const source = drafts.find(d => d.id === bookId);
+        if (source) {
+          updateDraft(bookId, { coverImage: dataUrl });
+          toast.success('Обложка сгенерирована', { id: 'cover' });
+        } else {
+          // For published books, update directly
+          const updated = currentBooks.map(b => b.id === bookId ? { ...b, coverImage: dataUrl } : b);
+          setLocalBooks(updated);
+          setBooks(updated);
+          localStorage.setItem(LOCAL_BOOKS_KEY, JSON.stringify(updated));
+          toast.success('Обложка сгенерирована', { id: 'cover' });
+        }
+      } else {
+        toast.error('Не удалось сгенерировать обложку', { id: 'cover' });
+      }
+    } catch {
+      toast.error('Ошибка генерации обложки', { id: 'cover' });
+    }
+  };
+
+  const generateCoversAll = async () => {
+    const booksWithoutCover = drafts.filter(d => !d.coverImage && d.fileUrl);
+    if (booksWithoutCover.length === 0) { toast.error('Нет книг для генерации обложек'); return; }
+    toast.loading(`Генерация ${booksWithoutCover.length} обложек...`, { id: 'covers-all' });
+    let done = 0;
+    for (const book of booksWithoutCover) {
+      try {
+        const url = book.fileUrl!.startsWith('http') ? book.fileUrl! : new URL(book.fileUrl!, window.location.origin).toString();
+        const dataUrl = await generateCoverFromPdf(url);
+        if (dataUrl) {
+          updateDraft(book.id, { coverImage: dataUrl });
+          done++;
+        }
+      } catch {}
+    }
+    toast.success(`Обложки сгенерированы: ${done}/${booksWithoutCover.length}`, { id: 'covers-all' });
+  };
+
   // ─── Stats ──────────────────────────────────────────────────────────────
   const stats = [
     { label: 'Книг', value: currentBooks.length, icon: BookOpen, color: 'var(--color-gold)' },
@@ -582,6 +681,8 @@ export default function AdminPage() {
           <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', flexWrap: 'wrap' }}>
             <button className="btn-primary" onClick={() => fileInputRef.current?.click()}><Upload size={14} /> Добавить файлы</button>
             <button className="btn-primary" onClick={() => coverInputRef.current?.click()}><Image size={14} /> Обложки</button>
+            <button className="btn-ghost" onClick={autoDetectAll} disabled={drafts.length === 0}><Wand2 size={14} /> Определить данные</button>
+            <button className="btn-ghost" onClick={generateCoversAll} disabled={drafts.filter(d => !d.coverImage && d.fileUrl).length === 0}><Image size={14} /> Генерировать обложки</button>
             <button className="btn-ghost" onClick={publishAll} disabled={drafts.filter(d => !d.needsReview).length === 0}><Package size={14} /> Опубликовать готовые ({drafts.filter(d => !d.needsReview).length})</button>
             <button className="btn-ghost" onClick={() => exportJson(drafts, 'books-drafts.json')}><Download size={14} /> Экспорт</button>
           </div>
@@ -645,6 +746,8 @@ export default function AdminPage() {
                     <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>{draft.author} · {draft.category} · {draft.language} · {draft.size}</div>
                   </div>
                   <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
+                    <button onClick={() => autoDetectMetadata(draft.id)} title="Определить данные из PDF" style={{ padding: '6px', borderRadius: '6px', border: '1px solid var(--color-border)', background: 'var(--color-bg-hover)', color: 'var(--color-gold)', cursor: 'pointer' }}><Wand2 size={12} /></button>
+                    <button onClick={() => generateCover(draft.id)} title="Сгенерировать обложку" style={{ padding: '6px', borderRadius: '6px', border: '1px solid var(--color-border)', background: 'var(--color-bg-hover)', color: 'var(--color-gold)', cursor: 'pointer' }}><Image size={12} /></button>
                     <button onClick={() => publishDraft(draft)} title="Опубликовать" style={{ padding: '6px', borderRadius: '6px', border: '1px solid var(--color-border)', background: 'var(--color-bg-hover)', color: 'var(--color-accent-light)', cursor: 'pointer' }}><Check size={12} /></button>
                     <button onClick={() => { setEditingBook(draft); }} title="Редактировать" style={{ padding: '6px', borderRadius: '6px', border: '1px solid var(--color-border)', background: 'var(--color-bg-hover)', color: 'var(--color-text-secondary)', cursor: 'pointer' }}><Edit3 size={12} /></button>
                     <button onClick={() => deleteDraft(draft.id)} title="Удалить" style={{ padding: '6px', borderRadius: '6px', border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(239,68,68,0.05)', color: '#ef4444', cursor: 'pointer' }}><Trash2 size={12} /></button>
