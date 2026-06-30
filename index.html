@@ -36,6 +36,14 @@
   </head>
   <body>
     <noscript>Для работы Salaf Library необходимо включить JavaScript.</noscript>
+    <script>
+      // Apply saved theme immediately to prevent flash of wrong colors
+      try {
+        var saved = JSON.parse(localStorage.getItem('salaf-library-storage'));
+        var theme = saved && saved.state && saved.state.theme;
+        if (theme) document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
