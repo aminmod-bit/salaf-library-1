@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { useTranslation } from 'react-i18next';
-import LiveStatsBadge from './LiveStatsBadge';
 import ThemeToggle from './ThemeToggle';
 
 const navItems = [

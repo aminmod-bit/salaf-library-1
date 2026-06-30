@@ -1,31 +1,68 @@
 export default function LoadingScreen() {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950">
-      {/* Logo */}
-      <div className="relative mb-8">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-2xl shadow-amber-900/50 animate-pulse">
-          <svg viewBox="0 0 64 64" fill="none" className="w-11 h-11">
-            <rect x="6" y="6" width="18" height="52" rx="3" fill="rgba(255,255,255,0.9)"/>
-            <rect x="26" y="6" width="18" height="52" rx="3" fill="rgba(255,255,255,0.7)"/>
-            <rect x="46" y="10" width="12" height="44" rx="2" fill="rgba(255,255,255,0.5)"/>
-          </svg>
-        </div>
-        {/* Glow */}
-        <div className="absolute inset-0 rounded-2xl bg-amber-500/20 blur-xl -z-10 scale-150" />
-      </div>
-
-      {/* Name */}
-      <h1 className="text-3xl font-semibold text-white tracking-wide mb-1">
-        Maktabah
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: 50,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'var(--color-bg-primary)',
+    }}>
+      <img
+        src="./logo-mark.svg"
+        alt="Salaf Library"
+        style={{
+          width: '72px',
+          height: '72px',
+          marginBottom: '20px',
+          filter: 'drop-shadow(0 8px 18px rgba(0,0,0,0.3))',
+          animation: 'pulse 2s ease-in-out infinite',
+        }}
+      />
+      <h1 style={{
+        fontSize: '24px',
+        fontWeight: 700,
+        color: 'var(--color-text-primary)',
+        marginBottom: '4px',
+      }}>
+        Salaf Library
       </h1>
-      <p className="text-slate-500 text-sm mb-8 font-medium tracking-widest uppercase">
-        مكتبة
+      <p style={{
+        fontSize: '12px',
+        color: 'var(--color-text-muted)',
+        letterSpacing: '2px',
+        textTransform: 'uppercase',
+        marginBottom: '24px',
+      }}>
+        Загрузка...
       </p>
-
-      {/* Progress bar */}
-      <div className="w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full animate-[loading_1.5s_ease-in-out_infinite]" />
+      <div style={{
+        width: '120px',
+        height: '2px',
+        background: 'var(--color-bg-card)',
+        borderRadius: '999px',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          height: '100%',
+          background: 'linear-gradient(90deg, var(--color-gold), var(--color-gold-light))',
+          borderRadius: '999px',
+          animation: 'loading 1.5s ease-in-out infinite',
+        }} />
       </div>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        @keyframes loading {
+          0% { width: 0%; margin-left: 0; }
+          50% { width: 60%; margin-left: 20%; }
+          100% { width: 0%; margin-left: 100%; }
+        }
+      `}</style>
     </div>
   );
 }

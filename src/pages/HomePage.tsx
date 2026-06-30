@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Search, BookOpen, Users, Sparkles, BookOpenText,
   ArrowRight, Star, Clock, TrendingUp, ChevronRight,
-  Heart, Library, Feather
+  Heart, Feather
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
@@ -65,19 +65,17 @@ export default function HomePage() {
         }} />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            width: '64px',
-            height: '64px',
-            margin: '0 auto 20px',
-            borderRadius: '16px',
-            background: 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 8px 32px rgba(212, 175, 55, 0.3)',
-          }}>
-            <Library size={32} color="#0a1a0f" />
-          </div>
+          <img
+            src="./logo-mark.svg"
+            alt="Salaf Library"
+            style={{
+              width: '64px',
+              height: '64px',
+              margin: '0 auto 20px',
+              display: 'block',
+              filter: 'drop-shadow(0 8px 18px rgba(0,0,0,0.3))',
+            }}
+          />
 
           <h1 style={{
             fontFamily: 'Georgia, "Times New Roman", serif',
@@ -255,7 +253,7 @@ export default function HomePage() {
           borderRadius: '20px',
           marginBottom: '40px',
         }}>
-          <Library size={48} style={{ color: 'var(--color-text-muted)', margin: '0 auto 16px' }} />
+          <img src="./logo-mark.svg" alt="" style={{ width: '48px', height: '48px', margin: '0 auto 16px', display: 'block', opacity: 0.6 }} />
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
             Библиотека готова к наполнению
           </h3>
