@@ -70,33 +70,10 @@ export default function Sidebar() {
         <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', flex: 1, display: 'flex', justifyContent: 'center' }}
               onClick={() => handleNav('/')}
             >
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                marginBottom: '4px',
-              }}>
-                <Logo size={38} />
-                <div>
-                  <div style={{
-                    fontSize: '18px',
-                    fontWeight: 800,
-                    background: 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    lineHeight: 1.1,
-                  }}>
-                    Salaf Library
-                  </div>
-                  <div style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                    Исламская библиотека
-                  </div>
-                </div>
-              </div>
+              <Logo size={42} showText />
             </div>
             <button
               onClick={() => setSidebarOpen(false)}

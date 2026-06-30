@@ -67,7 +67,7 @@ export default function HomePage() {
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ margin: '0 auto 20px' }}>
-            <Logo size={72} />
+            <Logo size={96} />
           </div>
 
           <h1 style={{

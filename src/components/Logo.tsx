@@ -4,9 +4,9 @@ interface LogoProps {
   className?: string;
 }
 
-export default function Logo({ size = 38, showText = false, className }: LogoProps) {
+export default function Logo({ size = 42, showText = false, className }: LogoProps) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} className={className}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }} className={className}>
       <svg
         viewBox="0 0 128 128"
         width={size}
@@ -20,9 +20,7 @@ export default function Logo({ size = 38, showText = false, className }: LogoPro
             <stop offset="100%" stopColor="#c9a227"/>
           </linearGradient>
         </defs>
-        {/* Rounded square */}
         <rect x="16" y="16" width="96" height="96" rx="24" fill="url(#lg-gold)"/>
-        {/* Book icon */}
         <g transform="translate(64, 64)">
           <path d="M-4-20 Q-20-20-26-8 L-26 22 Q-20 10-4 4 Z" fill="#1a3a24" opacity="0.9"/>
           <path d="M4-20 Q20-20 26-8 L26 22 Q20 10 4 4 Z" fill="#1a3a24" opacity="0.75"/>
@@ -37,9 +35,9 @@ export default function Logo({ size = 38, showText = false, className }: LogoPro
       </svg>
 
       {showText && (
-        <div>
+        <div style={{ textAlign: 'center' }}>
           <div style={{
-            fontSize: `${Math.max(14, size * 0.47)}px`,
+            fontSize: `${Math.max(16, size * 0.5)}px`,
             fontWeight: 800,
             background: 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))',
             WebkitBackgroundClip: 'text',
@@ -50,7 +48,7 @@ export default function Logo({ size = 38, showText = false, className }: LogoPro
             Salaf Library
           </div>
           <div style={{
-            fontSize: `${Math.max(8, size * 0.26)}px`,
+            fontSize: `${Math.max(9, size * 0.28)}px`,
             color: 'var(--color-text-muted)',
             letterSpacing: '1px',
             textTransform: 'uppercase',
