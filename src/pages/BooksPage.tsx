@@ -129,7 +129,7 @@ export default function BooksPage() {
         </select>
         <select value={lang} onChange={e => setLang(e.target.value)} className="input-field" style={{ width: 'auto' }}>
           <option value="all">{t('common.allLanguages', 'Все языки')}</option>
-          {['Русский', 'Арабский', 'Английский', 'Таджикский', 'Узбекский', 'Персидский'].map(value => <option key={value} value={value}>{value}</option>)}
+          {['Русский', 'English', 'Тоҷикӣ', 'العربية'].map(value => <option key={value} value={value}>{value}</option>)}
         </select>
         <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: 4 }}>
           <button onClick={() => setView('grid')} style={toggleStyle(view === 'grid')}><Grid3X3 size={16}/></button>

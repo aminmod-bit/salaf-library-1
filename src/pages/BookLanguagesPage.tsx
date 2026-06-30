@@ -7,7 +7,9 @@ import { useStore } from '../store/useStore';
 
 const LANGS = [
   { key: 'ru', label: 'Русский', native: 'Русский', bookValue: 'Русский', color: '#22c55e' },
-  { key: 'en', label: 'English', native: 'English', bookValue: 'Английский', color: '#fb923c' },
+  { key: 'en', label: 'English', native: 'English', bookValue: 'English', color: '#fb923c' },
+  { key: 'tg', label: 'Tajik', native: 'Тоҷикӣ', bookValue: 'Тоҷикӣ', color: '#38bdf8' },
+  { key: 'ar', label: 'Arabic', native: 'العربية', bookValue: 'العربية', color: '#a78bfa', rtl: true },
 ];
 
 const BOOK_FOLDERS = [
@@ -55,7 +57,7 @@ export default function BookLanguagesPage() {
   const stats = useMemo(() => LANGS.map(lang => {
     const languageBooks = books.filter(book => book.language === lang.bookValue);
     const bookCount = languageBooks.length;
-    const articleCount = lang.bookValue === 'Русский' ? fawaid.length : 0;
+    const articleCount = lang.key === 'ru' ? fawaid.length : 0;
     const folderStats = BOOK_FOLDERS.map(folder => ({
       name: folder,
       count: languageBooks.filter(book => normalizeSection(book.category) === folder).length,
@@ -113,8 +115,8 @@ export default function BookLanguagesPage() {
                 <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 80% 10%, ${lang.color}22, transparent 38%)`, pointerEvents: 'none' }} />
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 16 }}>
-                    <div>
-                      <h2 style={{ color: 'var(--color-text-primary)', fontSize: 22, fontWeight: 900 }}>{lang.native}</h2>
+                    <div dir={lang.rtl ? 'rtl' : undefined}>
+                      <h2 style={{ color: 'var(--color-text-primary)', fontSize: 22, fontWeight: 900, fontFamily: lang.rtl ? 'Amiri, serif' : undefined }}>{lang.native}</h2>
                       <p style={{ color: 'var(--color-text-muted)', fontSize: 12, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.08em' }}>{lang.label}</p>
                     </div>
                     <div style={{ width: 44, height: 44, borderRadius: 15, background: `${lang.color}22`, color: lang.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

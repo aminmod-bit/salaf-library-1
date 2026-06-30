@@ -1,6 +1,6 @@
 // Core types for Salaf Library
 
-export type Lang = "ru" | "en" | "ar" | "tg" | "uz" | "fa";
+export type Lang = "ru" | "en" | "ar" | "tg";
 
 export type FolderId =
   | "aqeedah" | "tawhid" | "manhaj" | "tafsir" | "hadith" | "seerah"
@@ -16,7 +16,7 @@ export interface Book {
   authorId?: string;
   category: FolderId;
   categoryLabel: string; // localized folder label
-  language: "Русский" | "العربية" | "Тоҷикӣ" | "Uzbek" | "فارسی" | "English";
+  language: "Русский" | "العربية" | "Тоҷикӣ" | "English";
   languageCode: Lang;
   pages?: number;
   size?: string;

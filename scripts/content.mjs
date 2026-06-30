@@ -76,7 +76,6 @@ function detectTags(text) {
 function detectLanguage(filename) {
   const lower = filename.toLowerCase();
   if (/таджик|тоҷик|tajik/.test(lower)) return 'Тоҷикӣ';
-  if (/узбек|uzbek/.test(lower)) return 'Uzbek';
   if (/араб|arab/.test(lower)) return 'العربية';
   if (/англ|english|eng/.test(lower)) return 'English';
   return 'Русский';

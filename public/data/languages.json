@@ -1,4 +1,6 @@
 [
   { "code": "ru", "label": "RU", "name": "Русский", "dir": "ltr" },
-  { "code": "en", "label": "EN", "name": "English", "dir": "ltr" }
+  { "code": "en", "label": "EN", "name": "English", "dir": "ltr" },
+  { "code": "tg", "label": "TG", "name": "Тоҷикӣ", "dir": "ltr" },
+  { "code": "ar", "label": "AR", "name": "العربية", "dir": "rtl" }
 ]
