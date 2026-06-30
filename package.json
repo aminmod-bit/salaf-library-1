@@ -18,7 +18,12 @@
     "polish:data": "node scripts/polish-library-data.mjs",
     "seo:generate": "node scripts/generate-seo.mjs",
     "metadata:enrich": "node scripts/enrich-book-metadata.mjs",
-    "books:sync": "node scripts/sync-books-folders.mjs"
+    "books:sync": "node scripts/sync-books-folders.mjs",
+    "content:scan": "node scripts/content.mjs scan",
+    "content:import": "node scripts/content.mjs import",
+    "content:validate": "node scripts/content.mjs validate",
+    "content:backup": "node scripts/content.mjs backup",
+    "content:restore": "node scripts/content.mjs restore"
   },
   "dependencies": {
     "clsx": "2.1.1",

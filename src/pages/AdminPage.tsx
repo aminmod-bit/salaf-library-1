@@ -113,6 +113,7 @@ export default function AdminPage() {
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px', marginBottom: '28px' }}>
                 {[
+                  { icon: '📋', title: 'Управление контентом', desc: 'Редактирование, удаление, публикация книг', action: () => navigate('/admin/content') },
                   { icon: '📚', title: 'Добавить книги', desc: 'Массовая публикация PDF через GitHub API', action: () => navigate('/admin/import') },
                   { icon: '🐙', title: 'GitHub API', desc: 'Токен, репозиторий и проверка подключения', action: () => navigate('/admin/settings') },
                   { icon: '🎨', title: 'Брендинг', desc: 'Сменить название сайта во всём проекте', action: () => navigate('/admin/branding') },

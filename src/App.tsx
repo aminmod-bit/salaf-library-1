@@ -19,6 +19,7 @@ import AdminPage from "./pages/AdminPage";
 import AdminImportPage from "./pages/admin/AdminImportPage";
 import AdminStatsPage from "./pages/admin/AdminStatsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
+import AdminContentPage from "./pages/admin/AdminContentPage";
 import AboutPage from "./pages/AboutPage";
 import ReportIssuePage from "./pages/ReportIssuePage";
 import BookLanguagesPage from "./pages/BookLanguagesPage";
@@ -114,6 +115,7 @@ function AppRoutes() {
                 />
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/content" element={<AdminContentPage />} />
                 <Route path="/admin/import" element={<AdminImportPage />} />
                 <Route path="/admin/stats" element={<AdminStatsPage />} />
                 <Route path="/admin/settings" element={<AdminSettingsPage />} />
