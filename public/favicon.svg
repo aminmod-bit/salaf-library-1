@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Salaf Library">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SL">
   <defs>
-    <linearGradient id="ink" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#182018"/>
-      <stop offset="1" stop-color="#050705"/>
+    <linearGradient id="g-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0c84a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
     </linearGradient>
-    <linearGradient id="green" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#365434"/>
-      <stop offset="1" stop-color="#0f3d2e"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#e6c978"/>
-      <stop offset="1" stop-color="#a7833b"/>
+    <linearGradient id="g-dark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a3a24"/>
+      <stop offset="100%" stop-color="#0d2218"/>
     </linearGradient>
   </defs>
-  <rect x="25" y="16" width="78" height="96" rx="7" fill="none" stroke="url(#ink)" stroke-width="7"/>
-  <path d="M65 13c18 19 17 36 8 49 9-5 15-13 18-23 4 24-5 42-20 54l-5 24-6-24C45 80 38 63 43 43c4 9 10 16 18 20-9-18-7-34 4-50Z" fill="url(#ink)"/>
-  <path d="M64 29v72" stroke="#f8f5ec" stroke-width="3" stroke-linecap="round" opacity=".9"/>
-  <path d="M43 80c7-8 14-8 20 0M84 80c-7-8-14-8-20 0" stroke="url(#green)" stroke-width="7" stroke-linecap="round" fill="none"/>
-  <path d="M50 92h12M78 92h12" stroke="url(#green)" stroke-width="7" stroke-linecap="round"/>
-  <path d="M27 110h76" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+  <!-- Arch -->
+  <path d="M8 46 Q8 10 32 6 Q56 10 56 46 L56 58 Q56 60 54 60 L10 60 Q8 60 8 58 Z"
+        fill="url(#g-dark)" stroke="url(#g-gold)" stroke-width="2"/>
+  <!-- Book -->
+  <g transform="translate(32, 36)">
+    <path d="M0 0 Q-11-3 -16 3 L-16 15 Q-11 9 0 6 Z" fill="#f8f5ec" opacity="0.95"/>
+    <path d="M0 0 Q11-3 16 3 L16 15 Q11 9 0 6 Z" fill="#ede8da" opacity="0.9"/>
+    <line x1="0" y1="-1" x2="0" y2="16" stroke="url(#g-gold)" stroke-width="1.2"/>
+  </g>
+  <!-- Diamond -->
+  <path d="M32 9 l3 4.5-3 4.5-3-4.5z" fill="url(#g-gold)" opacity="0.85"/>
 </svg>
