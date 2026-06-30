@@ -16,6 +16,7 @@ const BACKUPS = join(ROOT, 'backups');
 const GITHUB_REPO = 'aminmod-bit/salaf-library';
 const GITHUB_BRANCH = 'main';
 const BOOKS_PATH = 'books';
+const MANUAL_JSON = join(PUBLIC_DATA, 'books.manual.json');
 
 const CATEGORY_KEYWORDS = {
   'Акыда': ['акыда', 'aqeedah', 'акида', 'таухид', 'tawhid', 'иман', 'вероучение', 'усуль', 'ашиар', 'матуриди'],
@@ -120,22 +121,21 @@ async function main() {
     process.exit(0);
   }
 
-  // Backup existing books.json
-  const booksPath = join(PUBLIC_DATA, 'books.json');
-  if (existsSync(booksPath)) {
+  // Backup existing books.manual.json
+  if (existsSync(MANUAL_JSON)) {
     mkdirSync(BACKUPS, { recursive: true });
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    const backupPath = join(BACKUPS, `${timestamp}_books.json`);
-    const existing = readFileSync(booksPath, 'utf8');
+    const backupPath = join(BACKUPS, `${timestamp}_books.manual.json`);
+    const existing = readFileSync(MANUAL_JSON, 'utf8');
     writeFileSync(backupPath, existing);
     console.log(`💾 Backup: ${backupPath}`);
   }
 
-  // Load existing books
+  // Load existing books from manual file
   let existingBooks = [];
-  if (existsSync(booksPath)) {
+  if (existsSync(MANUAL_JSON)) {
     try {
-      existingBooks = JSON.parse(readFileSync(booksPath, 'utf8'));
+      existingBooks = JSON.parse(readFileSync(MANUAL_JSON, 'utf8'));
       if (!Array.isArray(existingBooks)) existingBooks = [];
     } catch { existingBooks = []; }
   }
@@ -190,15 +190,15 @@ async function main() {
   // Combine
   const allBooks = [...existingBooks, ...newBooks];
 
-  // Save
-  writeFileSync(booksPath, JSON.stringify(allBooks, null, 2) + '\n');
+  // Save to books.manual.json (books:sync will merge with books.json)
+  writeFileSync(MANUAL_JSON, JSON.stringify(allBooks, null, 2) + '\n');
 
   console.log(`\n📊 Results:`);
   console.log(`   New books: ${newBooks.length}`);
   console.log(`   Skipped (already imported): ${skipped}`);
   console.log(`   Total books: ${allBooks.length}`);
   console.log(`   Need review: ${newBooks.filter(b => b.needsReview).length}`);
-  console.log(`\n✅ Saved to: ${booksPath}`);
+  console.log(`\n✅ Saved to: ${MANUAL_JSON}`);
 }
 
 main().catch(e => {
