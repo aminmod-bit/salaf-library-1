@@ -14,7 +14,6 @@ const navItems = [
 ];
 
 export default function Header() {
-  const { t } = useTranslation();
   const { setSidebarOpen } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,7 +51,6 @@ export default function Header() {
       </form>
 
       <div className="site-actions">
-        <LiveStatsBadge />
         <ThemeToggle />
         <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Открыть меню"><Menu size={22}/></button>
       </div>
