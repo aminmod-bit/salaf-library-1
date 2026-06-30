@@ -72,11 +72,13 @@ function AppRoutes() {
   const location = useLocation();
   const isReader = location.pathname.startsWith('/read/');
 
-  // Reader: full-screen, no site layout
+  // Reader: full-screen, no site layout, but still needs Route for useParams
   if (isReader) {
     return (
       <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', color: '#d4af37' }}>Загрузка...</div>}>
-        <BookReaderPage />
+        <Routes location={location}>
+          <Route path="/read/:id" element={<BookReaderPage />} />
+        </Routes>
       </Suspense>
     );
   }

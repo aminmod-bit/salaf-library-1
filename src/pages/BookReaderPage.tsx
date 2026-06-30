@@ -33,10 +33,35 @@ const THEME_PANEL: Record<ReaderTheme, string> = { dark: '#1a1a1a', light: '#fff
 const THEME_BORDER: Record<ReaderTheme, string> = { dark: '#333', light: '#ddd', sepia: '#d4c9a8' };
 
 export default function BookReaderPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id: rawId } = useParams<{ id: string }>();
+  const id = rawId ? decodeURIComponent(rawId).trim() : '';
   const navigate = useNavigate();
-  const { books, addToHistory, saveReadingProgress } = useStore();
-  const book = books.find(b => b.id === id);
+  const { books, addToHistory, saveReadingProgress, isLoading } = useStore();
+
+  // Find book: first in store, then fallback to localStorage
+  const book = useMemo(() => {
+    if (!id) return null;
+    // Try store first
+    let found = books.find(b => String(b.id).trim() === id);
+    if (found) return found;
+    // Fallback: check localStorage
+    try {
+      const saved = JSON.parse(localStorage.getItem('salaf-admin-books') || '[]');
+      if (Array.isArray(saved)) {
+        found = saved.find((b: any) => String(b.id).trim() === id);
+        if (found) return found;
+      }
+    } catch {}
+    // Also try books.json data
+    try {
+      const saved = JSON.parse(localStorage.getItem('salaf-books-data') || '[]');
+      if (Array.isArray(saved)) {
+        found = saved.find((b: any) => String(b.id).trim() === id);
+      }
+    } catch {}
+    return found || null;
+  }, [id, books]);
+
   const pdfUrl = useMemo(() => book?.fileUrl ? toAbsoluteUrl(book.fileUrl) : '', [book?.fileUrl]);
 
   const shellRef = useRef<HTMLDivElement>(null);
@@ -310,10 +335,19 @@ export default function BookReaderPage() {
     if (!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.();
   };
 
+  // Loading state while store initializes
+  if (isLoading && !book) return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', color: '#d4af37', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ fontSize: '18px', fontWeight: 600 }}>Загрузка книги...</div>
+    </div>
+  );
+
+  // Book not found
   if (!book) return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', color: '#999', flexDirection: 'column', gap: '16px' }}>
       <div style={{ fontSize: '48px' }}>📕</div>
       <div style={{ fontSize: '18px', fontWeight: 600 }}>Книга не найдена</div>
+      <div style={{ fontSize: '13px', opacity: 0.6 }}>ID: {id}</div>
       <button onClick={() => navigate('/books')} style={{ padding: '10px 20px', background: '#d4af37', color: '#111', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>Назад к книгам</button>
     </div>
   );
@@ -465,9 +499,11 @@ export default function BookReaderPage() {
                   : 'Файл повреждён или недоступен. Попробуйте скачать его.'}
               </p>
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <button onClick={() => window.open(pdfUrl, '_blank')} style={goldBtnStyle}>
-                  <ExternalLink size={14} /> Открыть в новой вкладке
-                </button>
+                {pdfUrl && (
+                  <button onClick={() => window.open(pdfUrl, '_blank')} style={goldBtnStyle}>
+                    <ExternalLink size={14} /> Открыть в новой вкладке
+                  </button>
+                )}
                 <button onClick={downloadPdf} style={goldBtnStyle}>
                   <Download size={14} /> Скачать
                 </button>
@@ -475,6 +511,17 @@ export default function BookReaderPage() {
                   <ArrowLeft size={14} /> Назад
                 </button>
               </div>
+            </div>
+          )}
+
+          {!loadError && !loading && book && !book.fileUrl && (
+            <div style={{ textAlign: 'center', padding: '40px 20px', maxWidth: '500px' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>📄</div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>Файл книги пока не добавлен</h3>
+              <p style={{ fontSize: '14px', opacity: 0.7, marginBottom: '20px' }}>PDF-файл ещё не загружен для этой книги.</p>
+              <button onClick={() => navigate(-1)} style={{ ...goldBtnStyle, background: 'var(--color-bg-hover)', color: textColor, border: `1px solid ${THEME_BORDER[readerTheme]}` }}>
+                <ArrowLeft size={14} /> Назад
+              </button>
             </div>
           )}
 

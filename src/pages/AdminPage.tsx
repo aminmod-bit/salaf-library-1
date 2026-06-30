@@ -377,6 +377,14 @@ export default function AdminPage() {
     toast.success('Сохранено локально — книги видны на сайте');
   };
 
+  const clearLocal = () => {
+    if (!confirm('Удалить все локальные книги? Сайт снова будет читать books.json')) return;
+    localStorage.removeItem(LOCAL_BOOKS_KEY);
+    localStorage.removeItem('salaf-admin-drafts');
+    setLocalBooks([]);
+    toast.success('Локальные книги очищены. Обновите страницу.');
+  };
+
   const exportJson = (data: any[], filename: string) => {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -513,6 +521,11 @@ export default function AdminPage() {
               onClick={saveLocal}>
               <Save size={18} style={{ color: 'var(--color-green-light)' }} />
               <div><div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Сохранить локально</div><div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Видно на сайте</div></div>
+            </button>
+            <button className="glass-card glow-hover" style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', textAlign: 'left', border: '1px solid rgba(239,68,68,0.2)', background: 'var(--color-bg-card)', borderRadius: '12px' }}
+              onClick={clearLocal}>
+              <Trash2 size={18} style={{ color: '#ef4444' }} />
+              <div><div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Очистить локальные</div><div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Вернуть к books.json</div></div>
             </button>
           </div>
         </div>
