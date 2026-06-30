@@ -64,6 +64,7 @@ export default function Sidebar() {
           flexDirection: 'column',
           transition: 'transform 0.3s ease, background 0.3s ease',
           overflowY: 'auto',
+          transform: sidebarOpen ? 'translateX(0)' : undefined,
         }}
       >
         {/* Logo */}
