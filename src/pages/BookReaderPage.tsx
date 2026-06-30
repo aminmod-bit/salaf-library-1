@@ -69,6 +69,7 @@ export default function BookReaderPage() {
   const [fontSize, setFontSize] = useState(() => {
     try { return (JSON.parse(localStorage.getItem(settingsKey(id)) || '{}').fontSize) || 18; } catch { return 18; }
   });
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const progress = totalPages ? Math.min(100, Math.round((page / totalPages) * 100)) : 0;
   const bg = THEME_BG[readerTheme];
@@ -114,13 +115,22 @@ export default function BookReaderPage() {
         if (cancelled) return;
         setPdf(doc);
         setTotalPages(doc.numPages);
+        setLoadError(null);
         setPage(prev => clamp(prev, 1, doc.numPages));
         try {
           const raw = await doc.getOutline();
           if (raw) setOutline(await normalizeOutline(doc, raw));
         } catch {}
       })
-      .catch(() => toast.error('Не удалось открыть PDF'))
+      .catch((err) => {
+        const msg = err?.message || '';
+        if (msg.includes('CORS') || msg.includes('network') || msg.includes('Failed to fetch')) {
+          setLoadError('cors');
+        } else {
+          setLoadError('load');
+        }
+        toast.error('Не удалось открыть PDF');
+      })
       .finally(() => !cancelled && setLoading(false));
 
     return () => { cancelled = true; renderTaskRef.current?.cancel(); };
@@ -438,8 +448,35 @@ export default function BookReaderPage() {
           <button onClick={() => goToPage(page + (twoPages ? 2 : 1))} disabled={page >= totalPages}
             style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', ...navArrowStyle, opacity: page >= totalPages ? 0.2 : 0.5 }}><ChevronRight size={32} /></button>
 
-          {loading && <div style={{ position: 'absolute', padding: '12px 24px', background: 'rgba(0,0,0,0.7)', borderRadius: '20px', fontSize: '14px', color: '#fff' }}>Загрузка PDF...</div>}
+          {loading && !loadError && <div style={{ position: 'absolute', padding: '12px 24px', background: 'rgba(0,0,0,0.7)', borderRadius: '20px', fontSize: '14px', color: '#fff' }}>Загрузка PDF...</div>}
           {rendering && <div style={{ position: 'absolute', bottom: '20px', padding: '8px 16px', background: 'rgba(0,0,0,0.5)', borderRadius: '12px', fontSize: '12px', color: '#aaa' }}>...</div>}
+
+          {loadError && !loading && (
+            <div style={{ textAlign: 'center', padding: '40px 20px', maxWidth: '500px' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>
+                {loadError === 'cors' ? '🔒' : '📕'}
+              </div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
+                {loadError === 'cors' ? 'Файл недоступен напрямую' : 'Не удалось открыть PDF'}
+              </h3>
+              <p style={{ fontSize: '14px', opacity: 0.7, marginBottom: '20px', lineHeight: 1.5 }}>
+                {loadError === 'cors'
+                  ? 'PDF-файл находится на внешнем сервере и не может быть загружен из браузера из-за ограничений CORS. Откройте файл в новой вкладке или скачайте.'
+                  : 'Файл повреждён или недоступен. Попробуйте скачать его.'}
+              </p>
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button onClick={() => window.open(pdfUrl, '_blank')} style={goldBtnStyle}>
+                  <ExternalLink size={14} /> Открыть в новой вкладке
+                </button>
+                <button onClick={downloadPdf} style={goldBtnStyle}>
+                  <Download size={14} /> Скачать
+                </button>
+                <button onClick={() => navigate(-1)} style={{ ...goldBtnStyle, background: 'var(--color-bg-hover)', color: textColor, border: `1px solid ${THEME_BORDER[readerTheme]}` }}>
+                  <ArrowLeft size={14} /> Назад
+                </button>
+              </div>
+            </div>
+          )}
 
           <canvas ref={canvasRef} style={{ maxWidth: '100%', cursor: 'pointer', boxShadow: readerTheme === 'dark' ? '0 4px 40px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.15)' }}
             onClick={() => applyFit(fitMode === 'page' ? 'width' : 'page')} />
