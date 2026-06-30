@@ -283,7 +283,7 @@ export default function HomePage() {
 }
 
 function SectionHeader({ icon: Icon, title, count, onSeeAll }: {
-  icon: React.ComponentType<{ size?: number }>;
+  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
   title: string;
   count: number;
   onSeeAll: () => void;

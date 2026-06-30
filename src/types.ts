@@ -122,3 +122,65 @@ export interface LanguagePack {
   flag: string;
   rtl?: boolean;
 }
+
+export interface AudioItem {
+  id: string;
+  title: string;
+  author: string;
+  authorId?: string;
+  category: string;
+  description: string;
+  duration?: string;
+  fileUrl?: string;
+  downloadUrl?: string;
+  tags: string[];
+  coverColor?: string;
+  coverEmoji?: string;
+  coverImage?: string;
+  series?: string;
+  episode?: number;
+  year?: string;
+  relatedBooks?: string[];
+  views?: number;
+  isNew?: boolean;
+}
+
+export interface Fawaid {
+  id: string;
+  text: string;
+  textAr?: string;
+  author: string;
+  authorId?: string;
+  category: string;
+  language?: string;
+  source?: string;
+  tags: string[];
+  year?: string;
+  isFeatured?: boolean;
+  likes?: number;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  nameAr?: string;
+  icon: string;
+  color: string;
+  description?: string;
+  count?: number;
+  type: 'books' | 'audio' | 'bio' | 'all';
+}
+
+export interface HistoryItem {
+  itemId: string;
+  type: 'book' | 'audio' | 'bio';
+  title: string;
+  subtitle?: string;
+  timestamp?: number;
+}
+
+export interface ReadingGoal {
+  target: number;
+  current: number;
+  year: number;
+}
