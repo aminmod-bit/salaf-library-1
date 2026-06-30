@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Heart, BookOpen, Download, Star } from 'lucide-react';
 import { useStore, Book } from '../store/useStore';
+import { downloadFile } from '../utils/downloadFile';
 import toast from 'react-hot-toast';
 import GeneratedCover from './GeneratedCover';
 
@@ -26,7 +27,11 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
       coverEmoji: book.coverEmoji,
       coverImage: book.coverImage,
     });
-    navigate(`/books/${book.id}`);
+    if (book.fileUrl) {
+      navigate(`/read/${book.id}`);
+    } else {
+      navigate(`/books/${book.id}`);
+    }
   };
 
   const handleFav = (e: React.MouseEvent) => {
@@ -233,11 +238,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
           <button
             onClick={e => {
               e.stopPropagation();
-              if (book.downloadUrl || book.fileUrl) {
-                window.open(book.downloadUrl || book.fileUrl, '_blank');
-              } else {
-                toast('PDF файл пока не добавлен');
-              }
+              downloadFile(book.downloadUrl || book.fileUrl, `${book.title}.pdf`);
             }}
             style={{
               width: '28px',

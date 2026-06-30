@@ -32,16 +32,10 @@ const BookReaderPage = lazy(() => import("./pages/BookReaderPage"));
 
 function PageLoader() {
   return (
-    <div
-      style={{
-        minHeight: "50vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: "#d4af37",
-        fontWeight: 700,
-      }}
-    >
+    <div style={{
+      minHeight: "50vh", display: "flex", alignItems: "center",
+      justifyContent: "center", color: "var(--color-gold)", fontWeight: 700,
+    }}>
       Загрузка страницы...
     </div>
   );
@@ -49,17 +43,11 @@ function PageLoader() {
 
 export default function App() {
   const {
-    setBooks,
-    setBiographies,
-    setAudioLessons,
-    setFawaid,
-    setCategories,
-    setLoading,
+    setBooks, setBiographies, setAudioLessons, setFawaid, setCategories, setLoading,
   } = useStore();
 
   useEffect(() => {
     let mounted = true;
-
     loadLibraryData()
       .then((data) => {
         if (!mounted) return;
@@ -69,21 +57,9 @@ export default function App() {
         setFawaid(data.fawaid);
         setCategories(data.categories);
       })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [
-    setAudioLessons,
-    setBiographies,
-    setBooks,
-    setCategories,
-    setFawaid,
-    setLoading,
-  ]);
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
+  }, [setAudioLessons, setBiographies, setBooks, setCategories, setFawaid, setLoading]);
 
   return (
     <HashRouter>
@@ -94,7 +70,18 @@ export default function App() {
 
 function AppRoutes() {
   const location = useLocation();
+  const isReader = location.pathname.startsWith('/read/');
 
+  // Reader: full-screen, no site layout
+  if (isReader) {
+    return (
+      <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', color: '#d4af37' }}>Загрузка...</div>}>
+        <BookReaderPage />
+      </Suspense>
+    );
+  }
+
+  // Normal site layout
   return (
     <div className="app-layout">
       <Sidebar />
@@ -107,12 +94,8 @@ function AppRoutes() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/books" element={<BooksPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
-                <Route path="/read/:id" element={<BookReaderPage />} />
                 <Route path="/biographies" element={<BiographiesPage />} />
-                <Route
-                  path="/biographies/:id"
-                  element={<BiographyDetailPage />}
-                />
+                <Route path="/biographies/:id" element={<BiographyDetailPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/content" element={<AdminContentPage />} />
@@ -125,10 +108,7 @@ function AppRoutes() {
                 <Route path="/articles" element={<ArticlesPage />} />
                 <Route path="/hadith" element={<HadithPage />} />
                 <Route path="/azkar" element={<AzkarPage />} />
-                <Route
-                  path="/admin/books-editor"
-                  element={<AdminBookEditorPage />}
-                />
+                <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
               </Routes>
             </div>
           </Suspense>
@@ -155,7 +135,6 @@ function AppRoutes() {
           min-height: 100vh;
           background: var(--color-bg-primary);
         }
-
         .main-content {
           flex: 1;
           display: flex;
@@ -164,28 +143,17 @@ function AppRoutes() {
           margin-left: 260px;
           transition: margin-left 0.3s ease;
         }
-
         .page-content {
           flex: 1;
           padding: 24px;
           padding-bottom: 24px;
         }
-
         @media (max-width: 1024px) {
-          .main-content {
-            margin-left: 0;
-          }
-
-          .page-content {
-            padding: 16px;
-          }
+          .main-content { margin-left: 0; }
+          .page-content { padding: 16px; }
         }
-
         @media (max-width: 768px) {
-          .page-content {
-            padding: 12px;
-            padding-bottom: 80px;
-          }
+          .page-content { padding: 12px; padding-bottom: 80px; }
         }
       `}</style>
     </div>

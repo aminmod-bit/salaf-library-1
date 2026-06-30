@@ -2,31 +2,35 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Bookmark, BookOpen, ChevronLeft, ChevronRight, Download, ExternalLink,
-  Focus, ListTree, Maximize2, Minus, PanelLeft, Plus, Save, Search, X
+  Focus, ListTree, Maximize2, Minus, PanelLeft, Plus, Save, Search, X, Settings, Moon, Sun
 } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 import { useStore } from '../store/useStore';
-import { incrementBookDownload, incrementBookView, sendStatsEvent } from '../utils/siteStats';
 import toast from 'react-hot-toast';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 
 type PDFDocumentProxy = pdfjsLib.PDFDocumentProxy;
-type PDFPageProxy = pdfjsLib.PDFPageProxy;
 type FitMode = 'page' | 'width' | 'custom';
-type PanelTab = 'search' | 'bookmarks' | 'toc';
+type PanelTab = 'search' | 'bookmarks' | 'toc' | 'settings';
+type ReaderTheme = 'dark' | 'light' | 'sepia';
 
-interface ReaderBookmark { page: number; note: string; createdAt: string; }
+interface BookmarkItem { page: number; note: string; createdAt: string; }
 interface OutlineItem { title: string; page?: number; items?: OutlineItem[]; }
 
 function toAbsoluteUrl(url: string) {
   try { return new URL(url, document.baseURI).toString(); } catch { return url; }
 }
-function storageKey(id?: string) { return `salaf-library-reader:${id || 'unknown'}`; }
-function bookmarksKey(id?: string) { return `salaf-library-bookmarks:${id || 'unknown'}`; }
-function clamp(value: number, min: number, max: number) { return Math.min(max, Math.max(min, value)); }
-function pct(page: number, total: number) { return total ? Math.min(100, Math.round((page / total) * 100)) : 0; }
+function storageKey(id?: string) { return `sr:pos:${id}`; }
+function bookmarksKey(id?: string) { return `sr:bm:${id}`; }
+function settingsKey(id?: string) { return `sr:cfg:${id}`; }
+function clamp(v: number, min: number, max: number) { return Math.min(max, Math.max(min, v)); }
+
+const THEME_BG: Record<ReaderTheme, string> = { dark: '#111111', light: '#f5f0e8', sepia: '#f4ecd8' };
+const THEME_TEXT: Record<ReaderTheme, string> = { dark: '#e0e0e0', light: '#1a1a1a', sepia: '#3d3422' };
+const THEME_PANEL: Record<ReaderTheme, string> = { dark: '#1a1a1a', light: '#ffffff', sepia: '#efe8d8' };
+const THEME_BORDER: Record<ReaderTheme, string> = { dark: '#333', light: '#ddd', sepia: '#d4c9a8' };
 
 export default function BookReaderPage() {
   const { id } = useParams<{ id: string }>();
@@ -52,26 +56,30 @@ export default function BookReaderPage() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelTab, setPanelTab] = useState<PanelTab>('bookmarks');
   const [outline, setOutline] = useState<OutlineItem[]>([]);
-  const [bookmarks, setBookmarks] = useState<ReaderBookmark[]>([]);
+  const [bookmarks, setBookmarks] = useState<BookmarkItem[]>([]);
   const [note, setNote] = useState('');
   const [query, setQuery] = useState('');
   const [matches, setMatches] = useState<number[]>([]);
   const [searching, setSearching] = useState(false);
   const [chromeHidden, setChromeHidden] = useState(false);
+  const [twoPages, setTwoPages] = useState(() => window.innerWidth > 900);
+  const [readerTheme, setReaderTheme] = useState<ReaderTheme>(() => {
+    try { return (JSON.parse(localStorage.getItem(settingsKey(id)) || '{}').theme) || 'dark'; } catch { return 'dark'; }
+  });
+  const [fontSize, setFontSize] = useState(() => {
+    try { return (JSON.parse(localStorage.getItem(settingsKey(id)) || '{}').fontSize) || 18; } catch { return 18; }
+  });
 
-  const progress = pct(page, totalPages);
+  const progress = totalPages ? Math.min(100, Math.round((page / totalPages) * 100)) : 0;
+  const bg = THEME_BG[readerTheme];
+  const textColor = THEME_TEXT[readerTheme];
 
+  // Save settings
   useEffect(() => {
-    if (!book?.fileUrl) return;
-    addToHistory({
-      id: book.id, type: 'book', title: book.title, subtitle: book.author,
-      visitedAt: new Date().toISOString(), coverColor: book.coverColor,
-      coverEmoji: book.coverEmoji, coverImage: book.coverImage,
-    });
-    incrementBookView(book.id);
-    sendStatsEvent('book_view', { bookId: book.id, title: book.title });
-  }, [addToHistory, book?.author, book?.coverColor, book?.coverEmoji, book?.coverImage, book?.fileUrl, book?.id, book?.title]);
+    localStorage.setItem(settingsKey(id), JSON.stringify({ theme: readerTheme, fontSize }));
+  }, [id, readerTheme, fontSize]);
 
+  // Load saved state
   useEffect(() => {
     if (!id) return;
     try {
@@ -80,9 +88,20 @@ export default function BookReaderPage() {
       if (saved.scale) setScale(saved.scale);
       if (saved.fitMode) setFitMode(saved.fitMode);
       setBookmarks(JSON.parse(localStorage.getItem(bookmarksKey(id)) || '[]'));
-    } catch { /* ignore */ }
+    } catch {}
   }, [id]);
 
+  // History
+  useEffect(() => {
+    if (!book?.fileUrl) return;
+    addToHistory({
+      id: book.id, type: 'book', title: book.title, subtitle: book.author,
+      visitedAt: new Date().toISOString(), coverColor: book.coverColor,
+      coverEmoji: book.coverEmoji, coverImage: book.coverImage,
+    });
+  }, [addToHistory, book]);
+
+  // Load PDF
   useEffect(() => {
     if (!pdfUrl) return;
     let cancelled = false;
@@ -99,14 +118,15 @@ export default function BookReaderPage() {
         try {
           const raw = await doc.getOutline();
           if (raw) setOutline(await normalizeOutline(doc, raw));
-        } catch { /* no outline */ }
+        } catch {}
       })
-      .catch(() => toast.error('Не удалось открыть PDF. Попробуйте открыть файл в новой вкладке.'))
+      .catch(() => toast.error('Не удалось открыть PDF'))
       .finally(() => !cancelled && setLoading(false));
 
     return () => { cancelled = true; renderTaskRef.current?.cancel(); };
   }, [pdfUrl]);
 
+  // Fit scale
   const calculateFitScale = useCallback(async (mode: FitMode, targetPage = page) => {
     if (!pdf || !stageRef.current) return scale;
     const pdfPage = await pdf.getPage(targetPage);
@@ -115,13 +135,14 @@ export default function BookReaderPage() {
     const isMobile = window.innerWidth <= 760;
     const horizontalPadding = isMobile ? 24 : panelOpen ? 52 : 72;
     const verticalPadding = isMobile ? 118 : 128;
-    const availableWidth = Math.max(280, rect.width - horizontalPadding);
+    const cols = twoPages && !isMobile ? 2 : 1;
+    const availableWidth = Math.max(280, (rect.width - horizontalPadding) / cols);
     const availableHeight = Math.max(360, rect.height - verticalPadding);
 
     if (mode === 'width') return clamp(availableWidth / viewport.width, 0.45, isMobile ? 2.4 : 2.1);
     if (mode === 'page') return clamp(Math.min(availableWidth / viewport.width, availableHeight / viewport.height), 0.42, isMobile ? 1.65 : 1.35);
     return scale;
-  }, [pdf, page, panelOpen, scale]);
+  }, [pdf, page, panelOpen, scale, twoPages]);
 
   const applyFit = useCallback(async (mode: FitMode, targetPage = page) => {
     const next = await calculateFitScale(mode, targetPage);
@@ -133,14 +154,16 @@ export default function BookReaderPage() {
     setPage(clamp(target, 1, totalPages || 1));
   }, [totalPages]);
 
+  // Resize observer
   useEffect(() => {
     if (!pdf) return;
     const ro = new ResizeObserver(() => { if (fitMode !== 'custom') applyFit(fitMode); });
     if (stageRef.current) ro.observe(stageRef.current);
     applyFit(fitMode);
     return () => ro.disconnect();
-  }, [pdf, fitMode, applyFit]);
+  }, [pdf, fitMode, applyFit, twoPages]);
 
+  // Render page(s)
   useEffect(() => {
     if (!pdf || !canvasRef.current) return;
     let cancelled = false;
@@ -150,21 +173,49 @@ export default function BookReaderPage() {
       setRendering(true);
       try {
         renderTaskRef.current?.cancel();
-        const pdfPage: PDFPageProxy = await pdf.getPage(page);
-        if (cancelled) return;
-        const viewport = pdfPage.getViewport({ scale });
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
         const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-        canvas.width = Math.floor(viewport.width * dpr);
-        canvas.height = Math.floor(viewport.height * dpr);
-        canvas.style.width = `${viewport.width}px`;
-        canvas.style.height = `${viewport.height}px`;
+        const pagesToRender = twoPages ? [page, page + 1].filter(p => p <= totalPages) : [page];
+
+        let totalWidth = 0;
+        let maxHeight = 0;
+        const pageData: { canvas: HTMLCanvasElement; width: number; height: number }[] = [];
+
+        for (const p of pagesToRender) {
+          const pdfPage = await pdf.getPage(p);
+          if (cancelled) return;
+          const viewport = pdfPage.getViewport({ scale });
+          totalWidth += viewport.width;
+          if (viewport.height > maxHeight) maxHeight = viewport.height;
+          pageData.push({ canvas: document.createElement('canvas'), width: viewport.width, height: viewport.height });
+        }
+
+        const gap = pagesToRender.length > 1 ? 16 : 0;
+        canvas.width = Math.floor((totalWidth + gap) * dpr);
+        canvas.height = Math.floor(maxHeight * dpr);
+        canvas.style.width = `${totalWidth + gap}px`;
+        canvas.style.height = `${maxHeight}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const task = pdfPage.render({ canvas, canvasContext: ctx, viewport });
-        renderTaskRef.current = task;
-        await task.promise;
+
+        let offsetX = 0;
+        for (let i = 0; i < pagesToRender.length; i++) {
+          const pdfPage = await pdf.getPage(pagesToRender[i]);
+          if (cancelled) return;
+          const viewport = pdfPage.getViewport({ scale });
+          const tmpCanvas = pageData[i].canvas;
+          tmpCanvas.width = Math.floor(viewport.width * dpr);
+          tmpCanvas.height = Math.floor(viewport.height * dpr);
+          const tmpCtx = tmpCanvas.getContext('2d');
+          if (!tmpCtx) continue;
+          tmpCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const task = pdfPage.render({ canvas: tmpCanvas, canvasContext: tmpCtx, viewport });
+          renderTaskRef.current = task;
+          await task.promise;
+          ctx.drawImage(tmpCanvas, offsetX, 0, viewport.width, viewport.height);
+          offsetX += viewport.width + gap;
+        }
       } catch (error) {
         if (!(error instanceof Error && error.name === 'RenderingCancelledException')) console.error(error);
       } finally {
@@ -174,12 +225,13 @@ export default function BookReaderPage() {
 
     render();
     return () => { cancelled = true; renderTaskRef.current?.cancel(); };
-  }, [pdf, page, scale]);
+  }, [pdf, page, scale, twoPages, totalPages]);
 
+  // Save progress
   useEffect(() => {
     setPageInput(String(page));
     if (!id || !book || !totalPages) return;
-    localStorage.setItem(storageKey(id), JSON.stringify({ page, scale, fitMode, updatedAt: new Date().toISOString() }));
+    localStorage.setItem(storageKey(id), JSON.stringify({ page, scale, fitMode }));
     saveReadingProgress({
       bookId: book.id, page, totalPages, lastRead: new Date().toISOString(),
       title: book.title, author: book.author, coverColor: book.coverColor,
@@ -187,25 +239,27 @@ export default function BookReaderPage() {
     });
   }, [book, fitMode, id, page, saveReadingProgress, scale, totalPages]);
 
+  // Keyboard
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-      if (event.key === 'ArrowRight' || event.key === 'PageDown') goToPage(page + 1);
-      if (event.key === 'ArrowLeft' || event.key === 'PageUp') goToPage(page - 1);
-      if (event.key === 'f') applyFit('page');
-      if (event.key === 'w') applyFit('width');
-      if (event.key === 'Escape') setPanelOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') goToPage(page + (twoPages ? 2 : 1));
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') goToPage(page - (twoPages ? 2 : 1));
+      if (e.key === 'f') applyFit('page');
+      if (e.key === 'w') applyFit('width');
+      if (e.key === 'Escape') setPanelOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [applyFit, goToPage, page]);
+  }, [applyFit, goToPage, page, twoPages]);
 
+  // Bookmarks
   const addBookmark = () => {
     const next = [{ page, note: note.trim(), createdAt: new Date().toISOString() }, ...bookmarks.filter(b => b.page !== page)];
     setBookmarks(next);
     localStorage.setItem(bookmarksKey(id), JSON.stringify(next));
     setNote('');
-    toast.success(`Закладка на странице ${page} сохранена`);
+    toast.success(`Закладка: стр. ${page}`);
   };
 
   const removeBookmark = (target: number) => {
@@ -214,6 +268,7 @@ export default function BookReaderPage() {
     localStorage.setItem(bookmarksKey(id), JSON.stringify(next));
   };
 
+  // Search
   const runSearch = async () => {
     if (!pdf || !query.trim()) return;
     setSearching(true);
@@ -229,14 +284,13 @@ export default function BookReaderPage() {
       }
       setMatches(found);
       if (found[0]) goToPage(found[0]);
-      toast(found.length ? `Найдено страниц: ${found.length}` : 'Ничего не найдено', { icon: '🔎' });
+      toast(found.length ? `Найдено: ${found.length} стр.` : 'Ничего не найдено');
     } finally { setSearching(false); }
   };
 
+  // Download
   const downloadPdf = () => {
     if (!book) return;
-    incrementBookDownload(book.id);
-    sendStatsEvent('book_download', { bookId: book.id, title: book.title });
     window.open(toAbsoluteUrl(book.downloadUrl || book.fileUrl || ''), '_blank', 'noopener,noreferrer');
   };
 
@@ -246,106 +300,195 @@ export default function BookReaderPage() {
     if (!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.();
   };
 
-  if (!book) return <ReaderEmpty onBack={() => navigate('/books')} />;
+  if (!book) return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', color: '#999', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ fontSize: '48px' }}>📕</div>
+      <div style={{ fontSize: '18px', fontWeight: 600 }}>Книга не найдена</div>
+      <button onClick={() => navigate('/books')} style={{ padding: '10px 20px', background: '#d4af37', color: '#111', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>Назад к книгам</button>
+    </div>
+  );
 
   return (
-    <div ref={shellRef} className={`reader-app fade-in ${chromeHidden ? 'focus-mode' : ''}`}>
-      <style>{readerCss}</style>
-
-      <header className="reader-header">
-        <button className="reader-icon-btn" onClick={() => navigate(-1)} aria-label="Назад"><ArrowLeft size={18} /></button>
-        <div className="reader-book-meta">
-          <strong>{book.title}</strong>
-          <span>{book.author}</span>
-        </div>
-        <div className="reader-header-actions">
-          <button className="reader-soft-btn" onClick={() => { setPanelOpen(true); setPanelTab('bookmarks'); }}><Bookmark size={15}/> Закладки</button>
-          <button className="reader-soft-btn hide-sm" onClick={() => window.open(pdfUrl, '_blank', 'noopener,noreferrer')}><ExternalLink size={15}/> Открыть</button>
-          <button className="reader-gold-btn" onClick={downloadPdf}><Download size={15}/> PDF</button>
-        </div>
-      </header>
-
-      <div className="reader-body">
-        <aside className={`reader-panel ${panelOpen ? 'open' : ''}`}>
-          <div className="reader-panel-head">
-            <div className="reader-tabs">
-              <button className={panelTab === 'bookmarks' ? 'active' : ''} onClick={() => setPanelTab('bookmarks')}><Bookmark size={14}/> Закладки</button>
-              <button className={panelTab === 'search' ? 'active' : ''} onClick={() => setPanelTab('search')}><Search size={14}/> Поиск</button>
-              <button className={panelTab === 'toc' ? 'active' : ''} onClick={() => setPanelTab('toc')}><ListTree size={14}/> Оглавление</button>
-            </div>
-            <button className="reader-icon-btn" onClick={() => setPanelOpen(false)}><X size={16}/></button>
+    <div ref={shellRef} style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: bg, color: textColor, fontFamily: 'Inter, system-ui, sans-serif', overflow: 'hidden' }}>
+      {/* Header */}
+      {!chromeHidden && (
+        <header style={{ height: '52px', display: 'flex', alignItems: 'center', gap: '10px', padding: '0 16px', background: THEME_PANEL[readerTheme], borderBottom: `1px solid ${THEME_BORDER[readerTheme]}`, flexShrink: 0, zIndex: 20 }}>
+          <button onClick={() => navigate(-1)} style={iconBtnStyle}><ArrowLeft size={18} /></button>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '14px', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{book.title}</div>
+            <div style={{ fontSize: '11px', opacity: 0.6 }}>{book.author}</div>
           </div>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <button onClick={() => { setPanelOpen(true); setPanelTab('toc'); }} style={iconBtnStyle}><ListTree size={16} /></button>
+            <button onClick={() => { setPanelOpen(true); setPanelTab('bookmarks'); }} style={iconBtnStyle}><Bookmark size={16} /></button>
+            <button onClick={() => { setPanelOpen(true); setPanelTab('search'); }} style={iconBtnStyle}><Search size={16} /></button>
+            <button onClick={() => { setPanelOpen(true); setPanelTab('settings'); }} style={iconBtnStyle}><Settings size={16} /></button>
+            <button onClick={downloadPdf} style={{ ...iconBtnStyle, background: 'var(--color-gold)', color: '#111' }}><Download size={16} /></button>
+            <button onClick={toggleFullscreen} style={iconBtnStyle}><Maximize2 size={16} /></button>
+            <button onClick={() => setChromeHidden(true)} style={iconBtnStyle}><Focus size={16} /></button>
+          </div>
+        </header>
+      )}
 
-          {panelTab === 'search' && (
-            <div className="panel-section">
-              <div className="reader-search-box"><Search size={15}/><input value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>{ if(e.key==='Enter') runSearch(); }} placeholder="Поиск по PDF" /><button onClick={runSearch}>{searching ? '...' : 'OK'}</button></div>
-              {matches.map(p => <button className="panel-row" key={p} onClick={() => goToPage(p)}>Страница {p}</button>)}
+      {/* Chrome-hidden click area */}
+      {chromeHidden && (
+        <div onClick={() => setChromeHidden(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '40px', zIndex: 100, cursor: 'pointer' }} />
+      )}
+
+      {/* Body */}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+        {/* Side panel */}
+        {panelOpen && (
+          <aside style={{ width: '320px', background: THEME_PANEL[readerTheme], borderRight: `1px solid ${THEME_BORDER[readerTheme]}`, display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', borderBottom: `1px solid ${THEME_BORDER[readerTheme]}` }}>
+              <div style={{ display: 'flex', gap: '4px' }}>
+                {(['toc', 'bookmarks', 'search', 'settings'] as PanelTab[]).map(t => (
+                  <button key={t} onClick={() => setPanelTab(t)} style={{ ...tabBtnStyle, background: panelTab === t ? 'var(--color-gold)' : 'transparent', color: panelTab === t ? '#111' : undefined }}>
+                    {{ toc: <ListTree size={13} />, bookmarks: <Bookmark size={13} />, search: <Search size={13} />, settings: <Settings size={13} /> }[t]}
+                    <span style={{ fontSize: '11px' }}>{{ toc: 'Оглавл.', bookmarks: 'Закладки', search: 'Поиск', settings: 'Настр.' }[t]}</span>
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => setPanelOpen(false)} style={iconBtnStyle}><X size={16} /></button>
             </div>
-          )}
 
-          {panelTab === 'bookmarks' && (
-            <div className="panel-section">
-              <textarea value={note} onChange={e=>setNote(e.target.value)} placeholder={`Заметка к странице ${page}`} />
-              <button className="reader-gold-btn full" onClick={addBookmark}><Save size={14}/> Сохранить страницу {page}</button>
-              {bookmarks.length === 0 && <div className="empty-panel">Пока нет закладок</div>}
-              {bookmarks.map(b => <div className="bookmark-row" key={b.createdAt}><button onClick={()=>goToPage(b.page)}>Страница {b.page}<span>{b.note || 'Без заметки'}</span></button><button onClick={()=>removeBookmark(b.page)}><X size={12}/></button></div>)}
+            <div style={{ flex: 1, overflow: 'auto', padding: '12px' }}>
+              {panelTab === 'toc' && (
+                outline.length ? <OutlineList items={outline} goToPage={goToPage} /> : <div style={{ textAlign: 'center', padding: '20px', opacity: 0.5, fontSize: '13px' }}>Оглавление недоступно</div>
+              )}
+
+              {panelTab === 'bookmarks' && (
+                <div>
+                  <textarea value={note} onChange={e => setNote(e.target.value)} placeholder={`Заметка к стр. ${page}`}
+                    style={{ width: '100%', padding: '8px', borderRadius: '8px', border: `1px solid ${THEME_BORDER[readerTheme]}`, background: bg, color: textColor, fontSize: '13px', resize: 'vertical', minHeight: '50px', marginBottom: '8px', boxSizing: 'border-box' }} />
+                  <button onClick={addBookmark} style={{ ...goldBtnStyle, width: '100%' }}><Save size={13} /> Закладка стр. {page}</button>
+                  <div style={{ marginTop: '12px' }}>
+                    {bookmarks.length === 0 && <div style={{ textAlign: 'center', padding: '16px', opacity: 0.5, fontSize: '13px' }}>Нет закладок</div>}
+                    {bookmarks.map((b, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px', borderRadius: '6px', marginBottom: '4px', background: b.page === page ? 'rgba(212,175,55,0.15)' : 'transparent', cursor: 'pointer' }}
+                        onClick={() => goToPage(b.page)}>
+                        <div><div style={{ fontSize: '13px', fontWeight: 600 }}>Стр. {b.page}</div>{b.note && <div style={{ fontSize: '11px', opacity: 0.6 }}>{b.note}</div>}</div>
+                        <button onClick={e => { e.stopPropagation(); removeBookmark(b.page); }} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '4px' }}><X size={12} /></button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {panelTab === 'search' && (
+                <div>
+                  <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
+                    <input value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') runSearch(); }}
+                      placeholder="Поиск по тексту..."
+                      style={{ flex: 1, padding: '8px 10px', borderRadius: '8px', border: `1px solid ${THEME_BORDER[readerTheme]}`, background: bg, color: textColor, fontSize: '13px' }} />
+                    <button onClick={runSearch} disabled={searching} style={goldBtnStyle}>{searching ? '...' : 'OK'}</button>
+                  </div>
+                  {matches.map(p => (
+                    <button key={p} onClick={() => goToPage(p)}
+                      style={{ display: 'block', width: '100%', textAlign: 'left', padding: '8px', borderRadius: '6px', border: 'none', background: p === page ? 'rgba(212,175,55,0.15)' : 'transparent', color: textColor, cursor: 'pointer', fontSize: '13px', marginBottom: '2px' }}>
+                      Стр. {p}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {panelTab === 'settings' && (
+                <div>
+                  <label style={labelStyle}>Тема</label>
+                  <div style={{ display: 'flex', gap: '6px', marginBottom: '16px' }}>
+                    {(['dark', 'light', 'sepia'] as ReaderTheme[]).map(t => (
+                      <button key={t} onClick={() => setReaderTheme(t)}
+                        style={{ flex: 1, padding: '8px', borderRadius: '8px', border: `2px solid ${readerTheme === t ? 'var(--color-gold)' : THEME_BORDER[readerTheme]}`, background: THEME_BG[t], color: THEME_TEXT[t], cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}>
+                        {{ dark: 'Тёмная', light: 'Светлая', sepia: 'Сепия' }[t]}
+                      </button>
+                    ))}
+                  </div>
+
+                  <label style={labelStyle}>Размер шрифта: {fontSize}px</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                    <button onClick={() => setFontSize((s: number) => Math.max(12, s - 2))} style={iconBtnStyle}><Minus size={14} /></button>
+                    <input type="range" min={12} max={32} value={fontSize} onChange={e => setFontSize(Number(e.target.value))} style={{ flex: 1 }} />
+                    <button onClick={() => setFontSize((s: number) => Math.min(32, s + 2))} style={iconBtnStyle}><Plus size={14} /></button>
+                  </div>
+
+                  <label style={labelStyle}>Режим страниц</label>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button onClick={() => setTwoPages(false)} style={{ ...tabBtnStyle, flex: 1, background: !twoPages ? 'var(--color-gold)' : 'transparent', color: !twoPages ? '#111' : undefined }}>1 страница</button>
+                    <button onClick={() => setTwoPages(true)} style={{ ...tabBtnStyle, flex: 1, background: twoPages ? 'var(--color-gold)' : 'transparent', color: twoPages ? '#111' : undefined }}>2 страницы</button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </aside>
+        )}
 
-          {panelTab === 'toc' && (
-            <div className="panel-section">
-              {outline.length ? <OutlineList items={outline} goToPage={goToPage}/> : <div className="empty-panel">В этом PDF нет встроенного оглавления</div>}
-            </div>
-          )}
-        </aside>
-
-        <main
-          className="reader-stage-pro"
-          ref={stageRef}
-          onDoubleClick={() => applyFit(fitMode === 'page' ? 'width' : 'page')}
+        {/* Reading area */}
+        <main ref={stageRef} style={{ flex: 1, overflow: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
           onTouchStart={e => { touchStartX.current = e.touches[0]?.clientX || null; }}
           onTouchEnd={e => {
             if (touchStartX.current == null) return;
             const diff = (e.changedTouches[0]?.clientX || 0) - touchStartX.current;
-            if (Math.abs(diff) > 70) goToPage(diff < 0 ? page + 1 : page - 1);
+            if (Math.abs(diff) > 70) goToPage(diff < 0 ? page + (twoPages ? 2 : 1) : page - (twoPages ? 2 : 1));
             touchStartX.current = null;
-          }}
-        >
-          <button className="page-zone left" onClick={() => goToPage(page - 1)} aria-label="Предыдущая страница"><ChevronLeft size={28}/></button>
-          <button className="page-zone right" onClick={() => goToPage(page + 1)} aria-label="Следующая страница"><ChevronRight size={28}/></button>
+          }}>
 
-          <div className="reader-page-wrap">
-            {loading && <div className="reader-pill">Загрузка PDF...</div>}
-            {rendering && <div className="reader-pill secondary">Подготовка страницы...</div>}
-            <canvas ref={canvasRef} />
-          </div>
+          {/* Side arrows */}
+          <button onClick={() => goToPage(page - (twoPages ? 2 : 1))} disabled={page <= 1}
+            style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', ...navArrowStyle, opacity: page <= 1 ? 0.2 : 0.5 }}><ChevronLeft size={32} /></button>
+          <button onClick={() => goToPage(page + (twoPages ? 2 : 1))} disabled={page >= totalPages}
+            style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', ...navArrowStyle, opacity: page >= totalPages ? 0.2 : 0.5 }}><ChevronRight size={32} /></button>
+
+          {loading && <div style={{ position: 'absolute', padding: '12px 24px', background: 'rgba(0,0,0,0.7)', borderRadius: '20px', fontSize: '14px', color: '#fff' }}>Загрузка PDF...</div>}
+          {rendering && <div style={{ position: 'absolute', bottom: '20px', padding: '8px 16px', background: 'rgba(0,0,0,0.5)', borderRadius: '12px', fontSize: '12px', color: '#aaa' }}>...</div>}
+
+          <canvas ref={canvasRef} style={{ maxWidth: '100%', cursor: 'pointer', boxShadow: readerTheme === 'dark' ? '0 4px 40px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.15)' }}
+            onClick={() => applyFit(fitMode === 'page' ? 'width' : 'page')} />
         </main>
       </div>
 
-      <footer className="reader-bottom-bar">
-        <button className="reader-icon-btn" onClick={() => { setPanelOpen(true); setPanelTab('toc'); }}><PanelLeft size={17}/></button>
-        <button className="reader-icon-btn" onClick={() => goToPage(page - 1)} disabled={page <= 1}><ChevronLeft size={18}/></button>
-        <form className="page-form" onSubmit={e=>{e.preventDefault(); goToPage(Number(pageInput));}}>
-          <input value={pageInput} onChange={e=>setPageInput(e.target.value)} />
-          <span>/ {totalPages || '—'}</span>
-        </form>
-        <button className="reader-icon-btn" onClick={() => goToPage(page + 1)} disabled={page >= totalPages}><ChevronRight size={18}/></button>
-        <input className="page-slider" type="range" min={1} max={totalPages || 1} value={page} onChange={e=>goToPage(Number(e.target.value))} />
-        <span className="progress-label">{progress}%</span>
-        <button className={`reader-soft-btn ${fitMode === 'page' ? 'active' : ''}`} onClick={() => applyFit('page')}><BookOpen size={15}/> Страница</button>
-        <button className={`reader-soft-btn ${fitMode === 'width' ? 'active' : ''}`} onClick={() => applyFit('width')}>По ширине</button>
-        <button className="reader-icon-btn" onClick={() => { setFitMode('custom'); setScale(s => clamp(+(s - .12).toFixed(2), .35, 3)); }}><Minus size={16}/></button>
-        <span className="zoom-label">{Math.round(scale * 100)}%</span>
-        <button className="reader-icon-btn" onClick={() => { setFitMode('custom'); setScale(s => clamp(+(s + .12).toFixed(2), .35, 3)); }}><Plus size={16}/></button>
-        <button className="reader-icon-btn" onClick={() => setChromeHidden(v => !v)}><Focus size={16}/></button>
-        <button className="reader-icon-btn" onClick={toggleFullscreen}><Maximize2 size={16}/></button>
-      </footer>
+      {/* Bottom bar */}
+      {!chromeHidden && (
+        <footer style={{ height: '44px', display: 'flex', alignItems: 'center', gap: '8px', padding: '0 16px', background: THEME_PANEL[readerTheme], borderTop: `1px solid ${THEME_BORDER[readerTheme]}`, flexShrink: 0, fontSize: '13px' }}>
+          <button onClick={() => goToPage(page - (twoPages ? 2 : 1))} disabled={page <= 1} style={iconBtnSmall}><ChevronLeft size={16} /></button>
+          <form onSubmit={e => { e.preventDefault(); goToPage(Number(pageInput)); }} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <input value={pageInput} onChange={e => setPageInput(e.target.value)}
+              style={{ width: '40px', padding: '4px', textAlign: 'center', borderRadius: '6px', border: `1px solid ${THEME_BORDER[readerTheme]}`, background: bg, color: textColor, fontSize: '13px' }} />
+            <span style={{ opacity: 0.5 }}>/ {totalPages || '—'}</span>
+          </form>
+          <button onClick={() => goToPage(page + (twoPages ? 2 : 1))} disabled={page >= totalPages} style={iconBtnSmall}><ChevronRight size={16} /></button>
+
+          <input type="range" min={1} max={totalPages || 1} value={page} onChange={e => goToPage(Number(e.target.value))}
+            style={{ flex: 1, height: '4px', accentColor: 'var(--color-gold)' }} />
+
+          <span style={{ opacity: 0.5, fontSize: '12px', minWidth: '32px', textAlign: 'right' }}>{progress}%</span>
+
+          <button onClick={() => applyFit('page')} style={{ ...tabBtnStyle, background: fitMode === 'page' ? 'var(--color-gold)' : 'transparent', color: fitMode === 'page' ? '#111' : undefined }}>
+            <BookOpen size={13} /> Вся
+          </button>
+          <button onClick={() => applyFit('width')} style={{ ...tabBtnStyle, background: fitMode === 'width' ? 'var(--color-gold)' : 'transparent', color: fitMode === 'width' ? '#111' : undefined }}>
+            Ширина
+          </button>
+
+          <button onClick={() => { setFitMode('custom'); setScale(s => clamp(+(s - 0.12).toFixed(2), 0.35, 3)); }} style={iconBtnSmall}><Minus size={14} /></button>
+          <span style={{ fontSize: '11px', opacity: 0.5, minWidth: '32px', textAlign: 'center' }}>{Math.round(scale * 100)}%</span>
+          <button onClick={() => { setFitMode('custom'); setScale(s => clamp(+(s + 0.12).toFixed(2), 0.35, 3)); }} style={iconBtnSmall}><Plus size={14} /></button>
+        </footer>
+      )}
     </div>
   );
 }
 
-function OutlineList({ items, goToPage }: { items: OutlineItem[]; goToPage: (page: number) => void }) {
-  return <>{items.map((item, idx) => <div key={`${item.title}-${idx}`} className="outline-item"><button disabled={!item.page} onClick={() => item.page && goToPage(item.page)}>{item.title}</button>{item.items?.length ? <div className="outline-child"><OutlineList items={item.items} goToPage={goToPage}/></div> : null}</div>)}</>;
+// ─── Outline ─────────────────────────────────────────────────────────────────
+function OutlineList({ items, goToPage }: { items: OutlineItem[]; goToPage: (p: number) => void }) {
+  return <>{items.map((item, idx) => (
+    <div key={`${item.title}-${idx}`}>
+      <button disabled={!item.page} onClick={() => item.page && goToPage(item.page)}
+        style={{ display: 'block', width: '100%', textAlign: 'left', padding: '6px 8px', borderRadius: '6px', border: 'none', background: 'transparent', cursor: item.page ? 'pointer' : 'default', fontSize: '13px', opacity: item.page ? 1 : 0.5 }}>
+        {item.title}
+      </button>
+      {item.items?.length ? <div style={{ paddingLeft: '12px' }}><OutlineList items={item.items} goToPage={goToPage} /></div> : null}
+    </div>
+  ))}</>;
 }
 
 async function normalizeOutline(doc: PDFDocumentProxy, raw: any[]): Promise<OutlineItem[]> {
@@ -354,14 +497,41 @@ async function normalizeOutline(doc: PDFDocumentProxy, raw: any[]): Promise<Outl
     try {
       const dest = typeof item.dest === 'string' ? await doc.getDestination(item.dest) : item.dest;
       if (dest?.[0]) page = (await doc.getPageIndex(dest[0])) + 1;
-    } catch { /* ignore */ }
+    } catch {}
     return { title: item.title || 'Раздел', page, items: item.items?.length ? await normalizeOutline(doc, item.items) : [] };
   }));
 }
 
-function ReaderEmpty({ onBack }: { onBack: () => void }) {
-  return <div style={{ textAlign: 'center', padding: '80px', color: '#5a7a63' }}><div style={{ fontSize: '64px', marginBottom: '16px' }}>📕</div><div style={{ fontSize: '20px', fontWeight: 600, color: '#9db8a3' }}>Книга не найдена</div><button className="btn-secondary" style={{ marginTop: '20px' }} onClick={onBack}><ArrowLeft size={16} /> Назад к книгам</button></div>;
-}
+// ─── Styles ──────────────────────────────────────────────────────────────────
+const iconBtnStyle: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px',
+  borderRadius: '8px', border: '1px solid var(--color-border)', background: 'var(--color-bg-hover)',
+  color: 'var(--color-text-primary)', cursor: 'pointer', flexShrink: 0,
+};
 
-const readerCss = `
-.reader-app{height:calc(100vh - 88px);min-height:620px;display:grid;grid-template-rows:auto 1fr auto;background:var(--color-bg-primary);border:1px solid var(--color-border);border-radius:22px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.42)}.reader-header{height:62px;display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--color-bg-glass);border-bottom:1px solid var(--color-border);backdrop-filter:blur(18px)}.reader-book-meta{min-width:0;flex:1}.reader-book-meta strong{display:block;color:var(--color-text-primary);font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.reader-book-meta span{display:block;color:var(--color-text-secondary);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.reader-header-actions{display:flex;gap:8px;align-items:center}.reader-icon-btn,.reader-soft-btn,.reader-gold-btn{border:1px solid var(--color-border);background:var(--color-bg-hover);color:var(--color-text-primary);border-radius:12px;padding:9px 11px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:750}.reader-icon-btn{width:40px;height:40px;justify-content:center;padding:0}.reader-icon-btn:disabled{opacity:.35;cursor:not-allowed}.reader-soft-btn.active{background:rgba(212,175,55,.14);color:var(--color-gold)}.reader-gold-btn{background:linear-gradient(135deg,#d4af37,#f0c84a);color:#07130b;border:0}.reader-gold-btn.full{width:100%;justify-content:center}.reader-body{min-height:0;display:grid;grid-template-columns:0 1fr;transition:grid-template-columns .22s ease}.reader-body:has(.reader-panel.open){grid-template-columns:330px 1fr}.reader-panel{min-width:0;overflow:hidden;background:var(--color-bg-card);border-right:1px solid var(--color-border);display:flex;flex-direction:column}.reader-panel.open{min-width:330px}.reader-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border-bottom:1px solid rgba(212,175,55,.1)}.reader-tabs{display:flex;gap:5px;overflow:auto}.reader-tabs button{border:0;background:transparent;color:var(--color-text-secondary);border-radius:10px;padding:8px;display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;font-weight:750}.reader-tabs button.active{background:rgba(212,175,55,.12);color:var(--color-gold)}.panel-section{padding:14px;overflow:auto;display:flex;flex-direction:column;gap:10px}.reader-search-box{display:flex;gap:7px;align-items:center;border:1px solid var(--color-border);border-radius:12px;background:rgba(255,255,255,.04);padding:8px}.reader-search-box input{min-width:0;flex:1;background:transparent;border:0;outline:0;color:var(--color-text-primary)}.reader-search-box button,.panel-row{border:1px solid var(--color-border);background:rgba(255,255,255,.04);color:var(--color-gold);border-radius:10px;padding:8px;cursor:pointer}.panel-section textarea{min-height:90px;background:rgba(255,255,255,.04);border:1px solid var(--color-border);color:var(--color-text-primary);border-radius:12px;padding:10px;resize:vertical}.empty-panel{padding:18px;text-align:center;color:#5a7a63;border:1px dashed rgba(212,175,55,.16);border-radius:12px}.bookmark-row{display:grid;grid-template-columns:1fr auto;gap:7px}.bookmark-row button{border:1px solid var(--color-border);background:rgba(255,255,255,.035);color:var(--color-text-primary);border-radius:10px;padding:9px;text-align:left;cursor:pointer}.bookmark-row span{display:block;color:var(--color-text-secondary);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.outline-item button{width:100%;text-align:left;border:1px solid var(--color-border);background:rgba(255,255,255,.03);color:var(--color-text-primary);border-radius:10px;padding:9px;margin-bottom:6px;cursor:pointer}.outline-child{padding-left:12px;border-left:1px solid rgba(212,175,55,.14)}.reader-stage-pro{position:relative;min-width:0;overflow:auto;display:flex;align-items:center;justify-content:center;padding:28px;background:radial-gradient(circle at 50% 10%,rgba(212,175,55,.055),transparent 35%),#0b120d}.reader-page-wrap{position:relative;min-width:min-content}.reader-page-wrap canvas{display:block;background:#fff;border-radius:6px;box-shadow:0 22px 70px rgba(0,0,0,.58)}.reader-pill{position:absolute;left:50%;top:16px;transform:translateX(-50%);z-index:4;border:1px solid rgba(212,175,55,.22);background:rgba(7,19,11,.9);color:var(--color-gold);border-radius:999px;padding:8px 14px;font-size:12px;white-space:nowrap}.reader-pill.secondary{top:56px;color:var(--color-text-secondary)}.page-zone{position:fixed;top:50%;transform:translateY(-50%);z-index:3;width:54px;height:92px;border:1px solid var(--color-border);background:rgba(7,19,11,.28);color:rgba(212,175,55,.45);border-radius:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.32;transition:.2s}.page-zone:hover{opacity:1;background:rgba(7,19,11,.72)}.page-zone.left{left:calc(260px + 24px)}.page-zone.right{right:24px}.reader-bottom-bar{min-height:66px;display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--color-bg-card);border-top:1px solid rgba(212,175,55,.12);backdrop-filter:blur(18px)}.page-form{display:flex;align-items:center;gap:6px;color:var(--color-text-secondary)}.page-form input{width:56px;background:rgba(255,255,255,.06);border:1px solid var(--color-border);border-radius:10px;color:var(--color-text-primary);padding:8px;text-align:center}.page-slider{flex:1;min-width:90px;accent-color:var(--color-gold)}.progress-label,.zoom-label{font-size:12px;color:var(--color-gold);font-weight:850;min-width:42px;text-align:center}.focus-mode .reader-header{display:none}.focus-mode{height:calc(100vh - 36px)}@media(max-width:1024px){.page-zone.left{left:18px}.reader-body:has(.reader-panel.open){grid-template-columns:300px 1fr}.reader-panel.open{min-width:300px}}@media(max-width:760px){.reader-app{height:calc(100vh - 78px);border-radius:0;border-left:0;border-right:0}.reader-header{height:auto;align-items:flex-start}.reader-header-actions{gap:5px}.hide-sm{display:none}.reader-soft-btn{font-size:0}.reader-soft-btn svg{margin:0}.reader-body,.reader-body:has(.reader-panel.open){display:block}.reader-panel{display:none}.reader-panel.open{display:flex;position:fixed;z-index:40;inset:86px 10px 76px;min-width:0;border:1px solid rgba(212,175,55,.18);border-radius:18px;box-shadow:0 20px 80px rgba(0,0,0,.55)}.reader-stage-pro{height:100%;padding:12px;align-items:center}.page-zone{display:none}.reader-bottom-bar{overflow-x:auto;gap:6px}.reader-bottom-bar .reader-soft-btn{font-size:12px;white-space:nowrap}.reader-bottom-bar .reader-soft-btn svg{display:none}.zoom-label{display:none}.page-slider{min-width:120px}.reader-page-wrap canvas{border-radius:4px;box-shadow:0 12px 42px rgba(0,0,0,.55)}}`;
+const iconBtnSmall: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px',
+  borderRadius: '6px', border: 'none', background: 'transparent', color: 'var(--color-text-primary)',
+  cursor: 'pointer', flexShrink: 0,
+};
+
+const tabBtnStyle: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', borderRadius: '6px',
+  border: '1px solid var(--color-border)', background: 'transparent', color: 'var(--color-text-secondary)',
+  cursor: 'pointer', fontSize: '12px', fontWeight: 600, whiteSpace: 'nowrap',
+};
+
+const goldBtnStyle: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+  padding: '8px 14px', borderRadius: '8px', border: 'none',
+  background: 'linear-gradient(135deg, #d4af37, #f0c84a)', color: '#111',
+  fontWeight: 700, fontSize: '13px', cursor: 'pointer',
+};
+
+const navArrowStyle: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px',
+  borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,0.3)', color: '#fff',
+  cursor: 'pointer', transition: 'opacity 0.2s', zIndex: 5,
+};
+
+const labelStyle: React.CSSProperties = { display: 'block', fontSize: '12px', fontWeight: 600, opacity: 0.7, marginBottom: '6px' };
