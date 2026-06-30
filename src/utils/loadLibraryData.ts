@@ -31,13 +31,23 @@ async function loadJsonArray<T>(path: string, fallback: T[]): Promise<T[]> {
 }
 
 export async function loadLibraryData(): Promise<LibraryDataBundle> {
-  const [books, biographies, categories, audioLessons, fawaid] = await Promise.all([
+  // Check for admin override in localStorage
+  let adminBooks: Book[] | null = null;
+  try {
+    const saved = localStorage.getItem('salaf-admin-books');
+    if (saved) adminBooks = JSON.parse(saved);
+  } catch {}
+
+  const [jsonBooks, biographies, categories, audioLessons, fawaid] = await Promise.all([
     loadJsonArray<Book>('data/books.json', booksData),
     loadJsonArray<Biography>('data/biographies.json', biographiesData),
     loadJsonArray<Category>('data/categories.json', categoriesData),
     loadJsonArray<AudioLesson>('data/audio.json', audioData),
     loadJsonArray<Faidah>('data/fawaid.json', fawaidData),
   ]);
+
+  // Use admin override if available, otherwise use JSON data
+  const books = adminBooks && adminBooks.length > 0 ? adminBooks : jsonBooks;
 
   return {
     books,
