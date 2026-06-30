@@ -1,248 +1,207 @@
 #!/usr/bin/env node
-import fs from 'node:fs';
-import path from 'node:path';
-import https from 'node:https';
+/**
+ * Import books from GitHub repository
+ * Usage: node scripts/import-github-books.mjs
+ */
 
-const root = process.cwd();
-const args = process.argv.slice(2);
-const sourceUrl = args.find((arg) => !arg.startsWith('--')) || 'https://github.com/aminmod-bit/salaf-library/tree/main/books';
-const modeArg = args.find((arg) => arg.startsWith('--mode='));
-const mode = modeArg ? modeArg.split('=')[1] : 'link';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const dataFile = path.join(root, 'public', 'data', 'books.json');
-const publicBooksDir = path.join(root, 'public', 'books');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, '..');
+const PUBLIC_DATA = join(ROOT, 'public', 'data');
+const BACKUPS = join(ROOT, 'backups');
 
-fs.mkdirSync(path.dirname(dataFile), { recursive: true });
-fs.mkdirSync(publicBooksDir, { recursive: true });
+const GITHUB_REPO = 'aminmod-bit/salaf-library';
+const GITHUB_BRANCH = 'main';
+const BOOKS_PATH = 'books';
 
-function parseGithubUrl(url) {
-  const match = url.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/tree\/([^/]+)\/(.+)$/);
-  if (!match) {
-    throw new Error('Use GitHub folder URL like: https://github.com/owner/repo/tree/branch/books');
+const CATEGORY_KEYWORDS = {
+  'Акыда': ['акыда', 'aqeedah', 'акида', 'таухид', 'tawhid', 'иман', 'вероучение', 'усуль', 'ашиар', 'матуриди'],
+  'Хадисы': ['хадис', 'hadith', 'сахих', 'sahih', 'сунан', 'sunan', 'бухари', 'bukhari', 'муслим', 'муснад', 'навави', 'nawawi', 'аджурри'],
+  'Фикх': ['фикх', 'fiqh', 'намаз', 'salat', 'пост', 'ramadan', 'рамадан', 'закят', 'zakat', 'хадж', 'hajj', 'умра', 'умры', ' Cleanliness', 'очищ', 'валу'],
+  'Дуа и зикр': ['дуа', 'dua', 'azkar', 'adhkar', 'zikr', 'зикр', 'азкар', 'дуа'],
+  'Сира': ['сира', 'seerah', 'пророк', 'prophet', 'мухаммад', 'muhammad', 'мекка', 'медина'],
+  'Арабский язык': ['arabic', 'арабский', 'nahw', 'sarf', 'арабск'],
+  'Тафсир': ['тафсир', 'tafsir', 'толкование', 'коран', 'quran'],
+  'Манхадж': ['манхадж', 'manhaj', 'методология', 'сунна', 'sunnah', ' Kitab as-Sunnah', 'ас-Сунна'],
+  'Фаваиды': ['fawaid', 'فوائد', 'польза', 'мудрость', 'урок'],
+  'Биографии': ['биография', 'biography', 'учёный', 'имам', 'имама', 'имам ахмад', 'ибн'],
+  'Воспитание': ['воспит', 'адаб', 'нравствен', 'характер', 'blеск'],
+  'История': ['истори', 'история', 'халифат', 'государств'],
+  'Даава': ['даава', 'призыв', 'dawah'],
+  'Общее': ['общее', 'general', 'другое'],
+};
+
+const TAG_KEYWORDS = ['таухид', 'акыда', 'хадис', 'фикх', 'сира', 'коран', 'дуа', 'азкар', 'методология', 'биография', 'арабский', 'тафсир', 'сунна', 'саляф', 'намаз', 'пост', 'рамадан'];
+
+function detectCategory(filename) {
+  const lower = filename.toLowerCase();
+  for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (keywords.some(kw => lower.includes(kw))) return cat;
   }
-  const [, owner, repo, branch, folder] = match;
-  return { owner, repo, branch, folder };
-}
-
-function requestJson(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'salaf-library-importer' } }, (res) => {
-      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        requestJson(res.headers.location).then(resolve, reject);
-        return;
-      }
-      if (res.statusCode !== 200) {
-        reject(new Error(`GitHub API error ${res.statusCode}: ${url}`));
-        res.resume();
-        return;
-      }
-      let body = '';
-      res.setEncoding('utf8');
-      res.on('data', (chunk) => body += chunk);
-      res.on('end', () => {
-        try { resolve(JSON.parse(body)); } catch (error) { reject(error); }
-      });
-    }).on('error', reject);
-  });
-}
-
-function downloadFile(url, target) {
-  return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(target);
-    https.get(encodeURI(url), { headers: { 'User-Agent': 'salaf-library-importer' } }, (res) => {
-      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        file.close();
-        fs.rmSync(target, { force: true });
-        downloadFile(res.headers.location, target).then(resolve, reject);
-        return;
-      }
-      if (res.statusCode !== 200) {
-        file.close();
-        fs.rmSync(target, { force: true });
-        reject(new Error(`Download failed ${res.statusCode}: ${url}`));
-        return;
-      }
-      res.pipe(file);
-      file.on('finish', () => file.close(resolve));
-    }).on('error', (error) => {
-      file.close();
-      fs.rmSync(target, { force: true });
-      reject(error);
-    });
-  });
-}
-
-function readJson(file, fallback = []) {
-  if (!fs.existsSync(file)) return fallback;
-  const raw = fs.readFileSync(file, 'utf8').trim();
-  return raw ? JSON.parse(raw) : fallback;
-}
-
-function writeJson(file, data) {
-  fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
-}
-
-function slugify(value) {
-  const map = {
-    а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'c', ч: 'ch', ш: 'sh', щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
-  };
-  return String(value || 'book')
-    .normalize('NFC')
-    .toLowerCase()
-    .replace(/[а-яё]/g, (ch) => map[ch] || ch)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 90) || 'book';
-}
-
-function uniqueFileName(dir, base, ext) {
-  let name = `${base}${ext}`;
-  let i = 2;
-  while (fs.existsSync(path.join(dir, name))) {
-    name = `${base}-${i}${ext}`;
-    i += 1;
-  }
-  return name;
-}
-
-function nextId(items, prefix = 'b') {
-  const max = items.reduce((acc, item) => {
-    const id = String(item.id || '');
-    if (!id.startsWith(prefix)) return acc;
-    const num = Number(id.slice(prefix.length).replace(/^0+/, '') || '0');
-    return Number.isFinite(num) ? Math.max(acc, num) : acc;
-  }, 0);
-  return `${prefix}${String(max + 1).padStart(3, '0')}`;
-}
-
-function cleanTitle(filename) {
-  return path.basename(filename, path.extname(filename))
-    .normalize('NFC')
-    .replace(/_/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/\s+—\s+/g, ' — ')
-    .trim();
-}
-
-function splitTitleAuthor(title) {
-  const parts = title.split(/\s+—\s+|\s+-\s+/).map((x) => x.trim()).filter(Boolean);
-  if (parts.length >= 2) {
-    return { title: parts.slice(0, -1).join(' — '), author: parts.at(-1) };
-  }
-  const authorMatch = title.match(/(.+?)[,\s]+(Усаймин|Ибн Баз|аль[-\s]Альбани|аль[-\s]Фаузан|аль[-\s]Мунаджид|Маджид ибн Сулейман|ан[-\s]Навави|аль[-\s]Аджуррии?й?)$/i);
-  if (authorMatch) return { title: authorMatch[1].trim(), author: authorMatch[2].trim() };
-  return { title, author: 'Автор не указан' };
-}
-
-function detectCategory(title) {
-  const value = title.toLowerCase();
-  if (/дуа|зикр|мольб/.test(value)) return 'Дуа и зикр';
-  if (/хадис|сунн/.test(value)) return 'Хадисы';
-  if (/коран|къуран|тафсир|сур[аы]/.test(value)) return 'Коран';
-  if (/таухид|акыд|акъид|основ|правил|ширк|ислам/.test(value)) return 'Акыда';
-  if (/намаз|пост|рамадан|закят|хадж|умра|фикх|тахарат|омовен/.test(value)) return 'Фикх';
-  if (/биограф|сира|пророк|сподвиж|сахаб/.test(value)) return 'Сира';
-  if (/зуль|хидж|польз|настав|сердц|грех|нрав|адаб/.test(value)) return 'Фаваиды';
-  if (/араб|граммат|язык/.test(value)) return 'Арабский язык';
   return 'Общее';
 }
 
-function detectTags(title, category) {
-  const tags = new Set([category.toLowerCase()]);
-  const value = title.toLowerCase();
-  for (const [word, tag] of [
-    ['таухид', 'таухид'], ['акыд', 'акыда'], ['дуа', 'дуа'], ['хадис', 'хадисы'],
-    ['рамадан', 'рамадан'], ['пост', 'пост'], ['коран', 'коран'], ['намаз', 'намаз'],
-    ['зуль', 'зуль-хиджа'], ['усаймин', 'усаймин'], ['ибн баз', 'ибн баз'], ['альбани', 'альбани'],
-  ]) {
-    if (value.includes(word)) tags.add(tag);
+function detectTags(filename, category) {
+  const tags = [];
+  const lower = filename.toLowerCase();
+  if (category !== 'Общее') tags.push(category.toLowerCase());
+  for (const kw of TAG_KEYWORDS) {
+    if (lower.includes(kw)) tags.push(kw);
   }
-  return [...tags].slice(0, 8);
+  return [...new Set(tags)];
 }
 
-function fileSizeMb(bytes) {
-  return `${(bytes / 1024 / 1024).toFixed(bytes < 10 * 1024 * 1024 ? 1 : 0)} МБ`;
+function parseAuthorTitle(filename) {
+  const name = filename.replace(/\.[^.]+$/, '').replace(/[_]+/g, ' ').replace(/\s*\(\d+\)\s*/g, ' ').trim();
+
+  // Pattern: "Title - Author" or "Title — Author" or "Title_Автор"
+  const patterns = [
+    /^(.+?)\s*[-–—]\s*(.+)$/,
+    /^(.+?),\s*(.+)$/,
+    /^(.+?)\s+имама?\s+(.+)$/i,
+    /^(.+?)\s+шейх[а-я]?\s+(.+)$/i,
+    /^(.+?)\s+ибн\s+(.+)$/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = name.match(pattern);
+    if (match) {
+      const part1 = match[1].trim();
+      const part2 = match[2].trim();
+      if (part1.length < 60 && part2.length < 60) {
+        return { title: part1, author: part2 };
+      }
+    }
+  }
+
+  return { title: name, author: 'Автор не указан' };
+}
+
+function generateId() {
+  return 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function fileSizeStr(bytes) {
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' КБ';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' МБ';
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}: ${url}`);
+  return response.json();
 }
 
 async function main() {
-  if (!['link', 'download'].includes(mode)) {
-    throw new Error('Mode must be --mode=link or --mode=download');
+  console.log('📚 Fetching books from GitHub...');
+  console.log(`   Repository: ${GITHUB_REPO}`);
+  console.log(`   Path: ${BOOKS_PATH}/`);
+  console.log('');
+
+  // Fetch directory listing
+  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${BOOKS_PATH}?ref=${GITHUB_BRANCH}`;
+  let files;
+  try {
+    files = await fetchJson(url);
+  } catch (e) {
+    console.error('❌ Failed to fetch GitHub API:', e.message);
+    process.exit(1);
   }
 
-  const { owner, repo, branch, folder } = parseGithubUrl(sourceUrl);
-  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(folder)}?ref=${encodeURIComponent(branch)}`;
-  const contents = await requestJson(apiUrl);
-  if (!Array.isArray(contents)) throw new Error('GitHub folder response is not an array');
+  // Filter PDF files only
+  const pdfs = files.filter(f => f.type === 'file' && f.name.toLowerCase().endsWith('.pdf'));
+  console.log(`📄 Found ${pdfs.length} PDF files\n`);
 
-  const pdfs = contents.filter((item) => item.type === 'file' && item.name.toLowerCase().endsWith('.pdf'));
-  const books = readJson(dataFile, []);
-  let added = 0;
-  let updated = 0;
+  if (pdfs.length === 0) {
+    console.log('No PDF files found. Exiting.');
+    process.exit(0);
+  }
+
+  // Backup existing books.json
+  const booksPath = join(PUBLIC_DATA, 'books.json');
+  if (existsSync(booksPath)) {
+    mkdirSync(BACKUPS, { recursive: true });
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const backupPath = join(BACKUPS, `${timestamp}_books.json`);
+    const existing = readFileSync(booksPath, 'utf8');
+    writeFileSync(backupPath, existing);
+    console.log(`💾 Backup: ${backupPath}`);
+  }
+
+  // Load existing books
+  let existingBooks = [];
+  if (existsSync(booksPath)) {
+    try {
+      existingBooks = JSON.parse(readFileSync(booksPath, 'utf8'));
+      if (!Array.isArray(existingBooks)) existingBooks = [];
+    } catch { existingBooks = []; }
+  }
+  const existingUrls = new Set(existingBooks.map(b => b.fileUrl || b.downloadUrl));
+  console.log(`📖 Existing books: ${existingBooks.length}\n`);
+
+  // Process each PDF
+  const newBooks = [];
   let skipped = 0;
 
   for (const file of pdfs) {
-    const rawUrl = encodeURI(file.download_url);
-    const existsIndex = books.findIndex((book) => book.fileUrl === rawUrl || book.downloadUrl === rawUrl || book.externalSource === file.html_url);
+    const rawUrl = file.download_url;
+    const githubUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${file.path}`;
 
-    const clean = cleanTitle(file.name);
-    const { title, author } = splitTitleAuthor(clean);
-    const category = detectCategory(clean);
-    const id = existsIndex >= 0 ? books[existsIndex].id : nextId(books, 'b');
-
-    let fileUrl = rawUrl;
-    let downloadUrl = rawUrl;
-
-    if (mode === 'download') {
-      const targetName = uniqueFileName(publicBooksDir, slugify(title), '.pdf');
-      const target = path.join(publicBooksDir, targetName);
-      await downloadFile(file.download_url, target);
-      fileUrl = `./books/${targetName}`;
-      downloadUrl = fileUrl;
+    // Skip if already imported
+    if (existingUrls.has(githubUrl) || existingUrls.has(rawUrl)) {
+      skipped++;
+      continue;
     }
 
-    const item = {
-      id,
+    const { title, author } = parseAuthorTitle(file.name);
+    const category = detectCategory(file.name);
+    const tags = detectTags(file.name, category);
+    const needsReview = author === 'Автор не указан' || category === 'Общее';
+
+    const book = {
+      id: generateId(),
       title,
       author,
       category,
       language: 'Русский',
-      size: fileSizeMb(file.size),
-      description: `Книга «${title}» автоматически импортирована из репозитория ${owner}/${repo}.`,
-      coverColor: '#1a3a2a',
-      coverEmoji: '📖',
-      tags: detectTags(clean, category),
-      fileUrl,
-      downloadUrl,
+      size: fileSizeStr(file.size),
+      description: `Книга «${title}» из библиотеки Salaf Library.`,
+      tags,
+      fileUrl: githubUrl,
+      downloadUrl: githubUrl,
       year: '2026',
+      featured: false,
+      isNew: true,
+      popular: false,
+      needsReview,
       rating: 5,
       downloads: 0,
       views: 0,
-      featured: false,
-      popular: false,
-      isNew: true,
-      externalSource: file.html_url,
     };
 
-    if (existsIndex >= 0) {
-      books[existsIndex] = { ...books[existsIndex], ...item };
-      updated += 1;
-    } else {
-      books.push(item);
-      added += 1;
-    }
+    newBooks.push(book);
+    const status = needsReview ? '⚠️' : '✅';
+    console.log(`  ${status} ${title} — ${author} [${category}]`);
   }
 
-  writeJson(dataFile, books);
-  console.log(`GitHub books import finished from ${owner}/${repo}/${folder}`);
-  console.log(`Mode: ${mode}`);
-  console.log(`PDF found: ${pdfs.length}`);
-  console.log(`Added: ${added}`);
-  console.log(`Updated: ${updated}`);
-  console.log(`Skipped: ${skipped}`);
-  console.log('Next: npm run build');
+  // Combine
+  const allBooks = [...existingBooks, ...newBooks];
+
+  // Save
+  writeFileSync(booksPath, JSON.stringify(allBooks, null, 2) + '\n');
+
+  console.log(`\n📊 Results:`);
+  console.log(`   New books: ${newBooks.length}`);
+  console.log(`   Skipped (already imported): ${skipped}`);
+  console.log(`   Total books: ${allBooks.length}`);
+  console.log(`   Need review: ${newBooks.filter(b => b.needsReview).length}`);
+  console.log(`\n✅ Saved to: ${booksPath}`);
 }
 
-main().catch((error) => {
-  console.error(error.message);
+main().catch(e => {
+  console.error('❌ Error:', e.message);
   process.exit(1);
 });
