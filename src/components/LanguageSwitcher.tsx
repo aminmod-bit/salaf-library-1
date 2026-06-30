@@ -62,9 +62,9 @@ export default function LanguageSwitcher() {
         gap: 7,
         padding: '7px 9px',
         borderRadius: 10,
-        border: '1px solid rgba(212,175,55,.16)',
-        background: 'rgba(255,255,255,.05)',
-        color: '#d4af37',
+        border: '1px solid var(--color-border)',
+        background: 'var(--color-bg-hover)',
+        color: 'var(--color-gold)',
         fontSize: 12,
         fontWeight: 800,
         cursor: 'pointer',
@@ -79,14 +79,14 @@ export default function LanguageSwitcher() {
           border: 0,
           outline: 0,
           background: 'transparent',
-          color: '#d4af37',
+          color: 'var(--color-gold)',
           font: 'inherit',
           cursor: 'pointer',
           maxWidth: 54,
         }}
       >
         {languages.map(lang => (
-          <option key={lang.code} value={lang.code} style={{ background: '#112a1a', color: '#f0f4f1' }}>
+          <option key={lang.code} value={lang.code} style={{ background: 'var(--color-bg-card)', color: 'var(--color-text-primary)' }}>
             {lang.label}
           </option>
         ))}

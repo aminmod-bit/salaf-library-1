@@ -1,6 +1,5 @@
 import { useStore } from '../store/useStore';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
@@ -24,7 +23,6 @@ const userItems = [
 ];
 
 export default function Sidebar() {
-  const { t } = useTranslation();
   const { sidebarOpen, setSidebarOpen, favorites, books } = useStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,17 +56,17 @@ export default function Sidebar() {
           left: 0,
           height: '100vh',
           width: '260px',
-          background: 'linear-gradient(180deg, #0a1f12 0%, #091810 100%)',
-          borderRight: '1px solid rgba(212, 175, 55, 0.1)',
+          background: 'var(--color-sidebar-bg)',
+          borderRight: '1px solid var(--color-border)',
           zIndex: 50,
           display: 'flex',
           flexDirection: 'column',
-          transition: 'transform 0.3s ease',
+          transition: 'transform 0.3s ease, background 0.3s ease',
           overflowY: 'auto',
         }}
       >
         {/* Logo */}
-        <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(212,175,55,0.1)' }}>
+        <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div
               style={{ cursor: 'pointer' }}
@@ -94,7 +92,7 @@ export default function Sidebar() {
                   <div style={{
                     fontSize: '18px',
                     fontWeight: 800,
-                    background: 'linear-gradient(135deg, #d4af37, #f0c84a)',
+                    background: 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -102,7 +100,7 @@ export default function Sidebar() {
                   }}>
                     Salaf Library
                   </div>
-                  <div style={{ fontSize: '10px', color: '#5a7a63', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '10px', color: 'var(--color-text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
                     Исламская библиотека
                   </div>
                 </div>
@@ -111,7 +109,7 @@ export default function Sidebar() {
             <button
               onClick={() => setSidebarOpen(false)}
               style={{
-                background: 'none', border: 'none', color: '#5a7a63',
+                background: 'none', border: 'none', color: 'var(--color-text-muted)',
                 cursor: 'pointer', padding: '4px', borderRadius: '6px',
                 display: 'flex',
               }}
@@ -126,7 +124,7 @@ export default function Sidebar() {
             marginTop: '12px',
             fontFamily: 'Amiri, serif',
             fontSize: '14px',
-            color: '#9db8a3',
+            color: 'var(--color-text-secondary)',
             textAlign: 'center',
             direction: 'rtl',
           }}>
@@ -140,23 +138,23 @@ export default function Sidebar() {
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: '8px',
-          borderBottom: '1px solid rgba(212,175,55,0.1)',
+          borderBottom: '1px solid var(--color-border)',
         }}>
           {[
             { icon: BookMarked, label: 'Книг', value: books.length + '+' },
             { icon: Star, label: 'Избранных', value: favorites.length },
           ].map(({ icon: Icon, label, value }) => (
             <div key={label} style={{
-              background: 'rgba(255,255,255,0.03)',
+              background: 'var(--color-bg-hover)',
               borderRadius: '8px',
               padding: '8px 10px',
-              border: '1px solid rgba(212,175,55,0.08)',
+              border: '1px solid var(--color-border)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#d4af37', marginBottom: '2px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--color-gold)', marginBottom: '2px' }}>
                 <Icon size={11} />
                 <span style={{ fontSize: '10px', fontWeight: 600 }}>{label}</span>
               </div>
-              <div style={{ fontSize: '16px', fontWeight: 700, color: '#f0f4f1' }}>{value}</div>
+              <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text-primary)' }}>{value}</div>
             </div>
           ))}
         </div>
@@ -167,21 +165,21 @@ export default function Sidebar() {
             <div style={{
               fontSize: '10px',
               fontWeight: 700,
-              color: '#5a7a63',
+              color: 'var(--color-text-muted)',
               letterSpacing: '1px',
               textTransform: 'uppercase',
               padding: '0 8px 8px',
             }}>
               Библиотека
             </div>
-            {navItems.map(({ path, icon: Icon, label, key }) => (
+            {navItems.map(({ path, icon: Icon, label }) => (
               <button
                 key={path}
                 onClick={() => handleNav(path)}
                 className={`nav-link ${isActive(path) ? 'active' : ''}`}
               >
                 <Icon size={16} />
-                <span>{t(`nav.${key}`, label)}</span>
+                <span>{label}</span>
               </button>
             ))}
           </div>
@@ -190,26 +188,26 @@ export default function Sidebar() {
             <div style={{
               fontSize: '10px',
               fontWeight: 700,
-              color: '#5a7a63',
+              color: 'var(--color-text-muted)',
               letterSpacing: '1px',
               textTransform: 'uppercase',
               padding: '0 8px 8px',
             }}>
               Личное
             </div>
-            {userItems.map(({ path, icon: Icon, label, key }) => (
+            {userItems.map(({ path, icon: Icon, label }) => (
               <button
                 key={path}
                 onClick={() => handleNav(path)}
                 className={`nav-link ${isActive(path) ? 'active' : ''}`}
               >
                 <Icon size={16} />
-                <span>{t(`nav.${key}`, label)}</span>
+                <span>{label}</span>
                 {path === '/favorites' && favorites.length > 0 && (
                   <span style={{
                     marginLeft: 'auto',
                     background: 'rgba(212,175,55,0.2)',
-                    color: '#d4af37',
+                    color: 'var(--color-gold)',
                     fontSize: '10px',
                     fontWeight: 700,
                     padding: '2px 7px',
@@ -226,28 +224,28 @@ export default function Sidebar() {
         {/* Admin & Bottom */}
         <div style={{
           padding: '12px 12px 20px',
-          borderTop: '1px solid rgba(212,175,55,0.1)',
+          borderTop: '1px solid var(--color-border)',
         }}>
           <button
             onClick={() => handleNav('/admin')}
             className={`nav-link ${isActive('/admin') ? 'active' : ''}`}
           >
             <Settings size={16} />
-            <span>{t('nav.admin', 'Админ-панель')}</span>
+            <span>Админ-панель</span>
           </button>
 
           <div style={{
             marginTop: '16px',
             padding: '12px',
-            background: 'rgba(212,175,55,0.05)',
+            background: 'var(--color-bg-hover)',
             borderRadius: '10px',
-            border: '1px solid rgba(212,175,55,0.1)',
+            border: '1px solid var(--color-border)',
             textAlign: 'center',
           }}>
-            <div style={{ fontSize: '11px', color: '#5a7a63', marginBottom: '4px' }}>
+            <div style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginBottom: '4px' }}>
               Salaf Library v1.0
             </div>
-            <div style={{ fontSize: '10px', color: '#3d5a45' }}>
+            <div style={{ fontSize: '10px', color: 'var(--color-text-muted)' }}>
               Работает офлайн
             </div>
           </div>

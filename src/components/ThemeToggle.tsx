@@ -54,7 +54,7 @@ export default function ThemeToggle() {
       onClick={cycleTheme}
       title={`Тема: ${themeLabels[theme]}`}
       style={{
-        background: 'rgba(255,255,255,0.05)',
+        background: 'var(--color-bg-hover)',
         border: '1px solid var(--color-border)',
         borderRadius: '10px',
         padding: '8px',

@@ -29,13 +29,13 @@ export default function LiveStatsBadge() {
     <div title="Онлайн-счётчик. Без backend показывает активные вкладки текущего браузера; с Cloudflare Worker станет глобальным." style={{
       display: 'flex', alignItems: 'center', gap: 7,
       padding: '7px 10px', borderRadius: 10,
-      border: '1px solid rgba(34,197,94,.2)',
-      background: 'rgba(34,197,94,.07)', color: '#22c55e',
+      border: '1px solid var(--color-border)',
+      background: 'var(--color-bg-hover)', color: 'var(--color-green-light)',
       fontSize: 12, fontWeight: 800,
     }}>
       <Activity size={14} />
       <span>{online}</span>
-      <span style={{ color: '#9db8a3', fontWeight: 700 }}>online</span>
+      <span style={{ color: 'var(--color-text-secondary)', fontWeight: 700 }}>online</span>
     </div>
   );
 }

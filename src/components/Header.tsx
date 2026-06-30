@@ -3,8 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from './LanguageSwitcher';
 import LiveStatsBadge from './LiveStatsBadge';
+import ThemeToggle from './ThemeToggle';
 
 const navItems = [
   { path: '/', label: 'Главная', key: 'home' },
@@ -43,19 +43,19 @@ export default function Header() {
       <nav className="site-nav" aria-label="Основная навигация">
         {navItems.map(item => (
           <Link key={item.path} to={item.path} className={location.pathname === item.path ? 'active' : ''}>
-            {t(`nav.${item.key}`, item.label)}
+            {item.label}
           </Link>
         ))}
       </nav>
 
       <form onSubmit={handleSearch} className="site-search">
         <Search size={16} />
-        <input value={searchVal} onChange={e => setSearchVal(e.target.value)} placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')} />
+        <input value={searchVal} onChange={e => setSearchVal(e.target.value)} placeholder="Поиск книг..." />
       </form>
 
       <div className="site-actions">
         <LiveStatsBadge />
-        <LanguageSwitcher />
+        <ThemeToggle />
         <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Открыть меню"><Menu size={22}/></button>
       </div>
     </header>

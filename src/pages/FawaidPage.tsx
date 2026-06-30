@@ -50,10 +50,10 @@ export default function FawaidPage() {
   return (
     <div className="fade-in" style={{ maxWidth: '1100px', margin: '0 auto' }}>
       <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#f0f4f1', marginBottom: '6px' }}>
-          💎 Фаваиды
+        <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '6px' }}>
+          Фаваиды
         </h1>
-        <p style={{ color: '#9db8a3', fontSize: '14px' }}>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>
           {filtered.length} фаваидов из {fawaid.length} — мудрость учёных ислама
         </p>
       </div>
@@ -67,27 +67,27 @@ export default function FawaidPage() {
         <div style={{
           flex: 1, minWidth: '200px',
           display: 'flex', alignItems: 'center', gap: '8px',
-          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)',
           borderRadius: '10px', padding: '8px 14px',
         }}>
-          <Search size={15} color="#5a7a63" />
+          <Search size={15} style={{ color: 'var(--color-text-muted)' }} />
           <input
             type="text" value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Поиск фаваидов..."
-            style={{ background: 'none', border: 'none', outline: 'none', color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit', width: '100%' }}
+            style={{ background: 'none', border: 'none', outline: 'none', color: 'var(--color-text-primary)', fontSize: '14px', fontFamily: 'inherit', width: '100%' }}
           />
         </div>
 
         <select
           value={authorFilter} onChange={e => setAuthorFilter(e.target.value)}
           style={{
-            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '10px', padding: '8px 14px', color: '#f0f4f1',
+            background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)',
+            borderRadius: '10px', padding: '8px 14px', color: 'var(--color-text-primary)',
             fontSize: '13px', fontFamily: 'inherit', outline: 'none', cursor: 'pointer',
           }}
         >
-          <option value="all" style={{ background: '#112a1a' }}>Все авторы</option>
-          {authors.map(a => <option key={a} value={a} style={{ background: '#112a1a' }}>{a}</option>)}
+          <option value="all" style={{ background: 'var(--color-bg-card)' }}>Все авторы</option>
+          {authors.map(a => <option key={a} value={a} style={{ background: 'var(--color-bg-card)' }}>{a}</option>)}
         </select>
       </div>
 

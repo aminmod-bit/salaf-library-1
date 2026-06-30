@@ -61,10 +61,10 @@ export default function AudioPage() {
   return (
     <div className="fade-in" style={{ maxWidth: '1100px', margin: '0 auto' }}>
       <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#f0f4f1', marginBottom: '6px' }}>
-          🎧 Аудиоуроки
+        <h1 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '6px' }}>
+          Аудиоуроки
         </h1>
-        <p style={{ color: '#9db8a3', fontSize: '14px' }}>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>
           {filtered.length} уроков в каталоге
         </p>
       </div>
@@ -78,14 +78,14 @@ export default function AudioPage() {
         <div style={{
           flex: 1, minWidth: '200px',
           display: 'flex', alignItems: 'center', gap: '8px',
-          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)',
           borderRadius: '10px', padding: '8px 14px',
         }}>
-          <Search size={15} color="#5a7a63" />
+          <Search size={15} style={{ color: 'var(--color-text-muted)' }} />
           <input
             type="text" value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Поиск уроков..."
-            style={{ background: 'none', border: 'none', outline: 'none', color: '#f0f4f1', fontSize: '14px', fontFamily: 'inherit', width: '100%' }}
+            style={{ background: 'none', border: 'none', outline: 'none', color: 'var(--color-text-primary)', fontSize: '14px', fontFamily: 'inherit', width: '100%' }}
           />
         </div>
       </div>
@@ -108,8 +108,8 @@ export default function AudioPage() {
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px',
           }}>
-            <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#f0f4f1' }}>
-              🎵 Серия: {seriesName}
+            <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+              Серия: {seriesName}
             </h2>
             <span className="badge badge-gold">{lessons.length} уроков</span>
           </div>
@@ -125,8 +125,8 @@ export default function AudioPage() {
       {(standalone.length > 0 || category !== 'all') && (
         <div>
           {category === 'all' && standalone.length > 0 && (
-            <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#f0f4f1', marginBottom: '14px' }}>
-              🎤 Отдельные уроки
+            <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '14px' }}>
+              Отдельные уроки
             </h2>
           )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -138,9 +138,9 @@ export default function AudioPage() {
       )}
 
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '60px', color: '#5a7a63' }}>
+        <div style={{ textAlign: 'center', padding: '60px', color: 'var(--color-text-muted)' }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎧</div>
-          <div style={{ fontSize: '18px', fontWeight: 600, color: '#9db8a3' }}>Ничего не найдено</div>
+          <div style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-text-secondary)' }}>Ничего не найдено</div>
         </div>
       )}
     </div>
@@ -174,22 +174,22 @@ function AudioRow({ audio, currentAudio, isPlaying, onPlay }: AudioRowProps) {
       <div style={{
         width: '44px', height: '44px', borderRadius: '50%', flexShrink: 0,
         background: isCurrent
-          ? 'linear-gradient(135deg, #d4af37, #f0c84a)'
-          : 'rgba(255,255,255,0.05)',
-        border: isCurrent ? 'none' : '1px solid rgba(255,255,255,0.1)',
+          ? 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))'
+          : 'var(--color-bg-hover)',
+        border: isCurrent ? 'none' : '1px solid var(--color-border)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 0.3s ease',
       }}>
         {isCurrentPlaying
-          ? <Pause size={16} color={isCurrent ? '#0a1a0f' : '#9db8a3'} />
-          : <Play size={16} color={isCurrent ? '#0a1a0f' : '#9db8a3'} />
+          ? <Pause size={16} color={isCurrent ? '#0a1a0f' : 'var(--color-text-secondary)'} />
+          : <Play size={16} color={isCurrent ? '#0a1a0f' : 'var(--color-text-secondary)'} />
         }
       </div>
 
       {/* Cover */}
       <div style={{
         width: '44px', height: '44px', borderRadius: '10px', flexShrink: 0,
-        background: audio.coverColor || '#1a3a2a',
+        background: audio.coverColor || 'var(--color-bg-secondary)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
       }}>
         {audio.coverEmoji || '🎧'}
@@ -199,12 +199,12 @@ function AudioRow({ audio, currentAudio, isPlaying, onPlay }: AudioRowProps) {
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{
           fontSize: '14px', fontWeight: 600,
-          color: isCurrent ? '#d4af37' : '#f0f4f1', marginBottom: '2px',
+          color: isCurrent ? 'var(--color-gold)' : 'var(--color-text-primary)', marginBottom: '2px',
           display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden',
         }}>
           {audio.episode ? `${audio.episode}. ` : ''}{audio.title}
         </div>
-        <div style={{ fontSize: '12px', color: '#9db8a3' }}>
+        <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
           {audio.author}
           {audio.year ? ` · ${audio.year}` : ''}
         </div>
@@ -213,12 +213,12 @@ function AudioRow({ audio, currentAudio, isPlaying, onPlay }: AudioRowProps) {
       {/* Meta */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
         {audio.views && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#5a7a63', fontSize: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-text-muted)', fontSize: '12px' }}>
             <Eye size={12} /> {(audio.views / 1000).toFixed(1)}K
           </div>
         )}
         {audio.duration && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#5a7a63', fontSize: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-text-muted)', fontSize: '12px' }}>
             <Clock size={12} /> {audio.duration}
           </div>
         )}

@@ -355,26 +355,53 @@ export default function AdminImportPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div style={{ display: 'grid', gap: '20px' }}>
       <div className="glass-card" style={{ padding: 26 }}>
-        <h1 style={{ color: '#f0f4f1', fontSize: 28, fontWeight: 900, marginBottom: 8 }}>Автоматический импорт книг</h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.7 }}>Выберите PDF-файлы. Система сама прочитает первые страницы, определит название, автора, язык, страницы, категорию, теги, создаст cover.webp/thumb.webp, JSON и отправит всё в правильную папку Books/*.</p>
+        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 28, fontWeight: 900, marginBottom: 8 }}>Автоматический импорт книг</h1>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>Выберите PDF-файлы. Система сама прочитает первые страницы, определит название, автора, язык, страницы, категорию, теги, создаст обложки и JSON и отправит всё в правильную папку Books/*.</p>
       </div>
 
-      <div onDragOver={e => e.preventDefault()} onDrop={handleDrop} className="border-2 border-dashed border-slate-700/50 rounded-2xl p-8 text-center hover:border-amber-500/30 transition-colors bg-[#0c2240]/40">
-        <Upload size={42} className="text-slate-600 mx-auto mb-4" />
-        <p className="text-slate-400 text-sm mb-2">Перетащите PDF файлы сюда — можно пакетно</p>
-        <p className="text-slate-600 text-xs mb-4">10 / 50 / 100 / 500 PDF — система обработает очередь автоматически</p>
-        <label className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-xl text-sm cursor-pointer hover:bg-amber-500/20 transition-colors">
+      <div
+        onDragOver={e => e.preventDefault()}
+        onDrop={handleDrop}
+        style={{
+          border: '2px dashed var(--color-border)',
+          borderRadius: '16px',
+          padding: '40px 20px',
+          textAlign: 'center',
+          transition: 'border-color 0.2s',
+          background: 'var(--color-bg-card)',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--color-gold)')}
+        onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+      >
+        <Upload size={42} style={{ color: 'var(--color-text-muted)', margin: '0 auto 16px' }} />
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px', marginBottom: '8px' }}>Перетащите PDF файлы сюда — можно пакетно</p>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '12px', marginBottom: '16px' }}>10 / 50 / 100 / 500 PDF — система обработает очередь автоматически</p>
+        <label style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '10px 20px',
+          background: 'rgba(212, 175, 55, 0.1)',
+          color: 'var(--color-gold)',
+          border: '1px solid var(--color-border)',
+          borderRadius: '12px',
+          fontSize: '14px',
+          fontWeight: 600,
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+        }}>
           <FileText size={16} /> Выбрать PDF
-          <input type="file" accept=".pdf" multiple className="hidden" onChange={handleSelect} />
+          <input type="file" accept=".pdf" multiple style={{ display: 'none' }} onChange={handleSelect} />
         </label>
       </div>
 
       {summary.total > 0 && (
         <div className="glass-card" style={{ padding: 18, display: 'grid', gap: 12 }}>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', color: '#9db8a3' }}>
-            <b style={{ color: '#d4af37' }}>Всего: {summary.total}</b>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', color: 'var(--color-text-secondary)' }}>
+            <b style={{ color: 'var(--color-gold)' }}>Всего: {summary.total}</b>
             <span>Готово: {summary.ready}</span>
             <span>Требуют проверки: {summary.review}</span>
             <span>Обложки: {summary.covers}</span>
@@ -390,17 +417,17 @@ export default function AdminImportPage() {
           {items.map((item, index) => (
             <div key={item.uid} className="glass-card" style={{ padding: 16, borderColor: item.needsReview ? 'rgba(245,158,11,.45)' : undefined }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 12 }}>
-                <div><b style={{ color: '#f0f4f1' }}>{item.title}</b><div style={{ color: '#9db8a3', fontSize: 12 }}>{item.file.name} · {item.progress}</div></div>
+                <div><b style={{ color: 'var(--color-text-primary)' }}>{item.title}</b><div style={{ color: 'var(--color-text-secondary)', fontSize: 12 }}>{item.file.name} · {item.progress}</div></div>
                 <span className={item.needsReview ? 'badge badge-gold' : 'badge badge-green'}>{item.needsReview ? 'Проверить' : 'Авто' } · {item.categoryConfidence}%</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 10 }}>
                 <input className="input-field" value={item.title} onChange={e => updateItem(index, { title: e.target.value, slug: slugBase(e.target.value) })} placeholder="Название" />
                 <input className="input-field" value={item.author} onChange={e => updateItem(index, { author: e.target.value })} placeholder="Автор" />
-                <select className="input-field" value={item.category} onChange={e => updateItem(index, { category: e.target.value })}>{REVIEW_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}</select>
+                <select className="input-field" value={item.category} onChange={e => updateItem(index, { category: e.target.value })} style={{ background: 'var(--color-bg-card)', color: 'var(--color-text-primary)' }}>{REVIEW_CATEGORIES.map(c => <option key={c} value={c} style={{ background: 'var(--color-bg-card)', color: 'var(--color-text-primary)' }}>{c}</option>)}</select>
                 <input className="input-field" value={item.language} onChange={e => updateItem(index, { language: e.target.value })} placeholder="Язык" />
               </div>
-              <div style={{ marginTop: 10, color: '#5a7a63', fontSize: 12 }}>
-                Страниц: {item.pages || '—'} · Размер: {item.size} · ISBN: {item.isbn || '—'} · Издательство: {item.publisher || '—'} · Переводчик: {item.translator || '—'} · Редактор: {item.editor || '—'} · Папка: Books/{item.folder}
+              <div style={{ marginTop: 10, color: 'var(--color-text-muted)', fontSize: 12 }}>
+                Страниц: {item.pages || '—'} · Размер: {item.size} · ISBN: {item.isbn || '—'} · Издательство: {item.publisher || '—'} · Папка: Books/{item.folder}
               </div>
             </div>
           ))}
@@ -408,23 +435,23 @@ export default function AdminImportPage() {
       )}
 
       {report && (
-        <div className="glass-card" style={{ padding: 18, color: '#9db8a3', display: 'grid', gap: 6 }}>
-          <div style={{ color: '#22c55e', fontWeight: 900 }}><CheckCircle size={16} style={{ display: 'inline', marginRight: 6 }} />Отчёт импорта</div>
-          <div>✔ Импортировано: {report.imported}</div>
-          <div>✔ Авторы найдены: {report.authorsFound}</div>
-          <div>✔ Новые авторы: {report.newAuthors}</div>
-          <div>✔ Категории определены автоматически: {report.categoriesAuto}</div>
-          <div>✔ Требуют проверки: {report.needsReview}</div>
-          <div>✔ Обложки созданы: {report.covers}</div>
+        <div className="glass-card" style={{ padding: 18, color: 'var(--color-text-secondary)', display: 'grid', gap: 6 }}>
+          <div style={{ color: 'var(--color-green-light)', fontWeight: 900 }}><CheckCircle size={16} style={{ display: 'inline', marginRight: 6 }} />Отчёт импорта</div>
+          <div>Импортировано: {report.imported}</div>
+          <div>Авторы найдены: {report.authorsFound}</div>
+          <div>Новые авторы: {report.newAuthors}</div>
+          <div>Категории определены автоматически: {report.categoriesAuto}</div>
+          <div>Требуют проверки: {report.needsReview}</div>
+          <div>Обложки созданы: {report.covers}</div>
         </div>
       )}
 
-      {status === 'error' && <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm"><AlertCircle size={18} /> Ошибка импорта</div>}
+      {status === 'error' && <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '16px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '12px', color: '#ef4444', fontSize: '14px' }}><AlertCircle size={18} /> Ошибка импорта</div>}
 
       {logs.length > 0 && (
         <div className="glass-card" style={{ padding: 16 }}>
-          <h3 style={{ color: '#9db8a3', fontSize: 12, textTransform: 'uppercase', marginBottom: 8 }}>Лог</h3>
-          <div style={{ display: 'grid', gap: 4, fontFamily: 'monospace', fontSize: 12 }}>{logs.slice(-80).map((log, i) => <p key={i} style={{ color: '#5a7a63' }}>{log}</p>)}</div>
+          <h3 style={{ color: 'var(--color-text-secondary)', fontSize: 12, textTransform: 'uppercase', marginBottom: 8 }}>Лог</h3>
+          <div style={{ display: 'grid', gap: 4, fontFamily: 'monospace', fontSize: 12 }}>{logs.slice(-80).map((log, i) => <p key={i} style={{ color: 'var(--color-text-muted)' }}>{log}</p>)}</div>
         </div>
       )}
     </div>

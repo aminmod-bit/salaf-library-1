@@ -6,8 +6,8 @@ import { loadLibraryData } from "./utils/loadLibraryData";
 
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import BottomNav from "./components/BottomNav";
 import PwaInstallPrompt from "./components/PwaInstallPrompt";
-import GlobalTextTranslator from "./components/GlobalTextTranslator";
 import HomePage from "./pages/HomePage";
 import BooksPage from "./pages/BooksPage";
 import BookDetailPage from "./pages/BookDetailPage";
@@ -86,7 +86,6 @@ export default function App() {
 
   return (
     <HashRouter>
-      <GlobalTextTranslator />
       <div className="app-layout">
         <Sidebar />
         <div className="main-content">
@@ -122,14 +121,15 @@ export default function App() {
             </Suspense>
           </div>
         </div>
+        <BottomNav />
         <PwaInstallPrompt />
         <Toaster
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#112a1a",
-              color: "#f0f4f1",
-              border: "1px solid rgba(212, 175, 55, 0.3)",
+              background: "var(--color-bg-card)",
+              color: "var(--color-text-primary)",
+              border: "1px solid var(--color-border)",
               borderRadius: "12px",
               fontSize: "14px",
             },
@@ -166,6 +166,13 @@ export default function App() {
 
           .page-content {
             padding: 16px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .page-content {
+            padding: 12px;
+            padding-bottom: 80px;
           }
         }
       `}</style>
