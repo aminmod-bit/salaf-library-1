@@ -1,104 +1,261 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Repeat, Search, Shield, Sparkles } from 'lucide-react';
-import FolderCard from '../components/FolderCard';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Repeat, Search, Shield, Sparkles, Copy, Heart, Check,
+  ArrowLeft, Sun, Moon, BookOpen, Home, Coffee, Plane, CloudRain, HeartPulse
+} from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface Zikr {
-  id: string; type: string; category: string; title: string; arabic: string; translationRu: string; source: string; repeat: number; benefit: string;
+  id: string;
+  type: string;
+  category: string;
+  title: string;
+  arabic: string;
+  transliteration?: string;
+  translationRu: string;
+  source: string;
+  repeat: number;
+  benefit: string;
 }
 
-const folders = [
-  { id: 'all', label: 'Все азкары' },
-  { id: 'featured', label: 'Избранные' },
-  { id: 'morning', label: 'Утренние' },
-  { id: 'evening', label: 'Вечерние' },
-  { id: 'sleep', label: 'Перед сном' },
-  { id: 'after-prayer', label: 'После молитвы' },
-  { id: 'after-prayer', label: 'После намаза' },
-  { id: 'istikharah', label: 'Истихара' },
-  { id: 'before-food', label: 'Перед едой' },
-  { id: 'after-food', label: 'После еды' },
-  { id: 'enter-home', label: 'При входе в дом' },
-  { id: 'leave-home', label: 'При выходе из дома' },
-  { id: 'enter-masjid', label: 'При входе в мечеть' },
-  { id: 'leave-masjid', label: 'При выходе из мечети' },
-  { id: 'travel', label: 'Для путешествия' },
-  { id: 'rain', label: 'Во время дождя' },
-  { id: 'illness', label: 'При болезни' },
-  { id: 'misc', label: 'Разные азкары' },
+const SECTIONS = [
+  { id: 'morning', label: 'Утренние азкары', icon: Sun, description: 'Азкары на утро', color: '#f59e0b' },
+  { id: 'evening', label: 'Вечерние азкары', icon: Moon, description: 'Азкары на вечер', color: '#6366f1' },
+  { id: 'after-prayer', label: 'После намаза', icon: BookOpen, description: 'После каждого намаза', color: '#22c55e' },
+  { id: 'sleep', label: 'Перед сном', icon: Coffee, description: 'При засыпании и пробуждении', color: '#8b5cf6' },
+  { id: 'travel', label: 'Для путешествия', icon: Plane, description: 'При поездках', color: '#0ea5e9' },
+  { id: 'rain', label: 'Во время дождя', icon: CloudRain, description: 'При дожде', color: '#3b82f6' },
+  { id: 'illness', label: 'При болезни', icon: HeartPulse, description: 'Для больных', color: '#ef4444' },
+  { id: 'before-food', label: 'Перед едой', icon: Coffee, description: 'Перед приёмом пищи', color: '#f97316' },
 ];
 
-export default function AzkarPage() {
-  const [azkar, setAzkar] = useState<Zikr[]>([]);
-  const [folder, setFolder] = useState('');
-  const [query, setQuery] = useState('');
-  const [done, setDone] = useState<Record<string, number>>({});
+const FAVORITES_KEY = 'salaf-azkar-favorites';
+const COUNTS_KEY = 'salaf-azkar-counts';
 
-  useEffect(() => {
-    fetch('./data/azkar.json').then(r => r.json()).then(setAzkar).catch(() => setAzkar([]));
-  }, []);
-
-  const folderStats = useMemo(() => folders.map(item => ({ ...item, count: item.id === 'all' ? azkar.length : item.id === 'featured' ? Math.min(azkar.length, 2) : azkar.filter(z => z.type === item.id).length })), [azkar]);
-
-  const filtered = useMemo(() => {
-    let result = folder === 'all' || !folder ? azkar : folder === 'featured' ? azkar.slice(0, 2) : azkar.filter(item => item.type === folder);
-    const q = query.toLowerCase().trim();
-    if (q) result = azkar.filter(item => `${item.title} ${item.translationRu} ${item.source}`.toLowerCase().includes(q));
-    return result;
-  }, [azkar, folder, query]);
-
-  const increment = (id: string, max: number) => setDone(prev => ({ ...prev, [id]: Math.min((prev[id] || 0) + 1, max) }));
-  const reset = (id: string) => setDone(prev => ({ ...prev, [id]: 0 }));
-  const showFolders = !folder && !query.trim();
+// Main sections page
+export function AzkarSectionsPage() {
+  const navigate = useNavigate();
 
   return (
-    <div className="fade-in" style={{ maxWidth: 1180, margin: '0 auto' }}>
-      <section className="glass-card islamic-pattern" style={{ padding: 32, marginBottom: 20 }}>
-        <div style={{ color: 'var(--color-gold)', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><Shield size={16}/> Daily Azkar</div>
-        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 950, lineHeight: 1.05, marginBottom: 12 }}>{showFolders ? 'Папки азкаров и дуа' : folders.find(f => f.id === folder)?.label || 'Азкары и дуа'}</h1>
-        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, maxWidth: 760 }}>Сначала выберите папку: утренние, вечерние, перед сном, после намаза и другие разделы.</p>
+    <div className="fade-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <section className="glass-card islamic-pattern" style={{ padding: '32px', marginBottom: '24px', textAlign: 'center' }}>
+        <div style={{ fontSize: '48px', marginBottom: '12px' }}>🤲</div>
+        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, marginBottom: '8px' }}>
+          Азкары и поминания
+        </h1>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '15px', lineHeight: 1.6, maxWidth: '500px', margin: '0 auto' }}>
+          Поминания на каждый день: утренние, вечерные, после намаза, перед сном и другие
+        </p>
       </section>
 
-      <div className="glass-card" style={{ padding: 16, marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '9px 12px' }}>
-          <Search size={15} style={{ color: 'var(--color-text-muted)' }} />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Поиск азкаров..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: 'var(--color-text-primary)' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '14px' }}>
+        {SECTIONS.map(section => (
+          <button
+            key={section.id}
+            onClick={() => navigate(`/azkar/${section.id}`)}
+            style={{
+              padding: '20px', borderRadius: '16px', border: '1px solid var(--color-border)',
+              background: 'var(--color-bg-card)', cursor: 'pointer', textAlign: 'left',
+              transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = section.color; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          >
+            <div style={{
+              width: '44px', height: '44px', borderRadius: '12px',
+              background: `${section.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <section.icon size={22} style={{ color: section.color }} />
+            </div>
+            <div>
+              <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text-primary)' }}>{section.label}</div>
+              <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{section.description}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Section page (individual azkar list)
+export function AzkarSectionPage() {
+  const { sectionId } = useParams<{ sectionId: string }>();
+  const navigate = useNavigate();
+  const [azkar, setAzkar] = useState<Zikr[]>([]);
+  const [counts, setCounts] = useState<Record<string, number>>({});
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  const section = SECTIONS.find(s => s.id === sectionId);
+
+  useEffect(() => {
+    fetch('./data/azkar.json').then(r => r.json()).then(data => {
+      const filtered = data.filter((z: Zikr) => z.type === sectionId || z.category === sectionId);
+      setAzkar(filtered);
+    }).catch(() => setAzkar([]));
+
+    try {
+      setCounts(JSON.parse(localStorage.getItem(COUNTS_KEY) || '{}'));
+      setFavorites(new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')));
+    } catch {}
+  }, [sectionId]);
+
+  const toggleFavorite = (id: string) => {
+    const next = new Set(favorites);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    setFavorites(next);
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify([...next]));
+  };
+
+  const incrementCount = (id: string, max: number) => {
+    const current = counts[id] || 0;
+    if (current >= max) return;
+    const next = { ...counts, [id]: current + 1 };
+    setCounts(next);
+    localStorage.setItem(COUNTS_KEY, JSON.stringify(next));
+  };
+
+  const resetCount = (id: string) => {
+    const next = { ...counts };
+    delete next[id];
+    setCounts(next);
+    localStorage.setItem(COUNTS_KEY, JSON.stringify(next));
+  };
+
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success('Скопировано');
+  };
+
+  if (!section) return (
+    <div style={{ textAlign: 'center', padding: '60px', color: 'var(--color-text-muted)' }}>
+      Раздел не найден
+      <button onClick={() => navigate('/azkar')} className="btn-primary" style={{ marginTop: '16px' }}>Назад</button>
+    </div>
+  );
+
+  return (
+    <div className="fade-in" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <button onClick={() => navigate('/azkar')} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px', marginBottom: '12px' }}>
+          <ArrowLeft size={14} /> Все разделы
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: `${section.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <section.icon size={22} style={{ color: section.color }} />
+          </div>
+          <div>
+            <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--color-text-primary)' }}>{section.label}</h1>
+            <p style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{azkar.length} азкаров</p>
+          </div>
         </div>
-        {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setQuery(''); }}>Все папки</button>}
       </div>
 
-      {showFolders ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 16 }}>
-          {folderStats.map(item => (
-            <FolderCard
-              key={`${item.id}-${item.label}`}
-              title={item.label}
-              subtitle="Папка азкаров и дуа"
-              count={item.count}
-              countLabel="записей"
-              disabled={item.count === 0}
-              onClick={() => setFolder(item.id)}
-            />
-          ))}
+      {azkar.length === 0 ? (
+        <div className="glass-card" style={{ padding: '40px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+          <Sparkles size={32} style={{ margin: '0 auto 12px', opacity: 0.5 }} />
+          <p>Азкары этого раздела скоро будут добавлены</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
-          {filtered.map(item => {
-            const count = done[item.id] || 0;
+        <div style={{ display: 'grid', gap: '12px' }}>
+          {azkar.map(zikr => {
+            const currentCount = counts[zikr.id] || 0;
+            const isComplete = currentCount >= zikr.repeat;
+            const isFav = favorites.has(zikr.id);
+            const progress = zikr.repeat ? (currentCount / zikr.repeat) * 100 : 0;
+
             return (
-              <article key={item.id} className="glass-card" style={{ padding: 22 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start', marginBottom: 14 }}>
-                  <div><span className="badge badge-gold">{item.category}</span><h2 style={{ color: '#f0f4f1', fontSize: 20, fontWeight: 900, marginTop: 10 }}>{item.title}</h2></div>
-                  <div style={{ color: '#d4af37', display: 'flex', gap: 5, alignItems: 'center', fontWeight: 900 }}><Repeat size={16}/>{item.repeat}x</div>
+              <div key={zikr.id} className="glass-card" style={{
+                padding: '16px',
+                borderColor: isComplete ? 'var(--color-accent-light)' : undefined,
+                opacity: isComplete ? 0.7 : 1,
+              }}>
+                {/* Arabic text */}
+                {zikr.arabic && (
+                  <div style={{
+                    fontFamily: 'Amiri, serif', fontSize: '22px', lineHeight: 1.8,
+                    color: 'var(--color-text-primary)', textAlign: 'right',
+                    direction: 'rtl', marginBottom: '10px', padding: '12px',
+                    background: 'var(--color-bg-hover)', borderRadius: '12px',
+                  }}>
+                    {zikr.arabic}
+                  </div>
+                )}
+
+                {/* Translation */}
+                {zikr.translationRu && (
+                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '10px' }}>
+                    {zikr.translationRu}
+                  </p>
+                )}
+
+                {/* Source & benefit */}
+                {zikr.source && (
+                  <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginBottom: '10px' }}>
+                    Источник: {zikr.source}
+                  </p>
+                )}
+                {zikr.benefit && (
+                  <p style={{ fontSize: '12px', color: 'var(--color-gold)', marginBottom: '10px' }}>
+                    {zikr.benefit}
+                  </p>
+                )}
+
+                {/* Progress bar */}
+                {zikr.repeat > 0 && (
+                  <div style={{ marginBottom: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--color-text-muted)', marginBottom: '4px' }}>
+                      <span>{currentCount} / {zikr.repeat}</span>
+                      <span>{Math.round(progress)}%</span>
+                    </div>
+                    <div style={{ height: '4px', background: 'var(--color-bg-hover)', borderRadius: '999px', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${progress}%`, background: isComplete ? 'var(--color-accent-light)' : 'var(--color-gold)', borderRadius: '999px', transition: 'width 0.3s' }} />
+                    </div>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  {zikr.repeat > 0 && (
+                    <>
+                      <button
+                        onClick={() => incrementCount(zikr.id, zikr.repeat)}
+                        disabled={isComplete}
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: '4px',
+                          padding: '8px 14px', borderRadius: '8px', border: 'none',
+                          background: isComplete ? 'var(--color-accent-light)' : 'var(--color-gold)',
+                          color: isComplete ? '#fff' : '#111', fontWeight: 700, fontSize: '13px',
+                          cursor: isComplete ? 'default' : 'pointer', transition: 'all 0.2s',
+                        }}
+                      >
+                        {isComplete ? <Check size={14} /> : <Repeat size={14} />}
+                        {isComplete ? 'Готово' : `Повторить (${zikr.repeat})`}
+                      </button>
+                      <button onClick={() => resetCount(zikr.id)} style={{
+                        padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                        background: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', cursor: 'pointer',
+                      }}>
+                        <Repeat size={14} />
+                      </button>
+                    </>
+                  )}
+                  <button onClick={() => copyText(zikr.arabic || zikr.translationRu)} style={{
+                    padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                    background: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', cursor: 'pointer',
+                  }} title="Копировать">
+                    <Copy size={14} />
+                  </button>
+                  <button onClick={() => toggleFavorite(zikr.id)} style={{
+                    padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                    background: isFav ? 'rgba(239,68,68,0.1)' : 'var(--color-bg-hover)',
+                    color: isFav ? '#ef4444' : 'var(--color-text-muted)', cursor: 'pointer',
+                  }}>
+                    <Heart size={14} fill={isFav ? '#ef4444' : 'none'} />
+                  </button>
                 </div>
-                <p dir="rtl" style={{ fontFamily: 'Amiri, serif', fontSize: 25, lineHeight: 2, color: '#f8efd1', textAlign: 'right', padding: 14, border: '1px solid rgba(212,175,55,.12)', borderRadius: 14, background: 'rgba(212,175,55,.04)' }}>{item.arabic}</p>
-                <p style={{ color: '#9db8a3', lineHeight: 1.75, marginTop: 12 }}>{item.translationRu}</p>
-                <p style={{ color: '#5a7a63', fontSize: 12, marginTop: 8 }}>{item.source}</p>
-                <div style={{ marginTop: 14, display: 'grid', gridTemplateColumns: '1fr auto', gap: 10, alignItems: 'center' }}>
-                  <div style={{ height: 8, background: 'rgba(255,255,255,.08)', borderRadius: 999, overflow: 'hidden' }}><div style={{ width: `${(count / item.repeat) * 100}%`, height: '100%', background: 'linear-gradient(90deg,var(--color-gold),var(--color-accent-light))' }} /></div>
-                  <button className="btn-primary" onClick={() => count >= item.repeat ? reset(item.id) : increment(item.id, item.repeat)}>{count >= item.repeat ? 'Сброс' : `${count}/${item.repeat}`}</button>
-                </div>
-                {item.benefit && <div style={{ marginTop: 12, color: '#9db8a3', fontSize: 13, display: 'flex', gap: 7 }}><Sparkles size={14} color="#d4af37"/> {item.benefit}</div>}
-              </article>
+              </div>
             );
           })}
         </div>

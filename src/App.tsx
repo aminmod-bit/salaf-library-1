@@ -25,9 +25,10 @@ import ReportIssuePage from "./pages/ReportIssuePage";
 import BookLanguagesPage from "./pages/BookLanguagesPage";
 import ArticlesPage from "./pages/ArticlesPage";
 import HadithPage from "./pages/HadithPage";
-import AzkarPage from "./pages/AzkarPage";
+import { AzkarSectionsPage, AzkarSectionPage } from "./pages/AzkarPage";
 import AdminBookEditorPage from "./pages/AdminBookEditorPage";
 import OfflinePage from "./pages/OfflinePage";
+import CategoryTreePage from "./pages/CategoryTreePage";
 
 const BookReaderPage = lazy(() => import("./pages/BookReaderPage"));
 
@@ -110,8 +111,10 @@ function AppRoutes() {
                 <Route path="/book-languages" element={<BookLanguagesPage />} />
                 <Route path="/articles" element={<ArticlesPage />} />
                 <Route path="/hadith" element={<HadithPage />} />
-                <Route path="/azkar" element={<AzkarPage />} />
+                <Route path="/azkar" element={<AzkarSectionsPage />} />
+                <Route path="/azkar/:sectionId" element={<AzkarSectionPage />} />
                 <Route path="/offline" element={<OfflinePage />} />
+                <Route path="/categories" element={<CategoryTreePage />} />
                 <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
               </Routes>
             </div>

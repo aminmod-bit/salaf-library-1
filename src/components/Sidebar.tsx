@@ -3,13 +3,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
-  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText, WifiOff
+  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText, WifiOff, Trash2, FolderTree
 } from 'lucide-react';
 import Logo from './Logo';
+import { clearAllCaches } from '../utils/cache';
+import toast from 'react-hot-toast';
 
 const navItems = [
   { path: '/', icon: Home, label: 'Главная', key: 'home' },
   { path: '/books', icon: BookOpen, label: 'Книги', key: 'books' },
+  { path: '/categories', icon: FolderTree, label: 'Категории', key: 'categories' },
   { path: '/azkar', icon: Sparkles, label: 'Азкары', key: 'azkar' },
   { path: '/hadith', icon: BookOpenText, label: 'Хадисы', key: 'hadith' },
   { path: '/book-languages', icon: Languages, label: 'Книги на разных языках', key: 'bookLanguages' },
@@ -22,6 +25,7 @@ const userItems = [
   { path: '/offline', icon: WifiOff, label: 'Офлайн', key: 'offline' },
   { path: '/about', icon: Info, label: 'О нас', key: 'about' },
   { path: '/report', icon: MessageSquare, label: 'Ошибка', key: 'report' },
+  { path: '__clearCache', icon: Trash2, label: 'Очистить кэш', key: 'clearCache' },
 ];
 
 export default function Sidebar() {
@@ -32,7 +36,18 @@ export default function Sidebar() {
   // Filter favorites to only include books that exist
   const validFavorites = favorites.filter(id => books.some(b => b.id === id));
 
+  const handleClearCache = async () => {
+    if (!confirm('Очистить кэш приложения?\n\nБудет очищено:\n- Кэш браузера (Service Worker)\n- Сгенерированные обложки\n- Кэш метаданных\n\nНЕ будет удалено:\n- Избранное\n- Книги\n- Админские данные')) return;
+    await clearAllCaches();
+    toast.success('Кэш очищен. Страница перезагрузится.');
+    setTimeout(() => window.location.reload(), 1500);
+  };
+
   const handleNav = (path: string) => {
+    if (path === '__clearCache') {
+      handleClearCache();
+      return;
+    }
     navigate(path);
     setSidebarOpen(false);
   };

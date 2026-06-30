@@ -10,6 +10,7 @@ import {
 import { useStore } from '../store/useStore';
 import type { Book } from '../store/useStore';
 import { analyzePdf, generateCoverFromPdf } from '../utils/pdfAnalysis';
+import { saveGeneratedCover, saveBookMetadata, dispatchDataUpdated } from '../utils/cache';
 import toast from 'react-hot-toast';
 
 const ADMIN_PIN = '1234';
@@ -467,6 +468,15 @@ export default function AdminPage() {
           language: analysis.suggestedLanguage,
           tags: analysis.suggestedTags.length > 0 ? analysis.suggestedTags : source.tags,
         });
+        saveBookMetadata(bookId, {
+          title: analysis.suggestedTitle,
+          author: analysis.suggestedAuthor,
+          publisher: analysis.suggestedPublisher,
+          category: analysis.suggestedCategory,
+          language: analysis.suggestedLanguage,
+          tags: analysis.suggestedTags,
+          confidence: analysis.confidence,
+        });
         toast.success('Данные обновлены. Проверьте и отредактируйте.');
       }
     } catch (e) {
@@ -509,6 +519,7 @@ export default function AdminPage() {
         const source = drafts.find(d => d.id === bookId);
         if (source) {
           updateDraft(bookId, { coverImage: dataUrl });
+          saveGeneratedCover(bookId, dataUrl);
           toast.success('Обложка сгенерирована', { id: 'cover' });
         } else {
           // For published books, update directly
@@ -516,6 +527,7 @@ export default function AdminPage() {
           setLocalBooks(updated);
           setBooks(updated);
           localStorage.setItem(LOCAL_BOOKS_KEY, JSON.stringify(updated));
+          saveGeneratedCover(bookId, dataUrl);
           toast.success('Обложка сгенерирована', { id: 'cover' });
         }
       } else {
