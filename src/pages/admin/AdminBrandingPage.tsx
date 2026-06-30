@@ -101,7 +101,7 @@ export default function AdminBrandingPage() {
 
   return (
     <div className="space-y-6">
-      <div className="glass-card" style={{ padding: 28, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
+      <div className="glass-card" style={{ padding: 28, background: 'linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-card))' }}>
         <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10 }}>
           <Brush size={16}/> Branding Center
         </div>

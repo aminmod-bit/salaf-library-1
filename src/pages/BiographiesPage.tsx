@@ -56,22 +56,22 @@ export default function BiographiesPage() {
 
   return (
     <div className="fade-in" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 30, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
+      <section className="glass-card" style={{ padding: 30, marginBottom: 20, background: 'linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-card))' }}>
+        <div style={{ color: 'var(--color-gold)', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
           <UserRound size={16} /> Биографии
         </div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 50px)', fontWeight: 950, lineHeight: 1.08 }}>
+        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(30px, 5vw, 50px)', fontWeight: 950, lineHeight: 1.08 }}>
           {showFolders ? 'Папки биографий' : BIO_FOLDERS.find(item => item.id === folder)?.label || 'Биографии'}
         </h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.7, marginTop: 12, maxWidth: 760 }}>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginTop: 12, maxWidth: 760 }}>
           {showFolders ? 'Сначала выберите раздел биографий. Такая структура удобна для большого количества авторов и учёных.' : `${filtered.length} записей в выбранном разделе.`}
         </p>
       </section>
 
       <div className="glass-card" style={{ padding: 16, marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(212,175,55,.14)', borderRadius: 12, padding: '9px 12px' }}>
+        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '9px 12px' }}>
           <Search size={15} color="#5a7a63" />
-          <input value={search} onChange={event => setSearch(event.target.value)} placeholder="Поиск по биографиям..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
+          <input value={search} onChange={event => setSearch(event.target.value)} placeholder="Поиск по биографиям..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: 'var(--color-text-primary)' }} />
         </div>
         {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setSearch(''); }}>Все папки</button>}
       </div>
@@ -91,9 +91,9 @@ export default function BiographiesPage() {
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="glass-card" style={{ padding: 50, textAlign: 'center', color: '#9db8a3' }}>
-          <UserRound size={42} style={{ margin: '0 auto 14px', color: '#5a7a63' }} />
-          <div style={{ fontSize: 18, fontWeight: 700, color: '#f0f4f1' }}>Ничего не найдено</div>
+        <div className="glass-card" style={{ padding: 50, textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+          <UserRound size={42} style={{ margin: '0 auto 14px', color: 'var(--color-text-muted)' }} />
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--color-text-primary)' }}>Ничего не найдено</div>
         </div>
       ) : (
         <div className="cards-grid">
@@ -104,7 +104,7 @@ export default function BiographiesPage() {
               className="glass-card"
               style={{ display: 'flex', gap: 14, padding: 16, textAlign: 'left', cursor: 'pointer' }}
             >
-              <div style={{ width: 54, height: 54, borderRadius: 18, flexShrink: 0, background: `linear-gradient(160deg, ${bio.coverColor || '#1a3a2a'}, ${bio.coverColor || '#1a3a2a'}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37' }}>
+              <div style={{ width: 54, height: 54, borderRadius: 18, flexShrink: 0, background: `linear-gradient(160deg, ${bio.coverColor || '#1a3a2a'}, ${bio.coverColor || '#1a3a2a'}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-gold)' }}>
                 <UserRound size={25} />
               </div>
               <div style={{ minWidth: 0 }}>
@@ -112,9 +112,9 @@ export default function BiographiesPage() {
                   <span className="badge badge-gold" style={{ fontSize: 10 }}>{TYPE_LABELS[bio.type] || bio.type}</span>
                   {bio.featured && <span className="badge badge-green" style={{ fontSize: 10 }}>Избранный</span>}
                 </div>
-                <h3 style={{ fontSize: 15, fontWeight: 800, color: '#f0f4f1', marginBottom: 2 }}>{bio.name}</h3>
-                {bio.nameAr && <div style={{ fontFamily: 'Amiri, serif', fontSize: 14, color: '#d4af37', direction: 'rtl', marginBottom: 4 }}>{bio.nameAr}</div>}
-                <p style={{ fontSize: 12, color: '#9db8a3', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{bio.description}</p>
+                <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: 2 }}>{bio.name}</h3>
+                {bio.nameAr && <div style={{ fontFamily: 'Amiri, serif', fontSize: 14, color: 'var(--color-gold)', direction: 'rtl', marginBottom: 4 }}>{bio.nameAr}</div>}
+                <p style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{bio.description}</p>
               </div>
             </button>
           ))}

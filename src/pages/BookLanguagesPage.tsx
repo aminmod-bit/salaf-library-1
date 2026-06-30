@@ -67,14 +67,14 @@ export default function BookLanguagesPage() {
 
   return (
     <div className="fade-in" style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 32, marginBottom: 22, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>
+      <section className="glass-card" style={{ padding: 32, marginBottom: 22, background: 'linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-card))' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--color-gold)', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 12 }}>
           <Languages size={16} /> {t('bookLanguages.eyebrow', 'Мультиязычная библиотека')}
         </div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(30px, 5vw, 52px)', fontWeight: 950, lineHeight: 1.06, marginBottom: 12 }}>
+        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(30px, 5vw, 52px)', fontWeight: 950, lineHeight: 1.06, marginBottom: 12 }}>
           {selected ? `${selected.native} — папки книг` : t('bookLanguages.title', 'Книги на разных языках')}
         </h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.75, maxWidth: 820 }}>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, maxWidth: 820 }}>
           {selected
             ? 'Внутри каждого языка книги разделены по тематическим папкам. Если папка пустая, она остаётся подготовленной для будущего наполнения.'
             : t('bookLanguages.description', 'Здесь будут собраны книги, статьи, фаваиды и материалы по каждому языку. Мы не показываем искусственные переводы: если материала на языке нет, раздел честно отмечен как ожидающий наполнения.')}
@@ -114,8 +114,8 @@ export default function BookLanguagesPage() {
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 16 }}>
                     <div>
-                      <h2 style={{ color: '#f0f4f1', fontSize: 22, fontWeight: 900 }}>{lang.native}</h2>
-                      <p style={{ color: '#5a7a63', fontSize: 12, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.08em' }}>{lang.label}</p>
+                      <h2 style={{ color: 'var(--color-text-primary)', fontSize: 22, fontWeight: 900 }}>{lang.native}</h2>
+                      <p style={{ color: 'var(--color-text-muted)', fontSize: 12, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.08em' }}>{lang.label}</p>
                     </div>
                     <div style={{ width: 44, height: 44, borderRadius: 15, background: `${lang.color}22`, color: lang.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Languages size={21} />
@@ -142,9 +142,9 @@ export default function BookLanguagesPage() {
 
 function Stat({ icon, label, value, color }: { icon: ReactNode; label: string; value: number; color: string }) {
   return (
-    <div style={{ padding: 12, borderRadius: 12, border: '1px solid rgba(212,175,55,.14)', background: 'rgba(255,255,255,.035)' }}>
+    <div style={{ padding: 12, borderRadius: 12, border: '1px solid var(--color-border)', background: 'rgba(255,255,255,.035)' }}>
       <div style={{ color, display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>{icon}<b>{value}</b></div>
-      <div style={{ color: '#5a7a63', fontSize: 11, fontWeight: 800 }}>{label}</div>
+      <div style={{ color: 'var(--color-text-muted)', fontSize: 11, fontWeight: 800 }}>{label}</div>
     </div>
   );
 }

@@ -52,16 +52,16 @@ export default function AzkarPage() {
 
   return (
     <div className="fade-in" style={{ maxWidth: 1180, margin: '0 auto' }}>
-      <section className="glass-card" style={{ padding: 32, marginBottom: 20, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><Shield size={16}/> Daily Azkar</div>
-        <h1 style={{ color: '#f0f4f1', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 950, lineHeight: 1.05, marginBottom: 12 }}>{showFolders ? 'Папки азкаров и дуа' : folders.find(f => f.id === folder)?.label || 'Азкары и дуа'}</h1>
-        <p style={{ color: '#9db8a3', lineHeight: 1.75, maxWidth: 760 }}>Сначала выберите папку: утренние, вечерние, перед сном, после намаза и другие разделы.</p>
+      <section className="glass-card islamic-pattern" style={{ padding: 32, marginBottom: 20 }}>
+        <div style={{ color: 'var(--color-gold)', fontSize: 12, fontWeight: 900, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10, display: 'flex', gap: 8, alignItems: 'center' }}><Shield size={16}/> Daily Azkar</div>
+        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 950, lineHeight: 1.05, marginBottom: 12 }}>{showFolders ? 'Папки азкаров и дуа' : folders.find(f => f.id === folder)?.label || 'Азкары и дуа'}</h1>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, maxWidth: 760 }}>Сначала выберите папку: утренние, вечерние, перед сном, после намаза и другие разделы.</p>
       </section>
 
       <div className="glass-card" style={{ padding: 16, marginBottom: 20, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(212,175,55,.14)', borderRadius: 12, padding: '9px 12px' }}>
-          <Search size={15} color="#5a7a63" />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Поиск азкаров..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: '#f0f4f1' }} />
+        <div style={{ flex: 1, minWidth: 220, display: 'flex', gap: 8, alignItems: 'center', background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '9px 12px' }}>
+          <Search size={15} style={{ color: 'var(--color-text-muted)' }} />
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Поиск азкаров..." style={{ flex: 1, background: 'transparent', border: 0, outline: 0, color: 'var(--color-text-primary)' }} />
         </div>
         {!showFolders && <button className="btn-ghost" onClick={() => { setFolder(''); setQuery(''); }}>Все папки</button>}
       </div>

@@ -96,32 +96,32 @@ export default function BooksPage() {
 
   return (
     <div className="fade-in" style={{ maxWidth: '1400px', margin: '0 auto' }}>
-      <div className="glass-card" style={{ marginBottom: 24, padding: 28, background: 'linear-gradient(135deg, rgba(13,42,24,.96), rgba(7,19,11,.94))' }}>
-        <div style={{ color: '#d4af37', fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>
+      <div className="glass-card" style={{ marginBottom: 24, padding: 28, background: 'linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-card))' }}>
+        <div style={{ color: 'var(--color-gold)', fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', marginBottom: 10 }}>
           {t('booksPage.eyebrow', 'Каталог Salaf Library')}
         </div>
-        <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: '#f0f4f1', marginBottom: 10, lineHeight: 1.08 }}>
+        <h1 style={{ fontSize: 'clamp(30px, 5vw, 46px)', fontWeight: 900, color: 'var(--color-text-primary)', marginBottom: 10, lineHeight: 1.08 }}>
           {showFolders ? 'Разделы библиотеки' : selectedCat || t('booksPage.title', 'Книги для онлайн-чтения')}
         </h1>
-        <p style={{ color: '#9db8a3', fontSize: 15, lineHeight: 1.7, maxWidth: 760 }}>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: 15, lineHeight: 1.7, maxWidth: 760 }}>
           {showFolders
             ? 'Сначала выберите тематический раздел. Такая структура удобна для тысяч книг и не перегружает экран.'
             : `${filtered.length} / ${books.length}. ${t('booksPage.description', 'Используйте поиск, категории и сортировку, чтобы быстро найти нужный материал.')}`}
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 18 }}>
           {[[t('booksPage.books', 'Книг'), books.length], [t('booksPage.authors', 'Авторов'), authorsCount], [t('booksPage.categories', 'Категорий'), sectionStats.filter(s => s.count > 0).length], [t('booksPage.withPdf', 'С PDF'), books.filter(b => b.fileUrl).length]].map(([label, value]) => (
-            <div key={String(label)} style={{ padding: '10px 14px', border: '1px solid rgba(212,175,55,.18)', borderRadius: 12, background: 'rgba(255,255,255,.035)' }}>
-              <div style={{ color: '#d4af37', fontWeight: 900, fontSize: 18 }}>{value}</div>
-              <div style={{ color: '#5a7a63', fontSize: 11, fontWeight: 700 }}>{label}</div>
+            <div key={String(label)} style={{ padding: '10px 14px', border: '1px solid var(--color-border)', borderRadius: 12, background: 'var(--color-bg-hover)' }}>
+              <div style={{ color: 'var(--color-gold)', fontWeight: 900, fontSize: 18 }}>{value}</div>
+              <div style={{ color: 'var(--color-text-muted)', fontSize: 11, fontWeight: 700 }}>{label}</div>
             </div>
           ))}
         </div>
       </div>
 
       <div className="glass-card" style={{ borderRadius: 16, padding: '16px 20px', marginBottom: 24, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ flex: 1, minWidth: 220, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 14px' }}>
-          <Search size={15} color="#5a7a63" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')} style={{ background: 'none', border: 'none', outline: 'none', color: '#f0f4f1', fontSize: 14, fontFamily: 'inherit', width: '100%' }} />
+        <div style={{ flex: 1, minWidth: 220, display: 'flex', alignItems: 'center', gap: 8, background: 'var(--color-bg-hover)', border: '1px solid var(--color-border)', borderRadius: 10, padding: '8px 14px' }}>
+          <Search size={15} style={{ color: 'var(--color-text-muted)' }} />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('booksPage.searchPlaceholder', 'Поиск книг...')} style={{ background: 'none', border: 'none', outline: 'none', color: 'var(--color-text-primary)', fontSize: 14, fontFamily: 'inherit', width: '100%' }} />
         </div>
         {!showFolders && <button className="btn-ghost" onClick={() => setSelectedCat('')}>Все разделы</button>}
         <select value={sort} onChange={e => setSort(e.target.value)} className="input-field" style={{ width: 'auto' }}>
@@ -152,9 +152,9 @@ export default function BooksPage() {
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: 60, color: '#5a7a63' }}>
+        <div style={{ textAlign: 'center', padding: 60, color: 'var(--color-text-muted)' }}>
           <BookOpen size={44} style={{ margin: '0 auto 16px' }} />
-          <div style={{ fontSize: 18, fontWeight: 600, color: '#9db8a3', marginBottom: 8 }}>{t('booksPage.notFound', 'Ничего не найдено')}</div>
+          <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 8 }}>{t('booksPage.notFound', 'Ничего не найдено')}</div>
           <div style={{ fontSize: 14 }}>{t('booksPage.notFoundHint', 'Попробуйте изменить фильтры')}</div>
         </div>
       ) : view === 'grid' ? (
@@ -173,5 +173,5 @@ export default function BooksPage() {
 }
 
 function toggleStyle(active: boolean): CSSProperties {
-  return { background: active ? 'rgba(212,175,55,0.2)' : 'none', border: 'none', borderRadius: 7, padding: '6px 10px', color: active ? '#d4af37' : '#5a7a63', cursor: 'pointer' };
+  return { background: active ? 'rgba(212,175,55,0.2)' : 'none', border: 'none', borderRadius: 7, padding: '6px 10px', color: active ? 'var(--color-gold)' : 'var(--color-text-muted)', cursor: 'pointer' };
 }
