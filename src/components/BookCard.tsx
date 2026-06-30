@@ -136,7 +136,7 @@ export default function BookCard({ book, size = 'md', horizontal = false }: Prop
         {book.isNew && (
           <span style={{
             position: 'absolute', top: '8px', left: '8px',
-            background: '#22c55e', color: '#fff',
+            background: 'var(--color-accent-light)', color: '#fff',
             fontSize: '9px', fontWeight: 700,
             padding: '2px 6px', borderRadius: '4px',
           }}>

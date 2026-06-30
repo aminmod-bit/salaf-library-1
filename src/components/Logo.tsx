@@ -12,50 +12,28 @@ export default function Logo({ size = 38, showText = false, className }: LogoPro
         width={size}
         height={size}
         xmlns="http://www.w3.org/2000/svg"
-        style={{ filter: 'drop-shadow(0 4px 12px rgba(212,175,55,0.25))' }}
+        style={{ filter: 'drop-shadow(0 4px 12px rgba(212,175,55,0.3))' }}
       >
         <defs>
           <linearGradient id="lg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#f0c84a"/>
-            <stop offset="50%" stopColor="#d4af37"/>
-            <stop offset="100%" stopColor="#b8960e"/>
-          </linearGradient>
-          <linearGradient id="lg-dark" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#1a3a24"/>
-            <stop offset="100%" stopColor="#0d2218"/>
+            <stop offset="0%" stopColor="#f5d76e"/>
+            <stop offset="100%" stopColor="#c9a227"/>
           </linearGradient>
         </defs>
-
-        {/* Arch / Mihrab */}
-        <path d="M20 92 Q20 22 64 14 Q108 22 108 92 L108 116 Q108 120 104 120 L24 120 Q20 120 20 116 Z"
-              fill="url(#lg-dark)" stroke="url(#lg-gold)" strokeWidth="2.5"/>
-
-        {/* Inner arch */}
-        <path d="M30 90 Q30 32 64 24 Q98 32 98 90"
-              fill="none" stroke="url(#lg-gold)" strokeWidth="1.2" opacity="0.4"/>
-
-        {/* Open book */}
-        <g transform="translate(64, 72)">
-          <path d="M0 0 Q-22-6-32 6 L-32 30 Q-22 18 0 12 Z" fill="#f8f5ec" opacity="0.95"/>
-          <path d="M0 0 Q22-6 32 6 L32 30 Q22 18 0 12 Z" fill="#ede8da" opacity="0.9"/>
-          <line x1="0" y1="-2" x2="0" y2="32" stroke="url(#lg-gold)" strokeWidth="1.8"/>
-          <line x1="-28" y1="10" x2="-6" y2="4" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.6"/>
-          <line x1="-28" y1="16" x2="-6" y2="10" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.6"/>
-          <line x1="-28" y1="22" x2="-6" y2="16" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.6"/>
-          <line x1="6" y1="4" x2="28" y2="10" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.5"/>
-          <line x1="6" y1="10" x2="28" y2="16" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.5"/>
-          <line x1="6" y1="16" x2="28" y2="22" stroke="#ccc5b0" strokeWidth="0.8" opacity="0.5"/>
+        {/* Rounded square */}
+        <rect x="16" y="16" width="96" height="96" rx="24" fill="url(#lg-gold)"/>
+        {/* Book icon */}
+        <g transform="translate(64, 64)">
+          <path d="M-4-20 Q-20-20-26-8 L-26 22 Q-20 10-4 4 Z" fill="#1a3a24" opacity="0.9"/>
+          <path d="M4-20 Q20-20 26-8 L26 22 Q20 10 4 4 Z" fill="#1a3a24" opacity="0.75"/>
+          <line x1="0" y1="-22" x2="0" y2="24" stroke="#1a3a24" strokeWidth="2.5" strokeLinecap="round"/>
+          <line x1="-22" y1="0" x2="-8" y2="-6" stroke="#f5d76e" strokeWidth="1.2" opacity="0.5"/>
+          <line x1="-22" y1="6" x2="-8" y2="0" stroke="#f5d76e" strokeWidth="1.2" opacity="0.5"/>
+          <line x1="-22" y1="12" x2="-8" y2="6" stroke="#f5d76e" strokeWidth="1.2" opacity="0.5"/>
+          <line x1="8" y1="-6" x2="22" y2="0" stroke="#f5d76e" strokeWidth="1.2" opacity="0.4"/>
+          <line x1="8" y1="0" x2="22" y2="6" stroke="#f5d76e" strokeWidth="1.2" opacity="0.4"/>
+          <line x1="8" y1="6" x2="22" y2="12" stroke="#f5d76e" strokeWidth="1.2" opacity="0.4"/>
         </g>
-
-        {/* Diamond ornament */}
-        <path d="M64 18 l5 7-5 7-5-7z" fill="url(#lg-gold)" opacity="0.85"/>
-
-        {/* Bottom line */}
-        <line x1="34" y1="110" x2="94" y2="110" stroke="url(#lg-gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-
-        {/* Corner dots */}
-        <circle cx="34" cy="110" r="1.5" fill="url(#lg-gold)" opacity="0.6"/>
-        <circle cx="94" cy="110" r="1.5" fill="url(#lg-gold)" opacity="0.6"/>
       </svg>
 
       {showText && (
@@ -63,7 +41,7 @@ export default function Logo({ size = 38, showText = false, className }: LogoPro
           <div style={{
             fontSize: `${Math.max(14, size * 0.47)}px`,
             fontWeight: 800,
-            background: 'linear-gradient(135deg, #d4af37, #f0c84a)',
+            background: 'linear-gradient(135deg, var(--color-gold), var(--color-gold-light))',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',

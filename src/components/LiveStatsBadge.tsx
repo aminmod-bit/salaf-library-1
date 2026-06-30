@@ -30,7 +30,7 @@ export default function LiveStatsBadge() {
       display: 'flex', alignItems: 'center', gap: 7,
       padding: '7px 10px', borderRadius: 10,
       border: '1px solid var(--color-border)',
-      background: 'var(--color-bg-hover)', color: 'var(--color-green-light)',
+      background: 'var(--color-bg-hover)', color: 'var(--color-accent-light)',
       fontSize: 12, fontWeight: 800,
     }}>
       <Activity size={14} />

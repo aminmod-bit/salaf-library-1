@@ -9,7 +9,7 @@ import { useStore } from '../store/useStore';
 import Logo from '../components/Logo';
 
 const quickLinks = [
-  { path: '/books', icon: BookOpen, label: 'Книги', color: 'var(--color-green-primary)', desc: 'Электронная библиотека' },
+  { path: '/books', icon: BookOpen, label: 'Книги', color: 'var(--color-accent)', desc: 'Электронная библиотека' },
   { path: '/azkar', icon: Sparkles, label: 'Азкары', color: '#2563eb', desc: 'Поминания и дуа' },
   { path: '/hadith', icon: BookOpenText, label: 'Хадисы', color: '#9333ea', desc: 'Сборники хадисов' },
   { path: '/biographies', icon: Users, label: 'Биографии', color: '#dc2626', desc: 'Учёные и сподвижники' },

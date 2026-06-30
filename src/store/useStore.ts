@@ -5,7 +5,7 @@ import { goalsData, readingPlanData } from '../data/goals';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export type ThemeMode = 'dark' | 'light' | 'system';
+export type ThemeMode = 'medina-night' | 'olive-sand' | 'sky-marble' | 'qibla-gold' | 'tender-rose' | 'lilac-pearl' | 'ivory' | 'cream-mint';
 
 export interface Book {
   id: string;
@@ -228,7 +228,7 @@ export const useStore = create<LibraryStore>()(
       currentPage: 'home',
       searchQuery: '',
       isLoading: true,
-      theme: 'dark',
+      theme: 'medina-night',
       currentAudio: null,
       isPlaying: false,
       audioVolume: 0.8,

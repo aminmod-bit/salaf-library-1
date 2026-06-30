@@ -436,7 +436,7 @@ export default function AdminImportPage() {
 
       {report && (
         <div className="glass-card" style={{ padding: 18, color: 'var(--color-text-secondary)', display: 'grid', gap: 6 }}>
-          <div style={{ color: 'var(--color-green-light)', fontWeight: 900 }}><CheckCircle size={16} style={{ display: 'inline', marginRight: 6 }} />Отчёт импорта</div>
+          <div style={{ color: 'var(--color-accent-light)', fontWeight: 900 }}><CheckCircle size={16} style={{ display: 'inline', marginRight: 6 }} />Отчёт импорта</div>
           <div>Импортировано: {report.imported}</div>
           <div>Авторы найдены: {report.authorsFound}</div>
           <div>Новые авторы: {report.newAuthors}</div>

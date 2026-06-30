@@ -94,7 +94,7 @@ export default function AzkarPage() {
                 <p style={{ color: '#9db8a3', lineHeight: 1.75, marginTop: 12 }}>{item.translationRu}</p>
                 <p style={{ color: '#5a7a63', fontSize: 12, marginTop: 8 }}>{item.source}</p>
                 <div style={{ marginTop: 14, display: 'grid', gridTemplateColumns: '1fr auto', gap: 10, alignItems: 'center' }}>
-                  <div style={{ height: 8, background: 'rgba(255,255,255,.08)', borderRadius: 999, overflow: 'hidden' }}><div style={{ width: `${(count / item.repeat) * 100}%`, height: '100%', background: 'linear-gradient(90deg,#d4af37,#22c55e)' }} /></div>
+                  <div style={{ height: 8, background: 'rgba(255,255,255,.08)', borderRadius: 999, overflow: 'hidden' }}><div style={{ width: `${(count / item.repeat) * 100}%`, height: '100%', background: 'linear-gradient(90deg,var(--color-gold),var(--color-accent-light))' }} /></div>
                   <button className="btn-primary" onClick={() => count >= item.repeat ? reset(item.id) : increment(item.id, item.repeat)}>{count >= item.repeat ? 'Сброс' : `${count}/${item.repeat}`}</button>
                 </div>
                 {item.benefit && <div style={{ marginTop: 12, color: '#9db8a3', fontSize: 13, display: 'flex', gap: 7 }}><Sparkles size={14} color="#d4af37"/> {item.benefit}</div>}
