@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useStore } from "./store/useStore";
 import { loadLibraryData } from "./utils/loadLibraryData";
@@ -86,13 +86,23 @@ export default function App() {
 
   return (
     <HashRouter>
-      <div className="app-layout">
-        <Sidebar />
-        <div className="main-content">
-          <Header />
-          <div className="page-content">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
+      <AppRoutes />
+    </HashRouter>
+  );
+}
+
+function AppRoutes() {
+  const location = useLocation();
+
+  return (
+    <div className="app-layout">
+      <Sidebar />
+      <div className="main-content">
+        <Header />
+        <div className="page-content">
+          <Suspense fallback={<PageLoader />}>
+            <div className="page-enter" key={location.pathname}>
+              <Routes location={location}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/books" element={<BooksPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
@@ -118,24 +128,24 @@ export default function App() {
                   element={<AdminBookEditorPage />}
                 />
               </Routes>
-            </Suspense>
-          </div>
+            </div>
+          </Suspense>
         </div>
-        <BottomNav />
-        <PwaInstallPrompt />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "var(--color-bg-card)",
-              color: "var(--color-text-primary)",
-              border: "1px solid var(--color-border)",
-              borderRadius: "12px",
-              fontSize: "14px",
-            },
-          }}
-        />
       </div>
+      <BottomNav />
+      <PwaInstallPrompt />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "var(--color-bg-card)",
+            color: "var(--color-text-primary)",
+            border: "1px solid var(--color-border)",
+            borderRadius: "12px",
+            fontSize: "14px",
+          },
+        }}
+      />
 
       <style>{`
         .app-layout {
@@ -176,6 +186,6 @@ export default function App() {
           }
         }
       `}</style>
-    </HashRouter>
+    </div>
   );
 }

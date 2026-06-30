@@ -158,9 +158,9 @@ export default function BooksPage() {
           <div style={{ fontSize: 14 }}>{t('booksPage.notFoundHint', 'Попробуйте изменить фильтры')}</div>
         </div>
       ) : view === 'grid' ? (
-        <div className="books-grid">{visibleBooks.map(book => <BookCard key={book.id} book={book} />)}</div>
+        <div className="books-grid stagger-in">{visibleBooks.map(book => <BookCard key={book.id} book={book} />)}</div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>{visibleBooks.map(book => <BookCard key={book.id} book={book} horizontal />)}</div>
+        <div className="stagger-in" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>{visibleBooks.map(book => <BookCard key={book.id} book={book} horizontal />)}</div>
       )}
 
       {!showFolders && filtered.length > visibleCount && (

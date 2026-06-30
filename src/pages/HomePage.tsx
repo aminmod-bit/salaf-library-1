@@ -45,7 +45,7 @@ export default function HomePage() {
   return (
     <main className="fade-in" style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Hero Section */}
-      <section style={{
+      <section className="islamic-pattern" style={{
         position: 'relative',
         borderRadius: '24px',
         overflow: 'hidden',
@@ -153,7 +153,7 @@ export default function HomePage() {
 
       {/* Quick Links */}
       <section style={{ marginBottom: '40px' }}>
-        <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
+        <div className="stagger-in" style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
           {quickLinks.map(({ path, icon: Icon, label, color, desc }) => (
             <button
               key={path}
@@ -205,7 +205,7 @@ export default function HomePage() {
       {featured.length > 0 && (
         <section style={{ marginBottom: '40px' }}>
           <SectionHeader icon={Star} title="Рекомендуем" count={featured.length} onSeeAll={() => navigate('/books')} />
-          <div className="books-grid">
+          <div className="books-grid stagger-in">
             {featured.map(book => (
               <BookCard key={book.id} book={book} onClick={() => navigate(`/books/${book.id}`)} />
             ))}
@@ -217,7 +217,7 @@ export default function HomePage() {
       {newBooks.length > 0 && (
         <section style={{ marginBottom: '40px' }}>
           <SectionHeader icon={Clock} title="Новинки" count={newBooks.length} onSeeAll={() => navigate('/books')} />
-          <div className="books-grid">
+          <div className="books-grid stagger-in">
             {newBooks.map(book => (
               <BookCard key={book.id} book={book} onClick={() => navigate(`/books/${book.id}`)} />
             ))}
@@ -229,7 +229,7 @@ export default function HomePage() {
       {popular.length > 0 && (
         <section style={{ marginBottom: '40px' }}>
           <SectionHeader icon={TrendingUp} title="Популярные" count={popular.length} onSeeAll={() => navigate('/books')} />
-          <div className="books-grid">
+          <div className="books-grid stagger-in">
             {popular.map(book => (
               <BookCard key={book.id} book={book} onClick={() => navigate(`/books/${book.id}`)} />
             ))}
