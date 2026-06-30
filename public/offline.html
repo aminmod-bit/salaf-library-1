@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Salaf Library — Офлайн</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
-        margin: 0;
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
         background: #0a1a0f;
         color: #f0f4f1;
         display: flex;
@@ -17,26 +18,15 @@
         text-align: center;
         padding: 24px;
       }
-      .container {
-        max-width: 400px;
-      }
-      h1 {
-        font-size: 24px;
-        margin-bottom: 12px;
-        color: #d4af37;
-      }
-      p {
-        font-size: 16px;
-        color: #9db8a3;
-        line-height: 1.5;
-      }
-      .icon {
-        font-size: 48px;
-        margin-bottom: 16px;
-      }
+      .container { max-width: 380px; }
+      .logo { width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 20px; background: linear-gradient(135deg, #d4af37, #f0c84a); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3); }
+      .logo svg { width: 48px; height: 48px; }
+      h1 { font-size: 22px; margin-bottom: 8px; color: #d4af37; font-weight: 800; }
+      p { font-size: 14px; color: #9db8a3; line-height: 1.6; margin-bottom: 8px; }
+      .hint { font-size: 12px; color: #5a7a63; margin-top: 16px; }
       button {
         margin-top: 24px;
-        padding: 10px 20px;
+        padding: 12px 28px;
         background: linear-gradient(135deg, #d4af37, #f0c84a);
         color: #0a1a0f;
         border: none;
@@ -44,24 +34,39 @@
         font-weight: 700;
         cursor: pointer;
         font-size: 14px;
+        transition: transform 0.2s;
       }
-      button:hover {
-        transform: translateY(-1px);
-      }
+      button:hover { transform: translateY(-1px); }
       @media (prefers-color-scheme: light) {
         body { background: #f5f7f5; color: #1a1a1a; }
         h1 { color: #b8860b; }
         p { color: #4a5a4a; }
-        button { color: #1a1a1a; }
+        .hint { color: #888; }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="icon">📡</div>
-      <h1>Нет подключения</h1>
-      <p>Похоже, вы сейчас офлайн. Некоторые разделы библиотеки могут быть недоступны. Проверьте подключение к интернету и попробуйте снова.</p>
-      <button onclick="window.location.reload()">Перезагрузить</button>
+      <div class="logo">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5d76e"/>
+              <stop offset="100%" stop-color="#c9a227"/>
+            </linearGradient>
+          </defs>
+          <rect x="16" y="16" width="96" height="96" rx="24" fill="url(#g)"/>
+          <g transform="translate(64, 64)">
+            <path d="M-4-20 Q-20-20-26-8 L-26 22 Q-20 10-4 4 Z" fill="#1a3a24" opacity="0.9"/>
+            <path d="M4-20 Q20-20 26-8 L26 22 Q20 10 4 4 Z" fill="#1a3a24" opacity="0.75"/>
+            <line x1="0" y1="-22" x2="0" y2="24" stroke="#1a3a24" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <h1>Вы офлайн</h1>
+      <p>Нет подключения к интернету. Проверьте соединение и попробуйте снова.</p>
+      <p class="hint">Ранее открытые данные могут быть доступны из кэша.</p>
+      <button onclick="window.location.reload()">Повторить</button>
     </div>
   </body>
 </html>
