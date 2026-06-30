@@ -5,6 +5,7 @@ import {
   Search, Heart, Clock, Grid3X3, Settings,
   X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText
 } from 'lucide-react';
+import Logo from './Logo';
 
 const navItems = [
   { path: '/', icon: Home, label: 'Главная', key: 'home' },
@@ -78,16 +79,7 @@ export default function Sidebar() {
                 gap: '10px',
                 marginBottom: '4px',
               }}>
-                <img
-                  src="./logo-mark.svg"
-                  alt="Salaf Library"
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '12px',
-                    boxShadow: '0 4px 16px rgba(212, 175, 55, 0.28)',
-                  }}
-                />
+                <Logo size={38} />
                 <div>
                   <div style={{
                     fontSize: '18px',

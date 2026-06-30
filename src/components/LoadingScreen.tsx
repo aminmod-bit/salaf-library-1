@@ -1,3 +1,5 @@
+import Logo from './Logo';
+
 export default function LoadingScreen() {
   return (
     <div style={{
@@ -10,17 +12,12 @@ export default function LoadingScreen() {
       justifyContent: 'center',
       background: 'var(--color-bg-primary)',
     }}>
-      <img
-        src="./logo-mark.svg"
-        alt="Salaf Library"
-        style={{
-          width: '72px',
-          height: '72px',
-          marginBottom: '20px',
-          filter: 'drop-shadow(0 8px 18px rgba(0,0,0,0.3))',
-          animation: 'pulse 2s ease-in-out infinite',
-        }}
-      />
+      <div style={{
+        marginBottom: '20px',
+        animation: 'pulse 2s ease-in-out infinite',
+      }}>
+        <Logo size={80} />
+      </div>
       <h1 style={{
         fontSize: '24px',
         fontWeight: 700,

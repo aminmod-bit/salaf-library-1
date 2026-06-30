@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, Search } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import ThemeToggle from './ThemeToggle';
+import Logo from './Logo';
 
 const navItems = [
   { path: '/', label: 'Главная', key: 'home' },
@@ -30,11 +31,7 @@ export default function Header() {
   return (
     <header className="site-topbar">
       <div className="site-brand" onClick={() => navigate('/')} role="button" tabIndex={0}>
-        <img src="./logo-mark.svg" alt="Salaf Library" />
-        <div>
-          <strong>Salaf Library</strong>
-          <span>Исламская библиотека</span>
-        </div>
+        <Logo size={44} showText />
       </div>
 
       <nav className="site-nav" aria-label="Основная навигация">

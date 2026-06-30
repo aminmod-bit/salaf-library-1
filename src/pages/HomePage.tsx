@@ -6,6 +6,7 @@ import {
   Heart, Feather
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import Logo from '../components/Logo';
 
 const quickLinks = [
   { path: '/books', icon: BookOpen, label: 'Книги', color: 'var(--color-green-primary)', desc: 'Электронная библиотека' },
@@ -65,17 +66,9 @@ export default function HomePage() {
         }} />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <img
-            src="./logo-mark.svg"
-            alt="Salaf Library"
-            style={{
-              width: '64px',
-              height: '64px',
-              margin: '0 auto 20px',
-              display: 'block',
-              filter: 'drop-shadow(0 8px 18px rgba(0,0,0,0.3))',
-            }}
-          />
+          <div style={{ margin: '0 auto 20px' }}>
+            <Logo size={72} />
+          </div>
 
           <h1 style={{
             fontFamily: 'Georgia, "Times New Roman", serif',
@@ -253,7 +246,9 @@ export default function HomePage() {
           borderRadius: '20px',
           marginBottom: '40px',
         }}>
-          <img src="./logo-mark.svg" alt="" style={{ width: '48px', height: '48px', margin: '0 auto 16px', display: 'block', opacity: 0.6 }} />
+          <div style={{ margin: '0 auto 16px', opacity: 0.6 }}>
+            <Logo size={48} />
+          </div>
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
             Библиотека готова к наполнению
           </h3>
