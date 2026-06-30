@@ -1,0 +1,78 @@
+[
+  {
+    "id": "sciences",
+    "title": "Науки",
+    "parentId": null,
+    "icon": "BookOpen",
+    "children": [
+      { "id": "tawhid-science", "title": "Единобожие", "parentId": "sciences" },
+      { "id": "basics-rules", "title": "Основы и правила", "parentId": "sciences" },
+      { "id": "terminology", "title": "Терминология", "parentId": "sciences" },
+      { "id": "hadith-science", "title": "Хадисы", "parentId": "sciences" },
+      { "id": "imams-sheikhs", "title": "Имамы и шейхи", "parentId": "sciences" }
+    ]
+  },
+  {
+    "id": "rituals",
+    "title": "Обряды",
+    "parentId": null,
+    "icon": "Sparkles",
+    "children": [
+      { "id": "purification", "title": "Ритуалы очищения", "parentId": "rituals" },
+      { "id": "food-clothing-home", "title": "Пища/одежда/дом", "parentId": "rituals" },
+      { "id": "prayer", "title": "Намаз", "parentId": "rituals" },
+      { "id": "fasting", "title": "Посты", "parentId": "rituals" },
+      { "id": "zakat-finance", "title": "Закят и финансы", "parentId": "rituals" },
+      { "id": "azkar-dua", "title": "Азкары и дуа", "parentId": "rituals" },
+      { "id": "mosques", "title": "Мечети", "parentId": "rituals" },
+      { "id": "quran-ritual", "title": "Коран", "parentId": "rituals" },
+      { "id": "friday", "title": "Пятница", "parentId": "rituals" },
+      { "id": "eid-holidays", "title": "Ид — праздники", "parentId": "rituals" },
+      { "id": "safar", "title": "Сафар", "parentId": "rituals" },
+      { "id": "funeral-cemetery", "title": "Похороны и кладбища", "parentId": "rituals" }
+    ]
+  },
+  {
+    "id": "legal",
+    "title": "Правовое дело",
+    "parentId": null,
+    "icon": "Scale",
+    "children": [
+      { "id": "society-politics", "title": "Общество и политика", "parentId": "legal" },
+      { "id": "family-kinship", "title": "Семья и родство", "parentId": "legal" },
+      { "id": "marriage", "title": "Бракосочетание", "parentId": "legal" },
+      { "id": "woman", "title": "Женщина", "parentId": "legal" },
+      { "id": "divorce", "title": "Развод", "parentId": "legal" }
+    ]
+  },
+  {
+    "id": "upbringing",
+    "title": "Воспитание",
+    "parentId": null,
+    "icon": "Heart",
+    "children": [
+      { "id": "repentance", "title": "Покаяние", "parentId": "upbringing" },
+      { "id": "character-etiquette", "title": "Нрав и этикет", "parentId": "upbringing" },
+      { "id": "learning", "title": "Учёба и обучение", "parentId": "upbringing" }
+    ]
+  },
+  {
+    "id": "movements",
+    "title": "Течения",
+    "parentId": null,
+    "icon": "AlertTriangle",
+    "children": [
+      { "id": "kharijites", "title": "Хариджиты/такфириты", "parentId": "movements" },
+      { "id": "jahmites-asharites", "title": "Джахмиты и ашариты", "parentId": "movements" },
+      { "id": "shiites", "title": "Шииты-рафидиты", "parentId": "movements" },
+      { "id": "innovators", "title": "Иноверцы", "parentId": "movements" }
+    ]
+  },
+  {
+    "id": "misc",
+    "title": "Разное",
+    "parentId": null,
+    "icon": "MoreHorizontal",
+    "children": []
+  }
+]
