@@ -24,7 +24,9 @@ import AboutPage from "./pages/AboutPage";
 import ReportIssuePage from "./pages/ReportIssuePage";
 import BookLanguagesPage from "./pages/BookLanguagesPage";
 import ArticlesPage from "./pages/ArticlesPage";
-import HadithPage from "./pages/HadithPage";
+import HadithCatalogPage from "./pages/HadithCatalogPage";
+import HadithBookPage from "./pages/HadithBookPage";
+import HadithDetailPage from "./pages/HadithDetailPage";
 import { AzkarSectionsPage, AzkarSectionPage } from "./pages/AzkarPage";
 import AdminBookEditorPage from "./pages/AdminBookEditorPage";
 import OfflinePage from "./pages/OfflinePage";
@@ -110,7 +112,9 @@ function AppRoutes() {
                 <Route path="/report" element={<ReportIssuePage />} />
                 <Route path="/book-languages" element={<BookLanguagesPage />} />
                 <Route path="/articles" element={<ArticlesPage />} />
-                <Route path="/hadith" element={<HadithPage />} />
+                <Route path="/hadith" element={<HadithCatalogPage />} />
+                <Route path="/hadith/book/:slug" element={<HadithBookPage />} />
+                <Route path="/hadith/book/:bookSlug/:hadithSlug" element={<HadithDetailPage />} />
                 <Route path="/azkar" element={<AzkarSectionsPage />} />
                 <Route path="/azkar/:sectionId" element={<AzkarSectionPage />} />
                 <Route path="/offline" element={<OfflinePage />} />
