@@ -1,111 +1,208 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Repeat, Search, Shield, Sparkles, Copy, Heart, Check,
-  ArrowLeft, Sun, Moon, BookOpen, Home, Coffee, Plane, CloudRain, HeartPulse
+  ArrowLeft, Copy, Heart, Share2, Repeat, Search, Eye, EyeOff
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-interface Zikr {
+interface AzkarCategory {
   id: string;
-  type: string;
-  category: string;
+  slug: string;
   title: string;
-  arabic: string;
-  transliteration?: string;
-  translationRu: string;
-  source: string;
-  repeat: number;
-  benefit: string;
+  subtitle: string;
+  image: string;
+  gradient: string;
+  sourceUrl?: string;
 }
 
-const SECTIONS = [
-  { id: 'morning', label: 'Утренние азкары', icon: Sun, description: 'Азкары на утро', color: '#f59e0b' },
-  { id: 'evening', label: 'Вечерние азкары', icon: Moon, description: 'Азкары на вечер', color: '#6366f1' },
-  { id: 'after-prayer', label: 'После намаза', icon: BookOpen, description: 'После каждого намаза', color: '#22c55e' },
-  { id: 'sleep', label: 'Перед сном', icon: Coffee, description: 'При засыпании и пробуждении', color: '#8b5cf6' },
-  { id: 'travel', label: 'Для путешествия', icon: Plane, description: 'При поездках', color: '#0ea5e9' },
-  { id: 'rain', label: 'Во время дождя', icon: CloudRain, description: 'При дожде', color: '#3b82f6' },
-  { id: 'illness', label: 'При болезни', icon: HeartPulse, description: 'Для больных', color: '#ef4444' },
-  { id: 'before-food', label: 'Перед едой', icon: Coffee, description: 'Перед приёмом пищи', color: '#f97316' },
-];
+interface AzkarItem {
+  id: string;
+  categorySlug: string;
+  arabic: string;
+  translation: string;
+  transliteration?: string;
+  source?: string;
+  repeat: number;
+  tags: string[];
+  sourceUrl?: string;
+}
 
-const FAVORITES_KEY = 'salaf-azkar-favorites';
-const COUNTS_KEY = 'salaf-azkar-counts';
+const ACCESSIBLE_KEY = 'salaf-accessible-mode';
 
-// Main sections page
-export function AzkarSectionsPage() {
+// ─── Main categories page ────────────────────────────────────────────────────
+export function AzkarCategoriesPage() {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState<AzkarCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('./data/azkar-categories.json')
+      .then(r => r.json())
+      .then(data => setCategories(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <div className="fade-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <section className="glass-card islamic-pattern" style={{ padding: '32px', marginBottom: '24px', textAlign: 'center' }}>
+    <div className="fade-in" style={{ maxWidth: '1100px', margin: '0 auto' }}>
+      {/* Header */}
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <div style={{ fontSize: '48px', marginBottom: '12px' }}>🤲</div>
-        <h1 style={{ color: 'var(--color-text-primary)', fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, marginBottom: '8px' }}>
+        <h1 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
           Азкары и поминания
         </h1>
         <p style={{ color: 'var(--color-text-secondary)', fontSize: '15px', lineHeight: 1.6, maxWidth: '500px', margin: '0 auto' }}>
-          Поминания на каждый день: утренние, вечерные, после намаза, перед сном и другие
+          Поминания на каждый день: утренние, вечерные, после намаза и другие
         </p>
-      </section>
+      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '14px' }}>
-        {SECTIONS.map(section => (
-          <button
-            key={section.id}
-            onClick={() => navigate(`/azkar/${section.id}`)}
-            style={{
-              padding: '20px', borderRadius: '16px', border: '1px solid var(--color-border)',
-              background: 'var(--color-bg-card)', cursor: 'pointer', textAlign: 'left',
-              transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '10px',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = section.color; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-          >
-            <div style={{
-              width: '44px', height: '44px', borderRadius: '12px',
-              background: `${section.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <section.icon size={22} style={{ color: section.color }} />
-            </div>
-            <div>
-              <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text-primary)' }}>{section.label}</div>
-              <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginTop: '2px' }}>{section.description}</div>
-            </div>
-          </button>
-        ))}
+      {/* Categories grid - tiles like azkar.ru */}
+      {loading ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+          {[1,2,3,4,5,6,7,8].map(i => (
+            <div key={i} className="shimmer" style={{ height: '160px', borderRadius: '16px' }} />
+          ))}
+        </div>
+      ) : (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px',
+        }}>
+          {/* First two are large */}
+          {categories.slice(0, 2).map(cat => (
+            <TileCard key={cat.id} category={cat} large onClick={() => navigate(`/azkar/category/${cat.slug}`)} />
+          ))}
+          {/* Rest are smaller */}
+          {categories.slice(2).map(cat => (
+            <TileCard key={cat.id} category={cat} onClick={() => navigate(`/azkar/category/${cat.slug}`)} />
+          ))}
+        </div>
+      )}
+
+      {/* Responsive: 1 column on mobile */}
+      <style>{`
+        @media (max-width: 600px) {
+          .azkar-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function TileCard({ category, large, onClick }: { category: AzkarCategory; large?: boolean; onClick: () => void }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: 'relative',
+        height: large ? '200px' : '160px',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = 'scale(1.02)';
+        e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.3)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
+    >
+      {/* Background */}
+      {!imgError && category.image ? (
+        <img
+          src={category.image}
+          alt={category.title}
+          onError={() => setImgError(true)}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover',
+          }}
+        />
+      ) : (
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: category.gradient || 'linear-gradient(135deg, #1a3a24 0%, #0d2218 100%)',
+        }} />
+      )}
+
+      {/* Overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%)',
+      }} />
+
+      {/* Content */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        padding: '20px', textAlign: 'center', zIndex: 1,
+      }}>
+        <h2 style={{
+          fontSize: large ? '28px' : '22px',
+          fontWeight: 800, color: '#ffffff',
+          textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+          marginBottom: '4px',
+        }}>
+          {category.title}
+        </h2>
+        <p style={{
+          fontSize: '13px', color: 'rgba(255,255,255,0.8)',
+          textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+        }}>
+          {category.subtitle}
+        </p>
       </div>
     </div>
   );
 }
 
-// Section page (individual azkar list)
-export function AzkarSectionPage() {
-  const { sectionId } = useParams<{ sectionId: string }>();
+// ─── Category page ───────────────────────────────────────────────────────────
+export function AzkarCategoryPage() {
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [azkar, setAzkar] = useState<Zikr[]>([]);
+  const [categories, setCategories] = useState<AzkarCategory[]>([]);
+  const [azkar, setAzkar] = useState<AzkarItem[]>([]);
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [accessible, setAccessible] = useState(() => localStorage.getItem(ACCESSIBLE_KEY) === '1');
+  const [loading, setLoading] = useState(true);
 
-  const section = SECTIONS.find(s => s.id === sectionId);
+  const category = categories.find(c => c.slug === slug);
 
   useEffect(() => {
-    fetch('./data/azkar.json').then(r => r.json()).then(data => {
-      const filtered = data.filter((z: Zikr) => z.type === sectionId || z.category === sectionId);
-      setAzkar(filtered);
-    }).catch(() => setAzkar([]));
+    Promise.all([
+      fetch('./data/azkar-categories.json').then(r => r.json()),
+      fetch('./data/azkar.json').then(r => r.json()),
+    ]).then(([cats, items]) => {
+      setCategories(cats);
+      setAzkar(items.filter((a: AzkarItem) => a.categorySlug === slug));
+    }).catch(() => {})
+      .finally(() => setLoading(false));
 
     try {
-      setCounts(JSON.parse(localStorage.getItem(COUNTS_KEY) || '{}'));
-      setFavorites(new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')));
+      setCounts(JSON.parse(localStorage.getItem('salaf-azkar-counts') || '{}'));
+      setFavorites(new Set(JSON.parse(localStorage.getItem('salaf-azkar-favorites') || '[]')));
     } catch {}
-  }, [sectionId]);
+  }, [slug]);
+
+  const toggleAccessible = () => {
+    const next = !accessible;
+    setAccessible(next);
+    localStorage.setItem(ACCESSIBLE_KEY, next ? '1' : '0');
+  };
 
   const toggleFavorite = (id: string) => {
     const next = new Set(favorites);
     if (next.has(id)) next.delete(id); else next.add(id);
     setFavorites(next);
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify([...next]));
+    localStorage.setItem('salaf-azkar-favorites', JSON.stringify([...next]));
   };
 
   const incrementCount = (id: string, max: number) => {
@@ -113,14 +210,14 @@ export function AzkarSectionPage() {
     if (current >= max) return;
     const next = { ...counts, [id]: current + 1 };
     setCounts(next);
-    localStorage.setItem(COUNTS_KEY, JSON.stringify(next));
+    localStorage.setItem('salaf-azkar-counts', JSON.stringify(next));
   };
 
   const resetCount = (id: string) => {
     const next = { ...counts };
     delete next[id];
     setCounts(next);
-    localStorage.setItem(COUNTS_KEY, JSON.stringify(next));
+    localStorage.setItem('salaf-azkar-counts', JSON.stringify(next));
   };
 
   const copyText = (text: string) => {
@@ -128,85 +225,143 @@ export function AzkarSectionPage() {
     toast.success('Скопировано');
   };
 
-  if (!section) return (
-    <div style={{ textAlign: 'center', padding: '60px', color: 'var(--color-text-muted)' }}>
-      Раздел не найден
-      <button onClick={() => navigate('/azkar')} className="btn-primary" style={{ marginTop: '16px' }}>Назад</button>
-    </div>
-  );
+  const shareText = (text: string) => {
+    if (navigator.share) {
+      navigator.share({ title: 'Азкар', text });
+    } else {
+      copyText(text);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="fade-in" style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div className="shimmer" style={{ height: '60px', borderRadius: '12px', marginBottom: '16px' }} />
+        {[1,2,3].map(i => <div key={i} className="shimmer" style={{ height: '120px', borderRadius: '12px', marginBottom: '8px' }} />)}
+      </div>
+    );
+  }
+
+  if (!category) {
+    return (
+      <div style={{ textAlign: 'center', padding: '60px', color: 'var(--color-text-muted)' }}>
+        <p>Раздел не найден</p>
+        <button className="btn-primary" onClick={() => navigate('/azkar')} style={{ marginTop: '16px' }}>Назад</button>
+      </div>
+    );
+  }
+
+  const fontScale = accessible ? 1.2 : 1;
+  const arabicSize = accessible ? '26px' : '22px';
+  const btnSize = accessible ? '10px' : '12px';
 
   return (
-    <div className="fade-in" style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <div className="fade-in" style={{
+      maxWidth: '800px', margin: '0 auto',
+      fontSize: `${fontScale}em`,
+    }}>
+      {/* Header */}
       <div style={{ marginBottom: '20px' }}>
-        <button onClick={() => navigate('/azkar')} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px', marginBottom: '12px' }}>
-          <ArrowLeft size={14} /> Все разделы
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: `${section.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <section.icon size={22} style={{ color: section.color }} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--color-text-primary)' }}>{section.label}</h1>
-            <p style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{azkar.length} азкаров</p>
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <button onClick={() => navigate('/azkar')} style={{
+            display: 'flex', alignItems: 'center', gap: '6px', background: 'none',
+            border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '13px',
+          }}>
+            <ArrowLeft size={14} /> Все разделы
+          </button>
+
+          {/* Accessible toggle */}
+          <label style={{
+            display: 'flex', alignItems: 'center', gap: '8px',
+            fontSize: '12px', color: 'var(--color-text-secondary)', cursor: 'pointer',
+          }}>
+            {accessible ? <Eye size={14} /> : <EyeOff size={14} />}
+            Для слабовидящих
+            <div
+              onClick={toggleAccessible}
+              style={{
+                width: '36px', height: '20px', borderRadius: '10px',
+                background: accessible ? 'var(--color-gold)' : 'var(--color-bg-hover)',
+                border: '1px solid var(--color-border)',
+                position: 'relative', cursor: 'pointer', transition: 'background 0.2s',
+              }}
+            >
+              <div style={{
+                width: '16px', height: '16px', borderRadius: '50%',
+                background: accessible ? '#111' : 'var(--color-text-muted)',
+                position: 'absolute', top: '1px',
+                left: accessible ? '18px' : '1px',
+                transition: 'left 0.2s',
+              }} />
+            </div>
+          </label>
         </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--color-text-primary)' }}>
+            {category.title}
+          </h1>
+        </div>
+        <p style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>{azkar.length} азкаров</p>
       </div>
 
+      {/* Azkar list */}
       {azkar.length === 0 ? (
         <div className="glass-card" style={{ padding: '40px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-          <Sparkles size={32} style={{ margin: '0 auto 12px', opacity: 0.5 }} />
           <p>Азкары этого раздела скоро будут добавлены</p>
         </div>
       ) : (
         <div style={{ display: 'grid', gap: '12px' }}>
-          {azkar.map(zikr => {
-            const currentCount = counts[zikr.id] || 0;
-            const isComplete = currentCount >= zikr.repeat;
-            const isFav = favorites.has(zikr.id);
-            const progress = zikr.repeat ? (currentCount / zikr.repeat) * 100 : 0;
+          {azkar.map(item => {
+            const currentCount = counts[item.id] || 0;
+            const isComplete = currentCount >= item.repeat;
+            const isFav = favorites.has(item.id);
+            const progress = item.repeat ? (currentCount / item.repeat) * 100 : 0;
 
             return (
-              <div key={zikr.id} className="glass-card" style={{
-                padding: '16px',
+              <div key={item.id} className="glass-card" style={{
+                padding: accessible ? '20px' : '16px',
                 borderColor: isComplete ? 'var(--color-accent-light)' : undefined,
-                opacity: isComplete ? 0.7 : 1,
+                transition: 'all 0.3s ease',
               }}>
                 {/* Arabic text */}
-                {zikr.arabic && (
+                {item.arabic && (
                   <div style={{
-                    fontFamily: 'Amiri, serif', fontSize: '22px', lineHeight: 1.8,
+                    fontFamily: 'Amiri, serif', fontSize: arabicSize, lineHeight: accessible ? 2.2 : 1.8,
                     color: 'var(--color-text-primary)', textAlign: 'right',
-                    direction: 'rtl', marginBottom: '10px', padding: '12px',
+                    direction: 'rtl', marginBottom: '12px', padding: '14px',
                     background: 'var(--color-bg-hover)', borderRadius: '12px',
                   }}>
-                    {zikr.arabic}
+                    {item.arabic}
                   </div>
                 )}
 
-                {/* Translation */}
-                {zikr.translationRu && (
-                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '10px' }}>
-                    {zikr.translationRu}
+                {/* Transliteration */}
+                {item.transliteration && (
+                  <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', fontStyle: 'italic', marginBottom: '8px' }}>
+                    {item.transliteration}
                   </p>
                 )}
 
-                {/* Source & benefit */}
-                {zikr.source && (
-                  <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginBottom: '10px' }}>
-                    Источник: {zikr.source}
+                {/* Translation */}
+                {item.translation && (
+                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '10px' }}>
+                    {item.translation}
                   </p>
                 )}
-                {zikr.benefit && (
-                  <p style={{ fontSize: '12px', color: 'var(--color-gold)', marginBottom: '10px' }}>
-                    {zikr.benefit}
+
+                {/* Source */}
+                {item.source && (
+                  <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginBottom: '10px' }}>
+                    Источник: {item.source}
                   </p>
                 )}
 
                 {/* Progress bar */}
-                {zikr.repeat > 0 && (
-                  <div style={{ marginBottom: '10px' }}>
+                {item.repeat > 0 && (
+                  <div style={{ marginBottom: '12px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--color-text-muted)', marginBottom: '4px' }}>
-                      <span>{currentCount} / {zikr.repeat}</span>
+                      <span>{currentCount} / {item.repeat}</span>
                       <span>{Math.round(progress)}%</span>
                     </div>
                     <div style={{ height: '4px', background: 'var(--color-bg-hover)', borderRadius: '999px', overflow: 'hidden' }}>
@@ -217,42 +372,49 @@ export function AzkarSectionPage() {
 
                 {/* Actions */}
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
-                  {zikr.repeat > 0 && (
+                  {item.repeat > 0 && (
                     <>
                       <button
-                        onClick={() => incrementCount(zikr.id, zikr.repeat)}
+                        onClick={() => incrementCount(item.id, item.repeat)}
                         disabled={isComplete}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '4px',
-                          padding: '8px 14px', borderRadius: '8px', border: 'none',
+                          padding: `${accessible ? 10 : 8}px ${accessible ? 16 : 12}px`,
+                          borderRadius: '8px', border: 'none',
                           background: isComplete ? 'var(--color-accent-light)' : 'var(--color-gold)',
-                          color: isComplete ? '#fff' : '#111', fontWeight: 700, fontSize: '13px',
+                          color: isComplete ? '#fff' : '#111', fontWeight: 700, fontSize: btnSize,
                           cursor: isComplete ? 'default' : 'pointer', transition: 'all 0.2s',
                         }}
                       >
-                        {isComplete ? <Check size={14} /> : <Repeat size={14} />}
-                        {isComplete ? 'Готово' : `Повторить (${zikr.repeat})`}
+                        <Repeat size={accessible ? 16 : 14} />
+                        {isComplete ? 'Готово' : `Повторить (${item.repeat})`}
                       </button>
-                      <button onClick={() => resetCount(zikr.id)} style={{
-                        padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                      <button onClick={() => resetCount(item.id)} style={{
+                        padding: `${accessible ? 10 : 8}px`, borderRadius: '8px', border: '1px solid var(--color-border)',
                         background: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', cursor: 'pointer',
                       }}>
-                        <Repeat size={14} />
+                        <Repeat size={accessible ? 16 : 14} />
                       </button>
                     </>
                   )}
-                  <button onClick={() => copyText(zikr.arabic || zikr.translationRu)} style={{
-                    padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                  <button onClick={() => copyText(item.arabic || item.translation)} style={{
+                    padding: `${accessible ? 10 : 8}px`, borderRadius: '8px', border: '1px solid var(--color-border)',
                     background: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', cursor: 'pointer',
                   }} title="Копировать">
-                    <Copy size={14} />
+                    <Copy size={accessible ? 16 : 14} />
                   </button>
-                  <button onClick={() => toggleFavorite(zikr.id)} style={{
-                    padding: '8px', borderRadius: '8px', border: '1px solid var(--color-border)',
+                  <button onClick={() => shareText(item.arabic || item.translation)} style={{
+                    padding: `${accessible ? 10 : 8}px`, borderRadius: '8px', border: '1px solid var(--color-border)',
+                    background: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', cursor: 'pointer',
+                  }} title="Поделиться">
+                    <Share2 size={accessible ? 16 : 14} />
+                  </button>
+                  <button onClick={() => toggleFavorite(item.id)} style={{
+                    padding: `${accessible ? 10 : 8}px`, borderRadius: '8px', border: '1px solid var(--color-border)',
                     background: isFav ? 'rgba(239,68,68,0.1)' : 'var(--color-bg-hover)',
                     color: isFav ? '#ef4444' : 'var(--color-text-muted)', cursor: 'pointer',
                   }}>
-                    <Heart size={14} fill={isFav ? '#ef4444' : 'none'} />
+                    <Heart size={accessible ? 16 : 14} fill={isFav ? '#ef4444' : 'none'} />
                   </button>
                 </div>
               </div>

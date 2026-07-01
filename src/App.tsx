@@ -27,7 +27,7 @@ import ArticlesPage from "./pages/ArticlesPage";
 import HadithCatalogPage from "./pages/HadithCatalogPage";
 import HadithBookPage from "./pages/HadithBookPage";
 import HadithDetailPage from "./pages/HadithDetailPage";
-import { AzkarSectionsPage, AzkarSectionPage } from "./pages/AzkarPage";
+import { AzkarCategoriesPage, AzkarCategoryPage } from "./pages/AzkarPage";
 import AdminBookEditorPage from "./pages/AdminBookEditorPage";
 import OfflinePage from "./pages/OfflinePage";
 import CategoryTreePage from "./pages/CategoryTreePage";
@@ -115,8 +115,11 @@ function AppRoutes() {
                 <Route path="/hadith" element={<HadithCatalogPage />} />
                 <Route path="/hadith/book/:slug" element={<HadithBookPage />} />
                 <Route path="/hadith/book/:bookSlug/:hadithSlug" element={<HadithDetailPage />} />
-                <Route path="/azkar" element={<AzkarSectionsPage />} />
-                <Route path="/azkar/:sectionId" element={<AzkarSectionPage />} />
+                <Route path="/azkar" element={<AzkarCategoriesPage />} />
+                <Route path="/azkar/category/:slug" element={<AzkarCategoryPage />} />
+                <Route path="/azkar/morning" element={<AzkarCategoryPage />} />
+                <Route path="/azkar/evening" element={<AzkarCategoryPage />} />
+                <Route path="/azkar/prayer" element={<AzkarCategoryPage />} />
                 <Route path="/offline" element={<OfflinePage />} />
                 <Route path="/categories" element={<CategoryTreePage />} />
                 <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />

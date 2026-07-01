@@ -1,0 +1,74 @@
+[
+  {
+    "id": "morning",
+    "slug": "morning",
+    "title": "Утром",
+    "subtitle": "Азкары на утро",
+    "image": "./azkar/images/morning.webp",
+    "gradient": "linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%)",
+    "sourceUrl": "https://azkar.ru/category/morning"
+  },
+  {
+    "id": "evening",
+    "slug": "evening",
+    "title": "Вечером",
+    "subtitle": "Азкары на вечер",
+    "image": "./azkar/images/evening.webp",
+    "gradient": "linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #3730a3 100%)",
+    "sourceUrl": "https://azkar.ru/category/evening"
+  },
+  {
+    "id": "prayer",
+    "slug": "prayer",
+    "title": "После намаза",
+    "subtitle": "После каждого намаза",
+    "image": "./azkar/images/prayer.webp",
+    "gradient": "linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #166534 100%)",
+    "sourceUrl": "https://azkar.ru/category/prayer"
+  },
+  {
+    "id": "quran-dua",
+    "slug": "quran-dua",
+    "title": "Дуа из Корана",
+    "subtitle": "Молитвы из Корана",
+    "image": "./azkar/images/quran.webp",
+    "gradient": "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%)",
+    "sourceUrl": "https://azkar.ru/category/quran-dua"
+  },
+  {
+    "id": "protection",
+    "slug": "protection",
+    "title": "Дуа в защиту",
+    "subtitle": "Защита от зла",
+    "image": "./azkar/images/protection.webp",
+    "gradient": "linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)",
+    "sourceUrl": "https://azkar.ru/category/protection"
+  },
+  {
+    "id": "important-1",
+    "slug": "important-1",
+    "title": "Важные дуа",
+    "subtitle": "Часть 1",
+    "image": "./azkar/images/important1.webp",
+    "gradient": "linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%)",
+    "sourceUrl": "https://azkar.ru/category/important-1"
+  },
+  {
+    "id": "important-2",
+    "slug": "important-2",
+    "title": "Важные дуа",
+    "subtitle": "Часть 2",
+    "image": "./azkar/images/important2.webp",
+    "gradient": "linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%)",
+    "sourceUrl": "https://azkar.ru/category/important-2"
+  },
+  {
+    "id": "seerah",
+    "slug": "seerah",
+    "title": "Сира Пророка ﷺ",
+    "subtitle": "Из жизни Пророка",
+    "image": "./azkar/images/seerah.webp",
+    "gradient": "linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%)",
+    "sourceUrl": "https://azkar.ru/category/seerah"
+  }
+]
