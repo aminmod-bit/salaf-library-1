@@ -205,6 +205,33 @@
     --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
 
+  /* Editorial Monochrome — based on DESIGN.md */
+  [data-theme="editorial"] {
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f8f8f8;
+    --color-bg-card: #ffffff;
+    --color-bg-glass: rgba(255, 255, 255, 0.95);
+    --color-bg-hover: rgba(0,0,0,0.04);
+    --color-accent: #181818;
+    --color-accent-light: #000000;
+    --color-gold: #181818;
+    --color-gold-light: #333333;
+    --color-gold-muted: #636363;
+    --color-text-primary: #181818;
+    --color-text-secondary: #6d6d6d;
+    --color-text-muted: #9a9a9a;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-hover: rgba(0, 0, 0, 0.15);
+    --color-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+    --color-topbar-bg: rgba(255, 255, 255, 0.96);
+    --color-topbar-border: rgba(0, 0, 0, 0.06);
+    --color-topbar-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+    --radius-card: 0px;
+    --radius-btn: 75px;
+    --shadow-card: none;
+    --shadow-gold: none;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -213,6 +240,16 @@
 
   html {
     scroll-behavior: smooth;
+    transition: background-color 0.4s ease;
+  }
+
+  html, html * {
+    transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Disable transitions during theme switch for performance */
+  html.no-transition, html.no-transition * {
+    transition: none !important;
   }
 
   body {

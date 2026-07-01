@@ -31,6 +31,7 @@ import { AzkarCategoriesPage, AzkarCategoryPage } from "./pages/AzkarPage";
 import AdminBookEditorPage from "./pages/AdminBookEditorPage";
 import OfflinePage from "./pages/OfflinePage";
 import CategoryTreePage from "./pages/CategoryTreePage";
+import ThemesPage from "./pages/ThemesPage";
 
 const BookReaderPage = lazy(() => import("./pages/BookReaderPage"));
 
@@ -122,6 +123,7 @@ function AppRoutes() {
                 <Route path="/azkar/prayer" element={<AzkarCategoryPage />} />
                 <Route path="/offline" element={<OfflinePage />} />
                 <Route path="/categories" element={<CategoryTreePage />} />
+                <Route path="/settings/themes" element={<ThemesPage />} />
                 <Route path="/admin/books-editor" element={<AdminBookEditorPage />} />
               </Routes>
             </div>

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, BookOpen, Users, Headphones, Sparkles,
   Search, Heart, Clock, Grid3X3, Settings,
-  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText, WifiOff, Trash2, FolderTree
+  X, BookMarked, Star, Info, MessageSquare, Languages, BookOpenText, WifiOff, Trash2, FolderTree, Palette
 } from 'lucide-react';
 import Logo from './Logo';
 import { clearAllCaches } from '../utils/cache';
@@ -24,6 +24,7 @@ const navItems = [
 const userItems = [
   { path: '/favorites', icon: Heart, label: 'Избранное', key: 'favorites' },
   { path: '/offline', icon: WifiOff, label: 'Офлайн', key: 'offline' },
+  { path: '/settings/themes', icon: Palette, label: 'Темы', key: 'themes' },
   { path: '/about', icon: Info, label: 'О нас', key: 'about' },
   { path: '/report', icon: MessageSquare, label: 'Ошибка', key: 'report' },
   { path: '__clearCache', icon: Trash2, label: 'Очистить кэш', key: 'clearCache' },
