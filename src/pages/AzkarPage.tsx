@@ -4,6 +4,7 @@ import {
   ArrowLeft, Copy, Heart, Share2, Repeat, Search, Eye, EyeOff
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import VantaCloudsBackground from '../components/effects/VantaCloudsBackground';
 
 interface AzkarCategory {
   id: string;
@@ -44,9 +45,13 @@ export function AzkarCategoriesPage() {
   }, []);
 
   return (
-    <div className="fade-in" style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <div className="fade-in" style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative' }}>
+      <VantaCloudsBackground />
+
+      {/* Content overlay for readability */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
       {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '32px', paddingTop: '20px' }}>
         <div style={{ fontSize: '48px', marginBottom: '12px' }}>🤲</div>
         <h1 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
           Азкары и поминания
@@ -86,6 +91,7 @@ export function AzkarCategoriesPage() {
           .azkar-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
+      </div>{/* end content overlay */}
     </div>
   );
 }
