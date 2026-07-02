@@ -29,7 +29,7 @@ export default function Header() {
   };
 
   return (
-    <header className="site-topbar">
+    <header className="site-topbar" style={{ zIndex: 70 }}>
       <div className="site-brand" onClick={() => navigate('/')} role="button" tabIndex={0}>
         <Logo size={44} showText />
       </div>
@@ -49,7 +49,22 @@ export default function Header() {
 
       <div className="site-actions">
         <ThemeToggle />
-        <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)} aria-label="Открыть меню"><Menu size={22}/></button>
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Открыть меню"
+          style={{
+            display: 'none',
+            background: 'transparent',
+            color: 'var(--color-gold)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '10px',
+            padding: '8px',
+            cursor: 'pointer',
+          }}
+        >
+          <Menu size={22} />
+        </button>
       </div>
     </header>
   );

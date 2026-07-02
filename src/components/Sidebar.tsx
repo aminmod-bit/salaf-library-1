@@ -64,7 +64,12 @@ export default function Sidebar() {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          style={{
+            position: 'fixed', inset: 0,
+            background: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 85,
+          }}
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -80,7 +85,7 @@ export default function Sidebar() {
           width: '260px',
           background: 'var(--color-sidebar-bg)',
           borderRight: '1px solid var(--color-border)',
-          zIndex: 50,
+          zIndex: 90,
           display: 'flex',
           flexDirection: 'column',
           transition: 'transform 0.3s ease, background 0.3s ease',
