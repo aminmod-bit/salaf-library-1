@@ -19,13 +19,17 @@ interface AzkarCategory {
 interface AzkarItem {
   id: string;
   categorySlug: string;
+  title?: string;
   arabic: string;
   translation: string;
   transliteration?: string;
   source?: string;
   repeat: number;
+  audioUrl?: string;
+  imageUrl?: string;
   tags: string[];
   sourceUrl?: string;
+  needsReview?: boolean;
 }
 
 const ACCESSIBLE_KEY = 'salaf-accessible-mode';
