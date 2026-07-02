@@ -52,7 +52,7 @@ export function AzkarCategoriesPage() {
       <div style={{ position: 'relative', zIndex: 1 }}>
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '32px', paddingTop: '20px' }}>
-        <div style={{ fontSize: '48px', marginBottom: '12px' }}>🤲</div>
+        <div style={{ fontFamily: 'Amiri, serif', fontSize: '42px', color: 'var(--color-gold)', marginBottom: '12px', direction: 'rtl' }}>الأذكار</div>
         <h1 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 900, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
           Азкары и поминания
         </h1>
